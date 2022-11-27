@@ -1,0 +1,140 @@
+:root {
+  --main-color: #496bbe;
+  --main-background-color: #f5f7fa;
+  --main-text-color: #444;
+  --accent-background-color: #496bbe;
+  --light-background: #496bbe1a;
+  --border: 3px solid #496bbe1a;
+  --border-radius: 3px;
+}
+
+body {
+  margin: 0;
+  color: var(--main-text-color);
+  background: var(--main-background-color);
+  font-family: "Ubuntu", sans-serif;
+  text-align: center;
+}
+
+@viewport {
+  width: device-width;
+  zoom: 1;
+}
+
+main {
+  margin: 0 auto;
+  width: 80%;
+}
+
+a {
+  color: var(--main-color);
+  text-decoration: none;
+}
+
+hr {
+  width: 80%;
+  border-left: none;
+  border-right: none;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h2 {
+  align-content: center;
+  justify-content: center;
+}
+
+nav {
+  display: flex;
+  padding: 5px 0px 5px 0px;
+  width: 100%;
+  background-color: var(--accent-background-color);
+}
+
+.Hidden {
+  display: none;
+}
+
+.Visible {
+  display: block;
+}
+
+.Switch-Page {
+  display: flex;
+  align-items: center;
+  margin: 5px 5px 5px 10px;
+  padding: 5px;
+  font-size: 20px;
+  text-decoration: none;
+  color: #f5f7fa;
+  border: 2px solid #f5f7fa;
+  border-radius: var(--border-radius);
+  transition: 500ms;
+}
+
+.Switch-Page:hover {
+  scale: 1.1;
+}
+
+.Switch-Page:active {
+  color: var(--main-text-color);
+  border: 2px solid #444;
+}
+
+input[type="text"] {
+  font-family: inherit;
+  text-align: center;
+  all: unset;
+  width: 70%;
+  background-color: var(--light-background);
+  transition: 400ms;
+  padding: 5px;
+  border-radius: var(--border-radius);
+  border: 3px solid rgb(73, 107, 190, 0);
+}
+
+input[type="text"]:focus {
+  border: var(--border);
+}
+
+button {
+  border: 2px solid #44444400;
+  border-radius: var(--border-radius);
+  background-color: var(--light-background);
+  border: var(--border);
+  color: var(--main-text-color);
+  transition: 500ms;
+  padding: 5px;
+  font-size: 25px;
+}
+
+button:hover {
+  background-color: #496bbeb3;
+}
+
+button:active {
+  scale: 1.1;
+}
+
+@media only screen and (max-width: 300px) {
+  .Switch-Page {
+    width: 30%;
+    font-size: 15px;
+  }
+}
+
+@media only screen and (max-width: 550px) {
+  .Switch-Page {
+    margin: 2px;
+    font-size: 4vw;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  nav {
+    flex-direction: row;
+    justify-content: left;
+  }
+}
