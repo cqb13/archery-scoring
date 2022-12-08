@@ -12,6 +12,7 @@ const Slider = (props) => {
     <label className="Slider">
     <input
       type="range"
+      className={props.class}
       min={props.min}
       max={props.max}
       value={value}

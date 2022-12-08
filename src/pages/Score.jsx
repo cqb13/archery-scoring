@@ -1,6 +1,7 @@
 import SetupMenu from "../components/SetupMenu";
 
 const Score = () => {
+
   return (
     <div>
       <header>
@@ -8,7 +9,6 @@ const Score = () => {
       </header>
       <hr />
       <main>
-        {/*when begin is pressed on setup menu, switch  to score chart, setup using info from setup menu*/}
         <SetupMenu />
       </main>
     </div>
