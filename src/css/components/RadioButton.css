@@ -1,0 +1,31 @@
+.RadioButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 0px 5px 0px;
+}
+
+input[type="radio"] {
+  -webkit-appearance: none;
+  width: 25px;
+  height: 25px;
+  margin: auto;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  transition: var(--transition-time);
+}
+
+input[type="radio"]:checked {
+  background: var(--main-color-transparent);
+  scale: 1.1;
+}
+
+input[type="radio"]:hover {
+  scale: 1.1;
+}
+
+.RadioButton label {
+  margin-left: 5px;
+  font-size: 25px;
+}

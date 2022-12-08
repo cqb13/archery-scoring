@@ -1,0 +1,23 @@
+.Button-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  gap: 20px;
+}
+
+.Options {
+  display: flex;
+  width: fit-content;
+  gap: 20px;
+  margin: 0 auto;
+}
+
+.Details {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.Begin-Button {
+  width: 60%;
+}

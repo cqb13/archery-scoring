@@ -4,7 +4,7 @@ const Home = () => {
       <header>
         <h1>Archery Scoring</h1>
       </header>
-      <hr/>
+      <hr />
       <main>
         <div>
           <h2>How To Score?</h2>

@@ -1,0 +1,19 @@
+button {
+  border: 2px solid #44444400;
+  border-radius: var(--border-radius);
+  background-color: var(--light-background);
+  border: var(--border);
+  color: var(--main-text-color);
+  transition: var(--transition-time);
+  padding: 5px;
+  font-size: 25px;
+  min-width: 30%;
+}
+
+button:hover {
+  background-color: #496bbeb3;
+}
+
+button:active {
+  scale: 1.1;
+}

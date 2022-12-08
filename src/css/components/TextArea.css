@@ -1,0 +1,19 @@
+textarea {
+  all: unset;
+  text-align: left;
+  width: 90%;
+  height: 150px;
+  font-size: 25px;
+  line-height: 1.5;
+  color: var(--main-text-color);
+  background-color: var(--light-background);
+  border: 3px solid rgb(73, 107, 190, 0);
+  border-radius: var(--border-radius);
+  transition: var(--transition-time);
+  outline: none;
+  resize: none;
+}
+
+textarea:focus {
+  border: var(--border);
+}
