@@ -1,13 +1,18 @@
-import React from 'react';
+import React from "react";
 
 const Button = (props) => {
+  const handleClick = (event) => {
+    props.onClick(event);
+  };
+
   return (
     <button
-      onClick={props.onClick}
+      onClick={handleClick}
       className={props.class}
       type={props.type}
       disabled={props.disabled}
-    >
+      value={props.value}
+    > 
       {props.children}
     </button>
   );

@@ -6,6 +6,7 @@ const Slider = (props) => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
+    props.onChange(event);
   };
 
   return (

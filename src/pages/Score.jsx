@@ -1,6 +1,15 @@
+import { useState } from "react";
 import SetupMenu from "../components/SetupMenu";
+import ScoringChart from "../components/ScoringChart";
 
 const Score = () => {
+  const [state, setState] = useState();
+  const [settingUp, setSettingUp] = useState(true);
+
+  const handleStateChange = (newState) => {
+    setState(newState);
+    setSettingUp(false);
+  };
 
   return (
     <div>
@@ -9,7 +18,11 @@ const Score = () => {
       </header>
       <hr />
       <main>
-        <SetupMenu />
+        {settingUp ? (
+          <SetupMenu onStateChange={handleStateChange} />
+        ) : (
+          <ScoringChart data={state}/>
+        )}
       </main>
     </div>
   );
