@@ -1,9 +1,8 @@
 import React from "react";
-import "../css/SetupMenu.css";
-import Slider from "./Slider";
-import RadioButton from "./RadioButton";
-import Button from "./Button";
-import "../css/components/RadioButton.css"
+import "../../css/SetupMenu.css";
+import Slider from "../elements/Slider";
+import RadioButton from "../elements/RadioButton";
+import Button from "../elements/Button";
 
 class SetupMenu extends React.Component {
   constructor(props) {

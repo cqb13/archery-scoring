@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../css/components/Slider.css"
+import "../../css/components/Slider.css"
 
 const Slider = (props) => {
   const [value, setValue] = useState(props.default);

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import SetupMenu from "../components/SetupMenu";
-import ScoringChart from "../components/ScoringChart";
+import SetupMenu from "../components/pageComponents/SetupMenu";
+import ScoringPage from "../components/pageComponents/ScoringPage";
 
 const Score = () => {
   const [state, setState] = useState();
@@ -21,7 +21,7 @@ const Score = () => {
         {settingUp ? (
           <SetupMenu onStateChange={handleStateChange} />
         ) : (
-          <ScoringChart data={state}/>
+          <ScoringPage data={state}/>
         )}
       </main>
     </div>

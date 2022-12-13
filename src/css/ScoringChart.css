@@ -1,3 +1,17 @@
-/*
-background color of boxs in chart should match color of target ring of score
-*/
+.Scoring-Chart {
+  /*make a 3 x 10 grid out of the elements inside*/
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(10, 1fr);
+  /*make the grid items have a 1px border*/
+  grid-auto-flow: row dense;
+  /*make the grid items have a 1px border*/
+  border-collapse: collapse;
+}
+
+.Section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: var(--border);
+}
