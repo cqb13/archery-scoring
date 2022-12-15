@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../css/Score.css";
 import SetupMenu from "../components/pageComponents/SetupMenu";
 import ScoringPage from "../components/pageComponents/ScoringPage";
 
@@ -12,19 +13,13 @@ const Score = () => {
   };
 
   return (
-    <div>
-      <header>
-        <h1>Scoring Session Settings</h1>
-      </header>
-      <hr />
-      <main>
-        {settingUp ? (
-          <SetupMenu onStateChange={handleStateChange} />
-        ) : (
-          <ScoringPage data={state}/>
-        )}
-      </main>
-    </div>
+    <main className="Score">
+      {settingUp ? (
+        <SetupMenu onStateChange={handleStateChange} />
+      ) : (
+        <ScoringPage data={state}/>
+      )}
+    </main>
   );
 };
 
