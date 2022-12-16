@@ -9,6 +9,7 @@ import "./css/components/TextArea.css";
 import Home from "./pages";
 import Score from "./pages/Score";
 
+//TODO: make score the main page, switch home to about
 function App() {
   return (
     <Router>

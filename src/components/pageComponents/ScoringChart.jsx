@@ -1,15 +1,40 @@
 import React, { useState, useEffect } from 'react';
 import "../../css/ScoringChart.css"
 
+/*
+  Pass in split ends
+  divide the array of ends by the # of end splits
+    creates an array with x amount of array (end splits) with y amount of arrays (ends) with z amount of arrays (arrows)
+
+  if there are end splits
+    render left and right button to switch between the scoring chart
+      do this by switching which array within the main array is being rendered
+
+  if there are no end splits
+    render the scoring chart
+ */
+
+
+/*
+  add a done button @ the bottom of the chart,
+    when clicked, it will sort the rows from highest to lowest
+    
+    then it will create another chart with the number of 10s 9s
+      if there are x's then it will create a seperate column for them
+
+      if there are end splits 
+        then each end split will have a seperate row in the chart, with totals being added later
+
+  this component should be rendered in the ScoringPage component
+*/
+
 function ScoringChart(props) {
-  //TODO: when finished scoreing, sort the row values from highest to lowest
   const [data, setData] = useState([[]]);
-  //TODO: monkey code (new values from sliders are strings not ints)
-  const arrowsPerEnd = parseInt(props.arrowsPerEnd);
-  const ends = parseInt(props.ends);
+  const arrowsPerEnd = props.arrowsPerEnd;
+  const splits = props.splits;
+  const ends = props.ends;
 
   const handleChange = (event, rowIndex, columnIndex) => {
-    // Update the value of the text box at the specified row and column
     const updatedData = data.map((row, rIndex) => {
       if (rIndex === rowIndex) {
         return row.map((column, cIndex) => {

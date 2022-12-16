@@ -23,11 +23,6 @@ body {
   zoom: 1;
 }
 
-main {
-  margin: 0 auto;
-  width: 80%;
-}
-
 a {
   color: var(--main-color);
   text-decoration: none;
@@ -41,6 +36,7 @@ hr {
 
 h1 {
   font-size: 50px;
+  margin: 10px;
 }
 
 h2 {

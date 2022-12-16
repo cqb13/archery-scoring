@@ -20,10 +20,12 @@ class SetupMenu extends React.Component {
 
   handleLocationChange = (event) => {
     this.setState({location: event.target.value});
+    event.target.className = "Location-Button Selected";
+    document.querySelector(".Location-Button[value='" + (event.target.value === "Indoor" ? "Outdoor" : "Indoor") + "']").className = "Location-Button";
   }
 
   handleDistanceChange = (event) => {
-    this.setState({distance: event.target.value});
+    this.setState({distance: parseInt(event.target.value)});
   }
 
   handleDistanceUnitChange = (event) => {
@@ -31,15 +33,15 @@ class SetupMenu extends React.Component {
   }
 
   handleEndsChange = (event) => {
-    this.setState({ends: event.target.value});
+    this.setState({ends: parseInt(event.target.value)});
   }
 
   handleArrowsPerEndChange = (event) => {
-    this.setState({arrowsPerEnd: event.target.value});
+    this.setState({arrowsPerEnd: parseInt(event.target.value)});
   }
 
   handleSessionsChange = (event) => {
-    this.setState({sessions: event.target.value});
+    this.setState({sessions: parseInt(event.target.value)});
   }
 
   handleBowChange = (event) => {
@@ -55,7 +57,10 @@ class SetupMenu extends React.Component {
   render() {
     return (
       <div className='Setup-Menu'>
+        <h1>Setup</h1>
+        <hr />
         <div className='Location Container'>
+          <h3>Location</h3>
           <div className='Button-Container Container'>
             <Button class="Location-Button" type="location" value="Outdoor" onClick={this.handleLocationChange}>Outdoor</Button>
             <Button class="Location-Button" type="location" value="Indoor" onClick={this.handleLocationChange}>Indoor</Button>
