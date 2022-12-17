@@ -35,7 +35,7 @@ function ScoringChart(props) {
   const ends = props.ends;
 
   const handleChange = (event, rowIndex, columnIndex) => {
-    const updatedData = data.map((row, rIndex) => {
+    const updatedData = data[0].map((row, rIndex) => {
       if (rIndex === rowIndex) {
         return row.map((column, cIndex) => {
           if (cIndex === columnIndex) {
@@ -55,12 +55,30 @@ function ScoringChart(props) {
       }
       return row;
     });
-    setData(updatedData);
+
+    // keeps end splits from being overwritten
+    setData(prevData => {
+      const newArray = [...prevData];
+      newArray[0] = updatedData;
+      return newArray;
+    })
+    console.log(data)
   };
 
-  useEffect(() => {
-    setData(Array.from(Array(ends), () => new Array(arrowsPerEnd).fill('')));
-  }, [arrowsPerEnd, ends]);
+  useEffect(() => {    
+    let endsPerSplit = ends / splits;
+    // if endsPerSplit is not an integer, then use round down to get the number of ends per split, and extra end to the last split
+    //TODO: does not work how i want, fix it (10 ends, 3 splits, should be 3, 3, 4 but is 4, 4, 4)
+    if (endsPerSplit % 1 !== 0) {
+      endsPerSplit = Math.floor(endsPerSplit);
+      const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit + 1).fill(Array.from(Array(arrowsPerEnd), () => '')));
+      setData(setupArray);
+      return;
+    }
+    // if endsPerSplit is an integer, then use that number of ends per split
+    const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
+    setData(setupArray);
+  }, [arrowsPerEnd, ends, splits]);
 
   return (
     <div className='Scoring-Chart'>
@@ -68,7 +86,7 @@ function ScoringChart(props) {
         <thead>
           <tr>
             <th>End</th>
-            {data[0].map((_, columnIndex) => (
+            {Array.from(Array(arrowsPerEnd), (x, i) => i + 1).map((_, columnIndex) => (
               <th key={columnIndex}>Arrow {columnIndex + 1}</th>
             ))}
             <th>Total</th>
@@ -76,21 +94,21 @@ function ScoringChart(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {data[0].map((row, rowIndex) => (
             <tr key={rowIndex}>
               <td>{rowIndex + 1}</td>
               {row.map((column, columnIndex) => (
                 <td key={columnIndex}>
-                  <input
-                    type="text"
-                    value={column}
-                    onChange={event => handleChange(event, rowIndex, columnIndex)}
-                  />
-                </td>
+                <input
+                  type="text"
+                  value={column}
+                  onChange={event => handleChange(event, rowIndex, columnIndex)}
+                />
+              </td>
               ))}
               <td>{
-                data[rowIndex][data[rowIndex].length - 1] === '' ? '0' :
-                data[rowIndex].reduce((a, b) => {
+                data[0][rowIndex][data[0][rowIndex].length - 1] === '' ? '0' :
+                data[0][rowIndex].reduce((a, b) => {
                   if (b === 'm' || b === 'M' || b === '') return parseInt(a, 10) + 0;
                   if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
                   return parseInt(a, 10) + parseInt(b, 10);
@@ -99,8 +117,8 @@ function ScoringChart(props) {
               <td>{
                 //TODO: if any of the values in the row are empty, the running total should be empty
                 //!!!: value is NaN if last value is not filled last
-                data[rowIndex][data[rowIndex].length - 1] === '' ? '0' :
-                data.slice(0, rowIndex + 1).reduce((a, b) => {
+                data[0][rowIndex][data[0][rowIndex].length - 1] === '' ? '0' :
+                data[0].slice(0, rowIndex + 1).reduce((a, b) => {
                   return a + b.reduce((c, d) => {
                     if (d === 'm' || d === 'M') return parseInt(c, 10) + 0;
                     if (d === 'x' || d === 'X') return parseInt(c, 10) + 10;
