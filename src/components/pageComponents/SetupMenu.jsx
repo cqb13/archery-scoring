@@ -1,5 +1,4 @@
 import React from "react";
-import "../../css/SetupMenu.css";
 import Slider from "../elements/Slider";
 import RadioButton from "../elements/RadioButton";
 import Button from "../elements/Button";

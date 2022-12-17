@@ -7,7 +7,6 @@ button {
   transition: var(--transition-time);
   padding: 5px;
   font-size: 25px;
-  min-width: 30%;
 }
 
 button:hover {

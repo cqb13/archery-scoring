@@ -6,6 +6,10 @@
   gap: 20px;
 }
 
+.Location-Button {
+  width: 30%;
+}
+
 .Options {
   display: flex;
   width: fit-content;

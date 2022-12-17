@@ -1,19 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import "../../css/ScoringChart.css"
-
-/*
-  Pass in split ends
-  divide the array of ends by the # of end splits
-    creates an array with x amount of array (end splits) with y amount of arrays (ends) with z amount of arrays (arrows)
-
-  if there are end splits
-    render left and right button to switch between the scoring chart
-      do this by switching which array within the main array is being rendered
-
-  if there are no end splits
-    render the scoring chart
- */
-
+import Button from "../elements/Button";
 
 /*
   add a done button @ the bottom of the chart,
@@ -30,12 +16,13 @@ import "../../css/ScoringChart.css"
 
 function ScoringChart(props) {
   const [data, setData] = useState([[]]);
+  const [currentSplit, setCurrentSplit] = useState(0);
   const arrowsPerEnd = props.arrowsPerEnd;
   const splits = props.splits;
   const ends = props.ends;
 
   const handleChange = (event, rowIndex, columnIndex) => {
-    const updatedData = data[0].map((row, rIndex) => {
+    const updatedData = data[currentSplit].map((row, rIndex) => {
       if (rIndex === rowIndex) {
         return row.map((column, cIndex) => {
           if (cIndex === columnIndex) {
@@ -59,28 +46,47 @@ function ScoringChart(props) {
     // keeps end splits from being overwritten
     setData(prevData => {
       const newArray = [...prevData];
-      newArray[0] = updatedData;
+      newArray[currentSplit] = updatedData;
       return newArray;
     })
-    console.log(data)
   };
+
+  const handleSwitch = (event) => {
+    if (event.target.value === '<') {
+      if (currentSplit === 0) {
+        setCurrentSplit(splits - 1);
+        return;
+      }
+      setCurrentSplit(currentSplit - 1);
+    } else {
+      if (currentSplit === splits - 1) {
+        setCurrentSplit(0);
+        return;
+      }
+      setCurrentSplit(currentSplit + 1);
+    }
+  }
 
   useEffect(() => {    
     let endsPerSplit = ends / splits;
-    // if endsPerSplit is not an integer, then use round down to get the number of ends per split, and extra end to the last split
-    //TODO: does not work how i want, fix it (10 ends, 3 splits, should be 3, 3, 4 but is 4, 4, 4)
+
     if (endsPerSplit % 1 !== 0) {
       endsPerSplit = Math.floor(endsPerSplit);
-      const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit + 1).fill(Array.from(Array(arrowsPerEnd), () => '')));
+      const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
+      setupArray[splits - 1].push(Array.from(Array(arrowsPerEnd), () => ''));
       setData(setupArray);
       return;
     }
-    // if endsPerSplit is an integer, then use that number of ends per split
+    
     const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
     setData(setupArray);
   }, [arrowsPerEnd, ends, splits]);
 
   return (
+    <>
+    {splits > 1 ? <h2>Split {currentSplit + 1}</h2> : null}
+    <div className='Chart-Container'>
+    {splits > 1 ? <Button class="Switch-Chart" type="switch" value="<" onClick={handleSwitch} >{"<"}</Button> : null}
     <div className='Scoring-Chart'>
       <table>
         <thead>
@@ -94,7 +100,7 @@ function ScoringChart(props) {
           </tr>
         </thead>
         <tbody>
-          {data[0].map((row, rowIndex) => (
+          {data[currentSplit].map((row, rowIndex) => (
             <tr key={rowIndex}>
               <td>{rowIndex + 1}</td>
               {row.map((column, columnIndex) => (
@@ -107,18 +113,16 @@ function ScoringChart(props) {
               </td>
               ))}
               <td>{
-                data[0][rowIndex][data[0][rowIndex].length - 1] === '' ? '0' :
-                data[0][rowIndex].reduce((a, b) => {
+                data[currentSplit][rowIndex].some(value => value === '') ? '0' :
+                data[currentSplit][rowIndex].reduce((a, b) => {
                   if (b === 'm' || b === 'M' || b === '') return parseInt(a, 10) + 0;
                   if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
                   return parseInt(a, 10) + parseInt(b, 10);
                 }, 0)
                 }</td>
               <td>{
-                //TODO: if any of the values in the row are empty, the running total should be empty
-                //!!!: value is NaN if last value is not filled last
-                data[0][rowIndex][data[0][rowIndex].length - 1] === '' ? '0' :
-                data[0].slice(0, rowIndex + 1).reduce((a, b) => {
+                data[currentSplit][rowIndex].some(value => value === '') ? '0' :
+                data[currentSplit].slice(0, rowIndex + 1).reduce((a, b) => {
                   return a + b.reduce((c, d) => {
                     if (d === 'm' || d === 'M') return parseInt(c, 10) + 0;
                     if (d === 'x' || d === 'X') return parseInt(c, 10) + 10;
@@ -131,6 +135,9 @@ function ScoringChart(props) {
         </tbody>
       </table>
     </div>
+    {splits > 1 ? <Button class="Switch-Chart" type="switch" value=">" onClick={handleSwitch} >{">"}</Button> : null}
+    </div>
+    </>
   );
 }
 

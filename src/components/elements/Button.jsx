@@ -10,7 +10,6 @@ const Button = (props) => {
       onClick={handleClick}
       className={props.class}
       type={props.type}
-      disabled={props.disabled}
       value={props.value}
     > 
       {props.children}

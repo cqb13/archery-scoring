@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "../css/Score.css";
 import SetupMenu from "../components/pageComponents/SetupMenu";
 import ScoringPage from "../components/pageComponents/ScoringPage";
 

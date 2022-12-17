@@ -1,5 +1,4 @@
 import React from "react";
-import "../../css/components/RadioButton.css";
 
 const RadioButton = (props) => {
   const hangleChange = (event) => {
