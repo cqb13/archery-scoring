@@ -1,0 +1,40 @@
+.Final-Score-Stats {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+}
+
+.Final-Score-Stats {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.Final-Score-Stats table {
+  border-collapse: collapse;
+  background-color: var(--light-background);
+  border-radius: var(--border-radius);
+  width: 40%;
+}
+
+.Final-Score-Stats table th {
+  padding: 15px;
+  text-align: center;
+}
+
+.Final-Score-Stats table td {
+  padding: 15px;
+  text-align: center;
+}
+
+.Button-Container {
+    margin: 10px;
+  width: 100%;
+}
+
+.Final-Button {
+  width: 30%;
+}

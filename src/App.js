@@ -6,6 +6,7 @@ import "./css/Global.css";
 import "./css/Score.css";
 import "./css/SetupMenu.css";
 import "./css/ScoringChart.css";
+import "./css/FinalScoreStats.css";
 import "./css/components/Slider.css";
 import "./css/components/Button.css";
 import "./css/components/RadioButton.css";

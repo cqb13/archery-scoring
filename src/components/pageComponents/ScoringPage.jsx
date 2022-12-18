@@ -21,8 +21,8 @@ const ScoringPage = (props) => {
   const [score, setScore] = useState();
   const [done, setDone] = useState(false);
 
-  const handleScore = (data) => {
-    setScore(data);
+  const handleScore = (finalScore) => {
+    setScore(finalScore);
     setDone(true);
   };
 

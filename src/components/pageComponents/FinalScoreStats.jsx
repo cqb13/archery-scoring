@@ -1,43 +1,111 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import Button from "../elements/Button";
 
 const FinalScoreStats = (props) => {
   const score = props.score;
-  const [tenCount, setTenCount] = useState(0);
-  const [nineCount, setNineCount] = useState(0);
-  const [xCount, setXCount] = useState(0);
-  const [mCount, setMCount] = useState(0);
+  const [scoreStats, setScoreStats] = useState([[]]);
 
   useEffect(() => {
-    //TODO: in the future, use an array to store values, inorder to easily account for end splitss
-    const countGiven = (value) => {
-      let count = 0;
-
-      for (let i = 0; i < score.length; i++) {
-        for (let j = 0; j < score[i].length; j++) {
-          for (let k = 0; k < score[i][j].length; k++) {
-            if (score[i][j][k] === value) {
-              count++;
-            }
+    const stats = score.map((split) => {
+      const splitStats = [0, 0, 0, 0, 0];
+      split.forEach((end) => {
+        end.forEach((arrow) => {
+          switch (arrow) {
+            case "10":
+              splitStats[0]++;
+              splitStats[4] += 10;
+              break;
+            case "9":
+              splitStats[1]++;
+              splitStats[4] += 9;
+              break;
+            case "8":
+              splitStats[4] += 8;
+              break;
+            case "7":
+              splitStats[4] += 7;
+              break;
+            case "6":
+              splitStats[4] += 6;
+              break;
+            case "5":
+              splitStats[4] += 5;
+              break;
+            case "4":
+              splitStats[4] += 4;
+              break;
+            case "3":
+              splitStats[4] += 3;
+              break;
+            case "2":
+              splitStats[4] += 2;
+              break;
+            case "1":
+              splitStats[4] += 1;
+              break;
+            case "x":
+            case "X":
+              splitStats[2]++;
+              splitStats[4] += 10;
+              break;
+            case "m":
+            case "M":
+            case "0":
+              splitStats[3]++;
+              splitStats[4] += 0;
+              break;
+            default:
+              break;
           }
-        }
-      }
-      return count;
-    };
-
-    setTenCount(countGiven("10"));
-    setNineCount(countGiven("9"));
-    setXCount(countGiven("x") + countGiven("X"));
-    setMCount(countGiven("m") + countGiven("M"));
+        });
+      });
+      return splitStats;
+    });
+    setScoreStats(stats);
+    console.log(stats);
   }, [score]);
 
   return (
-    <ul>
-      <li>Tens: {tenCount}</li>
-      <li>Nines: {nineCount}</li>
-      <li>Xs: {xCount}</li>
-      <li>Misses: {mCount}</li>
-    </ul>
+    <div className="Final-Score-Stats">
+      <table>
+        <thead>
+          <th>Split</th>
+          <th>10's</th>
+          <th>9's</th>
+          <th>X's</th>
+          <th>M's</th>
+          <th>Score</th>
+        </thead>
+
+        <tbody>
+          {scoreStats.map((split, splitIndex) => (
+            <tr key={splitIndex}>
+              <td>{splitIndex + 1}</td>
+              {split.map((stat, statIndex) => (
+                <td key={statIndex}>{stat}</td>
+              ))}
+            </tr>
+          ))}
+          <tr>
+            <td>Total</td>
+            {scoreStats
+              .reduce((a, b) => {
+                return a.map((c, i) => {
+                  return c + b[i];
+                });
+              })
+              .map((stat, statIndex) => (
+                <td key={statIndex}>{stat}</td>
+              ))}
+          </tr>
+        </tbody>
+      </table>
+      <div className="Button-Container">
+        <Button class="Final-Button" >Finish</Button>
+        <Button class="Final-Button">Save</Button>
+      </div>
+    </div>
   );
 };
 
