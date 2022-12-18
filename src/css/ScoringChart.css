@@ -8,6 +8,14 @@
   height: 90%;
 }
 
+.Scoring-Chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
 .Switch-Chart {
   padding-top: 7%;
   padding-bottom: 7%;
@@ -15,10 +23,7 @@
   font-size: 50px;
 }
 
-.Scoring-Chart {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  width: 100%;
+.Done {
+  width: 30%;
+  margin: 10px;
 }

@@ -1,25 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Button from "../elements/Button";
 
-/*
-  add a done button @ the bottom of the chart,
-    when clicked, it will sort the rows from highest to lowest
-    
-    then it will create another chart with the number of 10s 9s
-      if there are x's then it will create a seperate column for them
-
-      if there are end splits 
-        then each end split will have a seperate row in the chart, with totals being added later
-
-  this component should be rendered in the ScoringPage component
-*/
-
 function ScoringChart(props) {
   const [data, setData] = useState([[]]);
   const [currentSplit, setCurrentSplit] = useState(0);
   const arrowsPerEnd = props.arrowsPerEnd;
+  const returnData = props.returnData;
   const splits = props.splits;
   const ends = props.ends;
+  const done = props.done;
 
   const handleChange = (event, rowIndex, columnIndex) => {
     const updatedData = data[currentSplit].map((row, rIndex) => {
@@ -65,6 +54,10 @@ function ScoringChart(props) {
       }
       setCurrentSplit(currentSplit + 1);
     }
+  }
+
+  const handleDone = () => {
+    returnData(data)
   }
 
   useEffect(() => {    
@@ -115,7 +108,7 @@ function ScoringChart(props) {
               <td>{
                 data[currentSplit][rowIndex].some(value => value === '') ? '0' :
                 data[currentSplit][rowIndex].reduce((a, b) => {
-                  if (b === 'm' || b === 'M' || b === '') return parseInt(a, 10) + 0;
+                  if (b === 'm' || b === 'M') return parseInt(a, 10) + 0;
                   if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
                   return parseInt(a, 10) + parseInt(b, 10);
                 }, 0)
@@ -137,6 +130,7 @@ function ScoringChart(props) {
     </div>
     {splits > 1 ? <Button class="Switch-Chart" type="switch" value=">" onClick={handleSwitch} >{">"}</Button> : null}
     </div>
+    {!done ? <Button class="Done" type="button" value="Done" onClick={handleDone} >Done</Button> : null}
     </>
   );
 }

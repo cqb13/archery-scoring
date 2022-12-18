@@ -1,18 +1,25 @@
-const Home = () => {
+import { useState } from "react";
+import SetupMenu from "../components/pageComponents/SetupMenu";
+import ScoringPage from "../components/pageComponents/ScoringPage";
+
+const Score = () => {
+  const [state, setState] = useState();
+  const [settingUp, setSettingUp] = useState(true);
+
+  const handleStateChange = (newState) => {
+    setState(newState);
+    setSettingUp(false);
+  };
+
   return (
-    <div>
-      <header>
-        <h1>Archery Scoring</h1>
-      </header>
-      <hr />
-      <main>
-        <div>
-          <h2>How To Score?</h2>
-          <p></p>
-        </div>
-      </main>
-    </div>
+    <main className="Score">
+      {settingUp ? (
+        <SetupMenu onStateChange={handleStateChange} />
+      ) : (
+        <ScoringPage data={state}/>
+      )}
+    </main>
   );
 };
 
-export default Home;
+export default Score;

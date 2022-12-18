@@ -11,25 +11,24 @@ import "./css/components/Button.css";
 import "./css/components/RadioButton.css";
 import "./css/components/TextArea.css";
 //Pages
-import Home from "./pages";
-import Score from "./pages/Score";
+import Score from "./pages";
+import About from "./pages/About";
 
-//TODO: make score the main page, switch home to about
 function App() {
   return (
     <Router>
       <nav>
         <Link to="/" className="Switch-Page">
-          Home
-        </Link>
-        <Link to="/score" className="Switch-Page">
           Score
+        </Link>
+        <Link to="/about" className="Switch-Page">
+          About
         </Link>
       </nav>
       <Routes>
-        <Route exact path="/" element={<Home />} />
-        <Route path="/score" element={<Score />} />
-        <Route path="*" element={<Home />} />
+        <Route exact path="/" element={<Score />} />
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<About />} />
       </Routes>
     </Router>
   );
