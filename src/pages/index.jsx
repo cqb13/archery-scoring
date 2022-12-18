@@ -11,12 +11,16 @@ const Score = () => {
     setSettingUp(false);
   };
 
+  const reset = () => {
+    setSettingUp(true);
+  };
+
   return (
     <main className="Score">
       {settingUp ? (
         <SetupMenu onStateChange={handleStateChange} />
       ) : (
-        <ScoringPage data={state}/>
+        <ScoringPage data={state} reset={reset}/>
       )}
     </main>
   );

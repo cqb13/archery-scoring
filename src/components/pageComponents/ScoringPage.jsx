@@ -20,10 +20,16 @@ const ScoringPage = (props) => {
   const [data] = useState(props.data);
   const [score, setScore] = useState();
   const [done, setDone] = useState(false);
+  const setUp = props.reset;
 
   const handleScore = (finalScore) => {
     setScore(finalScore);
     setDone(true);
+  };
+
+  const reset = () => {
+    setDone(false);
+    setUp();
   };
 
   return (
@@ -37,7 +43,7 @@ const ScoringPage = (props) => {
         done={done}
         returnData={handleScore}
       />
-      {done ? <FinalScoreStats score={score} /> : null}
+      {done ? <FinalScoreStats score={score} reset={reset}/> : null}
     </div>
   );
 }
