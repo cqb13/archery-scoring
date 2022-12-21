@@ -56,6 +56,12 @@ function ScoringChart(props) {
     }
   }
 
+  const addScores = (a, b) => {
+    if (b === 'm' || b === 'M') return parseInt(a, 10) + 0;
+    if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
+    return parseInt(a, 10) + parseInt(b, 10);
+  }
+
   const handleDone = () => {
     returnData(data)
   }
@@ -108,18 +114,14 @@ function ScoringChart(props) {
               <td>{
                 data[currentSplit][rowIndex].some(value => value === '') ? '0' :
                 data[currentSplit][rowIndex].reduce((a, b) => {
-                  if (b === 'm' || b === 'M') return parseInt(a, 10) + 0;
-                  if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
-                  return parseInt(a, 10) + parseInt(b, 10);
+                  return addScores(a, b)
                 }, 0)
                 }</td>
               <td>{
                 data[currentSplit][rowIndex].some(value => value === '') ? '0' :
                 data[currentSplit].slice(0, rowIndex + 1).reduce((a, b) => {
                   return a + b.reduce((c, d) => {
-                    if (d === 'm' || d === 'M') return parseInt(c, 10) + 0;
-                    if (d === 'x' || d === 'X') return parseInt(c, 10) + 10;
-                    return parseInt(c, 10) + parseInt(d, 10);
+                    return addScores(c, d);
                   }, 0);
                 }, 0)
               }</td>

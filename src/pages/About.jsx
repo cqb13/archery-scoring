@@ -8,7 +8,6 @@ const About = () => {
       <main>
         <div>
           <h2>How To Score?</h2>
-          <p></p>
         </div>
       </main>
     </div>

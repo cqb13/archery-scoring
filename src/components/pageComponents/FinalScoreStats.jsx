@@ -5,6 +5,7 @@ import Button from "../elements/Button";
 const FinalScoreStats = (props) => {
   const score = props.score;
   const reset = props.reset;
+  const save = props.save;
   const [scoreStats, setScoreStats] = useState([[]]);
 
   useEffect(() => {
@@ -67,10 +68,6 @@ const FinalScoreStats = (props) => {
     console.log(stats);
   }, [score]);
 
-  const handleFinish = () => {
-    reset();
-  }
-
   return (
     <div className="Final-Score-Stats">
       <table>
@@ -107,8 +104,8 @@ const FinalScoreStats = (props) => {
         </tbody>
       </table>
       <div className="Button-Container">
-        <Button class="Final-Button" onClick={handleFinish}>Finish</Button>
-        <Button class="Final-Button">Save</Button>
+        <Button class="Final-Button" onClick={reset}>Finish</Button>
+        <Button class="Final-Button" onClick={save}>Save</Button>
       </div>
     </div>
   );
