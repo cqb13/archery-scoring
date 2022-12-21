@@ -65,7 +65,6 @@ const FinalScoreStats = (props) => {
       return splitStats;
     });
     setScoreStats(stats);
-    console.log(stats);
   }, [score]);
 
   return (

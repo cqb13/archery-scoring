@@ -2,10 +2,10 @@ import React from "react";
 import { useState } from "react";
 import ScoringChart from "./ScoringChart";
 import FinalScoreStats from "./FinalScoreStats";
-import Button from "../elements/Button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import googleSignIn from "../../utils/googleSignIn";
+import SaveToDB from "../../utils/SaveScore";
 
 const ScoringPage = (props) => {
   const [user] = useAuthState(auth);
@@ -26,7 +26,7 @@ const ScoringPage = (props) => {
 
   const save = () => {
     if (user) {
-      // Save to database
+      SaveToDB(user, score, data);
       reset();
     } else {
       googleSignIn();
