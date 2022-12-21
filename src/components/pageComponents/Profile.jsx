@@ -2,6 +2,7 @@ import React from "react";
 
 const Profile = (props) => {
   const name = props.name;
+  const highScore = props.highScore;
 
   //TODO: Later create component for stats and pass in props
   return (
@@ -13,7 +14,7 @@ const Profile = (props) => {
         <h2>Stats</h2>
         <div className="Stats-Container">
           <div className="Stat">
-            <h2>High Score: </h2>
+            <h2>High Score: {highScore}</h2>
           </div>
           <div className="Stat">
             <h2>Average Score: </h2>

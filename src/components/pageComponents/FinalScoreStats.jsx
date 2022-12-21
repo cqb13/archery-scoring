@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Button from "../elements/Button";
 
 const FinalScoreStats = (props) => {
+  const [totalScore, setTotalScore] = useState(0);
   const score = props.score;
   const reset = props.reset;
   const save = props.save;
@@ -64,8 +65,16 @@ const FinalScoreStats = (props) => {
       });
       return splitStats;
     });
+    const total = stats.reduce((a, b) => {
+      return a + b[4];
+    }, 0);
+    setTotalScore(total);
     setScoreStats(stats);
   }, [score]);
+
+  const handleSave = () => {
+    save(totalScore);
+  };
 
   return (
     <div className="Final-Score-Stats">
@@ -103,8 +112,12 @@ const FinalScoreStats = (props) => {
         </tbody>
       </table>
       <div className="Button-Container">
-        <Button class="Final-Button" onClick={reset}>Finish</Button>
-        <Button class="Final-Button" onClick={save}>Save</Button>
+        <Button class="Final-Button" onClick={reset}>
+          Finish
+        </Button>
+        <Button class="Final-Button" onClick={handleSave}>
+          Save
+        </Button>
       </div>
     </div>
   );

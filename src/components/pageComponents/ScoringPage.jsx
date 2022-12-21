@@ -24,9 +24,9 @@ const ScoringPage = (props) => {
     setUp();
   };
 
-  const save = () => {
+  const save = (totalScore) => {
     if (user) {
-      SaveToDB(user, score, data);
+      SaveToDB(user, score, data, totalScore);
       reset();
     } else {
       googleSignIn();

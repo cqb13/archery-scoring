@@ -14,7 +14,10 @@ const googleSignIn = async () => {
     await setDoc(userRef, {
       displayName: user.displayName,
       photoURL: user.photoURL,
-      email: user.email
+      email: user.email,
+      highScore: 0,
+      lowScore: 0,
+      allScores: [],
     });
   }
 };
