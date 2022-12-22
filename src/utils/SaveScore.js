@@ -16,6 +16,8 @@ const SaveToDB = async (user, score, data, totalScore) => {
   const lowScore = usersDoc.data().lowScore;
   const allScores = usersDoc.data().allScores;
 
+  console.log("allScores", allScores);
+
   if (allScores) {
     let newAllScores = [...allScores, totalScore];
     await setDoc(userDoc, {
