@@ -13,6 +13,9 @@ const NavBar = () => {
         <Link to="/" className="Switch-Page">
           Score
         </Link>
+        <Link to="/history" className="Switch-Page">
+          History
+        </Link>
         <Link to="/about" className="Switch-Page">
           About
         </Link>

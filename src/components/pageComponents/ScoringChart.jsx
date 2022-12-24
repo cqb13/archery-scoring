@@ -6,11 +6,14 @@ function ScoringChart(props) {
   const [currentSplit, setCurrentSplit] = useState(0);
   const arrowsPerEnd = props.arrowsPerEnd;
   const returnData = props.returnData;
+  const history = props.history;
   const splits = props.splits;
+  const score = props.score;
   const ends = props.ends;
   const done = props.done;
 
   const handleChange = (event, rowIndex, columnIndex) => {
+    if (history) return;
     const updatedData = data[currentSplit].map((row, rIndex) => {
       if (rIndex === rowIndex) {
         return row.map((column, cIndex) => {
@@ -66,19 +69,24 @@ function ScoringChart(props) {
     returnData(data)
   }
 
-  useEffect(() => {    
-    let endsPerSplit = ends / splits;
+  useEffect(() => {  
+    if (history) {
+      setData(score)
+    } else {
+      let endsPerSplit = ends / splits;
 
-    if (endsPerSplit % 1 !== 0) {
-      endsPerSplit = Math.floor(endsPerSplit);
+      if (endsPerSplit % 1 !== 0) {
+        endsPerSplit = Math.floor(endsPerSplit);
+        const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
+        setupArray[splits - 1].push(Array.from(Array(arrowsPerEnd), () => ''));
+        setData(setupArray);
+        return;
+      }
+      
       const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
-      setupArray[splits - 1].push(Array.from(Array(arrowsPerEnd), () => ''));
       setData(setupArray);
-      return;
     }
-    
-    const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
-    setData(setupArray);
+
   }, [arrowsPerEnd, ends, splits]);
 
   return (
@@ -132,7 +140,7 @@ function ScoringChart(props) {
     </div>
     {splits > 1 ? <Button class="Switch-Chart" type="switch" value=">" onClick={handleSwitch} >{">"}</Button> : null}
     </div>
-    {!done ? <Button class="Done" type="button" value="Done" onClick={handleDone} >Done</Button> : null}
+    {!done && !history ? <Button class="Done" type="button" value="Done" onClick={handleDone} >Done</Button> : null}
     </>
   );
 }

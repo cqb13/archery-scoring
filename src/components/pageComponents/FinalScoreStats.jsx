@@ -4,6 +4,7 @@ import Button from "../elements/Button";
 
 const FinalScoreStats = (props) => {
   const [totalScore, setTotalScore] = useState(0);
+  const history = props.history;
   const score = props.score;
   const reset = props.reset;
   const save = props.save;
@@ -111,14 +112,16 @@ const FinalScoreStats = (props) => {
           </tr>
         </tbody>
       </table>
-      <div className="Button-Container">
-        <Button class="Final-Button" onClick={reset}>
-          Finish
-        </Button>
-        <Button class="Final-Button" onClick={handleSave}>
-          Save
-        </Button>
-      </div>
+      {!history ? (
+        <div className="Button-Container">
+          <Button class="Final-Button" onClick={reset}>
+            Finish
+          </Button>
+          <Button class="Final-Button" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      ) : null}
     </div>
   );
 };
