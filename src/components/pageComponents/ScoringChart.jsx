@@ -91,7 +91,7 @@ function ScoringChart(props) {
 
   return (
     <>
-    {splits > 1 ? <h2>Split {currentSplit + 1}</h2> : null}
+    {splits > 1 ? <h2>Split {currentSplit + 1}/{splits}</h2> : null}
     <div className='Chart-Container'>
     {splits > 1 ? <Button class="Switch-Chart" type="switch" value="<" onClick={handleSwitch} >{"<"}</Button> : null}
     <div className='Scoring-Chart'>

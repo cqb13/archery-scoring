@@ -26,8 +26,13 @@ const Account = () => {
       setHighScore(res.highScore);
       setLowScore(res.lowScore);
       setGamesPlayed(res.allScores.length);
-      setAverageScore(res.allScores.reduce((a, b) => a + b, 0) / res.allScores.length);
+      setAverageScore(getAverageScore(res.allScores));
     });
+  }
+
+  const getAverageScore = (allScores) => {
+    let average = allScores.reduce((a, b) => a + b, 0) / allScores.length
+    return Math.round((average + Number.EPSILON) * 100) / 100
   }
 
   return (

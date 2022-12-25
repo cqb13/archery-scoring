@@ -90,14 +90,17 @@ const FinalScoreStats = (props) => {
         </thead>
 
         <tbody>
-          {scoreStats.map((split, splitIndex) => (
-            <tr key={splitIndex}>
-              <td>{splitIndex + 1}</td>
-              {split.map((stat, statIndex) => (
-                <td key={statIndex}>{stat}</td>
-              ))}
-            </tr>
-          ))}
+          {scoreStats.length > 1 ? (
+            scoreStats.map((split, splitIndex) => (
+              <tr key={splitIndex}>
+                <td>{splitIndex + 1}</td>
+
+                {split.map((stat, statIndex) => (
+                  <td key={statIndex}>{stat}</td>
+                ))}
+              </tr>
+            ))
+          ) : null }
           <tr>
             <td>Total</td>
             {scoreStats

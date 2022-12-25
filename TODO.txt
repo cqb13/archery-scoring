@@ -1,0 +1,14 @@
+History:
+    - display notes for each session
+
+Save:
+    - add a custom date
+    - add a note for the session
+
+About:
+    - how to score  
+        - different scoring systems
+
+Scoring Chart:
+    - when done, sort the values in each row from highest to lowest
+    
