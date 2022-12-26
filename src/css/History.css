@@ -16,3 +16,45 @@
 .Game-Count {
   margin: 5px;
 }
+
+.Custom-Dropdown-Menu {
+  position: relative;
+  display: inline-block;
+}
+
+.Custom-Dropdown-Menu button:active{
+  scale: 1;
+}
+
+.Custom-Dropdown-Menu button {
+  padding: 8px 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.Custom-Dropdown-Menu ul {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  background-color: var(--main-background-color);
+  border: var(--border);
+  border-radius: var(--border-radius);
+}
+
+.Custom-Dropdown-Menu ul li {
+  display: block;
+  padding: 8px 10px;
+  font-size: 18px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.Custom-Dropdown-Menu ul li:hover {
+  background-color: var(--light-background);
+  border-radius: var(--border-radius);
+}

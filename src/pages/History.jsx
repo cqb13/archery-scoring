@@ -8,6 +8,7 @@ import FinalScoreStats from "../components/pageComponents/FinalScoreStats";
 import ScoringChart from "../components/pageComponents/ScoringChart";
 import DropdownMenu from "../components/elements/DropdownMenu";
 
+//!!!: when switching between charts of the same type, values of main chart are not updated
 const History = () => {
   const [user] = useAuthState(auth);
   const [score, setScore] = useState();
@@ -17,8 +18,9 @@ const History = () => {
   const [distanceUnit, setDistanceUnit] = useState();
   const [location, setLocation] = useState();
   const [bow, setBow] = useState();
-  const [date, setDate] = useState();
+  const [setDate] = useState();
   const [dateMap] = useState(new Map());
+  const [currentGame, setCurrentGame] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,8 +32,8 @@ const History = () => {
           const date = doc.data().createdAt.toDate().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric' });
           dateMap.set(date, doc.id);
         });
-        //TODO: use function to get latest by date
         getScoreDoc(dateMap.values().next().value);
+        setCurrentGame(dateMap.size);
       }
     };
     fetchData();
@@ -55,6 +57,27 @@ const History = () => {
     getScoreDoc(dateMap.get(date));
   }
 
+  const switchGame = (e) => {
+    let reverseDates = Array.from(dateMap.keys()).slice().reverse();
+    if (e.target.value === '<') {
+      if (currentGame === 1) {
+        setCurrentGame(dateMap.size);
+        changeGame(reverseDates[reverseDates.length - 1]);
+      } else {
+        setCurrentGame(currentGame - 1);
+        changeGame(reverseDates[currentGame - 2]);
+      }
+    } else {
+      if (currentGame === dateMap.size) {
+        setCurrentGame(1);
+        changeGame(reverseDates[0]);
+      } else {
+        setCurrentGame(currentGame + 1);
+        changeGame(reverseDates[currentGame]);
+      }
+    }
+  }
+
   return (
     <>
       <h1>History</h1>
@@ -62,13 +85,11 @@ const History = () => {
       {user && score ? (
         <div>
           <div className="Info-Bar">
-            {/*make a dropdown to pick a specifc date from list of all dates*/}
-            <DropdownMenu options={Array.from(dateMap.keys())} updateDate={changeGame}/>
+          <DropdownMenu options={Array.from(dateMap.keys())} updateDate={setDate} setGame={setCurrentGame} changeGame={changeGame} currentGame={currentGame}/>
             <div className="Switch-Game-Container">
-              <Button class="Switch-Game" type="switch" value="<" >{"<"}</Button>
-              {/*create an component (same style as bellow), replace the current chart with text input for chart num*/}
-              <h2 className="Game-Count">Game 1/{dateMap.size}</h2>
-              <Button class="Switch-Game" type="switch" value=">" >{">"}</Button>
+              <Button class="Switch-Game" type="switch" value="<" onClick={switchGame}>{"<"}</Button>
+              <h2 className="Game-Count">Game {currentGame}/{dateMap.size}</h2>
+              <Button class="Switch-Game" type="switch" value=">" onClick={switchGame}>{">"}</Button>
             </div>
             <h2>{location}</h2>
             <h2>{distance}{distanceUnit}</h2>
