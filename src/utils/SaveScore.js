@@ -1,9 +1,8 @@
 import { collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { db } from "../firebase";
 
-const SaveToDB = async (user, score, data, totalScore) => {
+const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
   const { location, distance, distanceUnit, ends, arrowsPerEnd, sessions, bow } = data;
-
   const encodedScore = JSON.stringify(score);
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection, user.uid);
@@ -46,16 +45,18 @@ const SaveToDB = async (user, score, data, totalScore) => {
   const scoreCollection = collection(userDoc, "scores");
 
   await addDoc(scoreCollection, {
-    location: location,
+    name: name || "",
+    note: note || "",
+    location: location || "Unknown",
     distance: distance,
-    distanceUnit: distanceUnit,
+    distanceUnit: distanceUnit || "Unknown", 
     ends: ends,
     arrowsPerEnd: arrowsPerEnd,
     sessions: sessions,
-    bow: bow,
+    bow: bow || "Unknown",
     score: encodedScore,
     totalScore: totalScore,
-    createdAt: serverTimestamp()
+    date: createdAt
   });
 };
 

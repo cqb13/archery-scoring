@@ -11,7 +11,7 @@ const Button = (props) => {
       className={props.class}
       type={props.type}
       value={props.value}
-    > 
+    >
       {props.children}
     </button>
   );

@@ -20,9 +20,14 @@
 .Custom-Dropdown-Menu {
   position: relative;
   display: inline-block;
+  width: 25%;
 }
 
-.Custom-Dropdown-Menu button:active{
+.Custom-Dropdown-Menu-Toggle {
+  width: 100%;
+}
+
+.Custom-Dropdown-Menu button:active {
   scale: 1;
 }
 

@@ -18,7 +18,7 @@ const Account = () => {
     const users = collection(db, "users");
     const userRef = doc(users, user.uid);
     const docSnap = await getDoc(userRef);
-    return docSnap.data()
+    return docSnap.data();
   };
 
   if (user) {
@@ -31,12 +31,12 @@ const Account = () => {
   }
 
   const getAverageScore = (allScores) => {
-    let average = allScores.reduce((a, b) => a + b, 0) / allScores.length
-    return Math.round((average + Number.EPSILON) * 100) / 100
-  }
+    let average = allScores.reduce((a, b) => a + b, 0) / allScores.length;
+    return Math.round((average + Number.EPSILON) * 100) / 100;
+  };
 
   return (
-    <div className="Account">
+    <div className='Account'>
       <h1>Account</h1>
       <hr />
       {user ? (
@@ -49,12 +49,12 @@ const Account = () => {
             gamesPlayed={gamesPlayed}
             averageScore={averageScore}
           />
-          <Button class="Account-Button" onClick={googleSignOut}>
+          <Button class='Account-Button' onClick={googleSignOut}>
             Sign Out
           </Button>
         </div>
       ) : (
-        <Button class="Account-Button" onClick={googleSignIn}>
+        <Button class='Account-Button' onClick={googleSignIn}>
           Sign In
         </Button>
       )}

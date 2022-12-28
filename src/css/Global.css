@@ -80,3 +80,39 @@ input[type="text"] {
 input[type="text"]:focus {
   border: var(--border);
 }
+
+/*style date input*/
+input[type="date"] {
+  font-family: inherit;
+  text-align: center;
+  all: unset;
+  color: var(--main-text-color);
+  width: 70%;
+  background-color: var(--light-background);
+  transition: var(--transition-time);
+  padding: 5px;
+  border-radius: var(--border-radius);
+  border: 3px solid rgb(73, 107, 190, 0);
+}
+
+input[type="date"]:focus {
+  border: var(--border);
+}
+
+/*style time input*/
+input[type="time"] {
+  font-family: inherit;
+  text-align: center;
+  all: unset;
+  color: var(--main-text-color);
+  width: 70%;
+  background-color: var(--light-background);
+  transition: var(--transition-time);
+  padding: 5px;
+  border-radius: var(--border-radius);
+  border: 3px solid rgb(73, 107, 190, 0);
+}
+
+input[type="time"]:focus {
+  border: var(--border);
+}

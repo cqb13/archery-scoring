@@ -17,7 +17,7 @@ const googleSignIn = async () => {
       email: user.email,
       highScore: 0,
       lowScore: 0,
-      allScores: [],
+      allScores: []
     });
   }
 };

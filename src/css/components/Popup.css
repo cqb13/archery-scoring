@@ -1,0 +1,47 @@
+.Popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: 62%;
+  background-color: var(--main-background-color);
+  z-index: 1000;
+  border-radius: 5px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.Note {
+  text-align: left;
+  font-size: 30px;
+  height: 55%;
+  background-color: var(--light-background);
+  border-radius: var(--border-radius);
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.Save-Details-Item {
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.Popup p {
+  margin: 1px;
+}
+
+.Popup-Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}

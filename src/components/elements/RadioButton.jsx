@@ -1,18 +1,18 @@
 import React from "react";
 
 const RadioButton = (props) => {
-  const hangleChange = (event) => {
+  const handleChange = (event) => {
     props.onChange(event);
   };
 
   return (
-    <div className="RadioButton">
+    <div className='RadioButton'>
       <input
-        type="radio"
+        type='radio'
         className={props.class}
         name={props.name}
         value={props.value}
-        onChange={hangleChange}
+        onChange={handleChange}
       />
       <label>{props.value}</label>
     </div>

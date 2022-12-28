@@ -9,16 +9,21 @@ const Slider = (props) => {
   };
 
   return (
-    <label className="Slider">
-    <input
-      type="range"
-      className={props.class}
-      min={props.min}
-      max={props.max}
-      value={value}
-      onChange={handleChange}
-    />
-    <input type="text" className="Slider-Value" value={value} onChange={handleChange}/>
+    <label className='Slider'>
+      <input
+        type='range'
+        className={props.class}
+        min={props.min}
+        max={props.max}
+        value={value}
+        onChange={handleChange}
+      />
+      <input
+        type='text'
+        className='Slider-Value'
+        value={value}
+        onChange={handleChange}
+      />
     </label>
   );
 };

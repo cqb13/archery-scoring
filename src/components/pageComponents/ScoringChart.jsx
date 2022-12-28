@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import Button from "../elements/Button";
 
 function ScoringChart(props) {
@@ -19,15 +19,15 @@ function ScoringChart(props) {
         return row.map((column, cIndex) => {
           if (cIndex === columnIndex) {
             switch (event.target.value) {
-              case 'm':
-              case 'M':
-              case 'x':
-              case 'X':
+              case "m":
+              case "M":
+              case "x":
+              case "X":
                 return event.target.value;
               default:
                 break;
             }
-            return /^\d+$/.test(event.target.value) ? event.target.value : '';
+            return /^\d+$/.test(event.target.value) ? event.target.value : "";
           }
           return column;
         });
@@ -36,15 +36,15 @@ function ScoringChart(props) {
     });
 
     // keeps end splits from being overwritten
-    setData(prevData => {
+    setData((prevData) => {
       const newArray = [...prevData];
       newArray[currentSplit] = updatedData;
       return newArray;
-    })
+    });
   };
 
   const handleSwitch = (event) => {
-    if (event.target.value === '<') {
+    if (event.target.value === "<") {
       if (currentSplit === 0) {
         setCurrentSplit(splits - 1);
         return;
@@ -57,36 +57,41 @@ function ScoringChart(props) {
       }
       setCurrentSplit(currentSplit + 1);
     }
-  }
+  };
 
   const addScores = (a, b) => {
-    if (b === 'm' || b === 'M') return parseInt(a, 10) + 0;
-    if (b === 'x' || b === 'X') return parseInt(a, 10) + 10;
+    if (b === "m" || b === "M") return parseInt(a, 10) + 0;
+    if (b === "x" || b === "X") return parseInt(a, 10) + 10;
     return parseInt(a, 10) + parseInt(b, 10);
-  }
+  };
 
   const handleDone = () => {
-    returnData(data)
-  }
+    returnData(data);
+  };
 
-  useEffect(() => {  
+  useEffect(() => {
     if (history) {
-      setData(score)
+      setData(score);
     } else {
       let endsPerSplit = ends / splits;
 
       if (endsPerSplit % 1 !== 0) {
         endsPerSplit = Math.floor(endsPerSplit);
-        const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
-        setupArray[splits - 1].push(Array.from(Array(arrowsPerEnd), () => ''));
+        const setupArray = Array.from(Array(splits), () =>
+          new Array(endsPerSplit).fill(
+            Array.from(Array(arrowsPerEnd), () => "")
+          )
+        );
+        setupArray[splits - 1].push(Array.from(Array(arrowsPerEnd), () => ""));
         setData(setupArray);
         return;
       }
-      
-      const setupArray = Array.from(Array(splits), () => new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => '')));
+
+      const setupArray = Array.from(Array(splits), () =>
+        new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => ""))
+      );
       setData(setupArray);
     }
-
   }, [arrowsPerEnd, ends, splits]);
 
   return (
@@ -146,4 +151,3 @@ function ScoringChart(props) {
 }
 
 export default ScoringChart;
-           

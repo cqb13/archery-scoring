@@ -18,40 +18,44 @@ class SetupMenu extends React.Component {
   }
 
   handleLocationChange = (event) => {
-    this.setState({location: event.target.value});
+    this.setState({ location: event.target.value });
     event.target.className = "Location-Button Selected";
-    document.querySelector(".Location-Button[value='" + (event.target.value === "Indoor" ? "Outdoor" : "Indoor") + "']").className = "Location-Button";
-  }
+    document.querySelector(
+      ".Location-Button[value='" +
+        (event.target.value === "Indoor" ? "Outdoor" : "Indoor") +
+        "']"
+    ).className = "Location-Button";
+  };
 
   handleDistanceChange = (event) => {
-    this.setState({distance: parseInt(event.target.value)});
-  }
+    this.setState({ distance: parseInt(event.target.value) });
+  };
 
   handleDistanceUnitChange = (event) => {
-    this.setState({distanceUnit: event.target.value});
-  }
+    this.setState({ distanceUnit: event.target.value });
+  };
 
   handleEndsChange = (event) => {
-    this.setState({ends: parseInt(event.target.value)});
-  }
+    this.setState({ ends: parseInt(event.target.value) });
+  };
 
   handleArrowsPerEndChange = (event) => {
-    this.setState({arrowsPerEnd: parseInt(event.target.value)});
-  }
+    this.setState({ arrowsPerEnd: parseInt(event.target.value) });
+  };
 
   handleSessionsChange = (event) => {
-    this.setState({sessions: parseInt(event.target.value)});
-  }
+    this.setState({ sessions: parseInt(event.target.value) });
+  };
 
   handleBowChange = (event) => {
-    this.setState({bow: event.target.value});
-  }
+    this.setState({ bow: event.target.value });
+  };
 
   handleBegin = (newState) => {
     this.setState(newState, () => {
       this.props.onStateChange(this.state);
     });
-  }
+  };
 
   render() {
     return (
@@ -92,6 +96,5 @@ class SetupMenu extends React.Component {
     );
   }
 }
-
 
 export default SetupMenu;

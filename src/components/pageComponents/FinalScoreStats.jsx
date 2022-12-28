@@ -94,7 +94,6 @@ const FinalScoreStats = (props) => {
             scoreStats.map((split, splitIndex) => (
               <tr key={splitIndex}>
                 <td>{splitIndex + 1}</td>
-
                 {split.map((stat, statIndex) => (
                   <td key={statIndex}>{stat}</td>
                 ))}
@@ -103,26 +102,20 @@ const FinalScoreStats = (props) => {
           ) : null }
           <tr>
             <td>Total</td>
-            {scoreStats
-              .reduce((a, b) => {
-                return a.map((c, i) => {
-                  return c + b[i];
-                });
-              })
-              .map((stat, statIndex) => (
-                <td key={statIndex}>{stat}</td>
-              ))}
+            {scoreStats.reduce((a, b) => {
+              return a.map((c, i) => {
+                return c + b[i];
+              });
+            }).map((stat, statIndex) => (
+              <td key={statIndex}>{stat}</td>
+            ))}
           </tr>
         </tbody>
       </table>
       {!history ? (
         <div className="Button-Container">
-          <Button class="Final-Button" onClick={reset}>
-            Finish
-          </Button>
-          <Button class="Final-Button" onClick={handleSave}>
-            Save
-          </Button>
+          <Button class="Final-Button" onClick={reset}>Finish</Button>
+          <Button class="Final-Button" onClick={handleSave}>Save</Button>
         </div>
       ) : null}
     </div>

@@ -7,6 +7,7 @@ import "./css/History.css";
 import "./css/SetupMenu.css";
 import "./css/ScoringChart.css";
 import "./css/FinalScoreStats.css";
+import "./css/components/Popup.css";
 import "./css/components/NavBar.css";
 import "./css/components/Slider.css";
 import "./css/components/Button.css";
@@ -25,11 +26,11 @@ function App() {
     <Router>
       <NavBar />
       <Routes>
-        <Route exact path="/" element={<Score />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/account" element={<Account />} />
-        <Route path="*" element={<About />} />
+        <Route exact path='/' element={<Score />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/history' element={<History />} />
+        <Route path='/account' element={<Account />} />
+        <Route path='*' element={<About />} />
       </Routes>
     </Router>
   );

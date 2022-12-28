@@ -9,24 +9,24 @@ const NavBar = () => {
 
   return (
     <nav>
-      <div className="Links">
-        <Link to="/" className="Switch-Page">
+      <div className='Links'>
+        <Link to='/' className='Switch-Page'>
           Score
         </Link>
-        <Link to="/history" className="Switch-Page">
+        <Link to='/history' className='Switch-Page'>
           History
         </Link>
-        <Link to="/about" className="Switch-Page">
+        <Link to='/about' className='Switch-Page'>
           About
         </Link>
       </div>
-      <div className="User">
+      <div className='User'>
         {user ? (
-          <Link to="/account" className="Switch-Page">
+          <Link to='/account' className='Switch-Page'>
             {user.displayName}
           </Link>
         ) : (
-          <Button class="Switch-Page" onClick={googleSignIn}>
+          <Button class='Switch-Page' onClick={googleSignIn}>
             Sign In
           </Button>
         )}
