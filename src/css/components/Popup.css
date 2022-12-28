@@ -14,9 +14,10 @@
   align-items: center;
   padding: 20px;
 }
+
 .Note {
   text-align: left;
-  font-size: 30px;
+  font-size: 25px;
   height: 55%;
   background-color: var(--light-background);
   border-radius: var(--border-radius);

@@ -1,6 +1,7 @@
-import { collection, addDoc, doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
+import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
+//TODO: clean up this code
 const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
   const { location, distance, distanceUnit, ends, arrowsPerEnd, sessions, bow } = data;
   const encodedScore = JSON.stringify(score);

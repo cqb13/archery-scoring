@@ -5,6 +5,9 @@ About:
 Scoring Chart:
     - when done, sort the values in each row from highest to lowest
 
+DropdownMenu:
+    - Fix button
+
 Style:
     - Style hr element
     

@@ -24,7 +24,7 @@ const DropdownMenu = (props) => {
 
   return (
     <div className='Custom-Dropdown-Menu'>
-      <button class='Custom-Dropdown-Menu-Toggle' onClick={toggleDropdown}>
+      <button className='Custom-Dropdown-Menu-Toggle' onClick={toggleDropdown}>
         {selected || selectedDate}
       </button>
       {open && (

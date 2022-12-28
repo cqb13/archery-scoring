@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { getDoc, doc, getDocs, collection, query, orderBy, limit } from "firebase/firestore";
+import { getDoc, doc, getDocs, collection, query, orderBy, limit, deleteDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import Button from "../components/elements/Button";
 import googleSignIn from "../utils/googleSignIn";
@@ -21,6 +21,8 @@ const History = () => {
   const [currentGame, setCurrentGame] = useState(1);
   const [note, setNote] = useState();
   const [noteOpen, setNoteOpen] = useState(false);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [totalScore, setTotalScore] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -64,6 +66,7 @@ const History = () => {
       setLocation(scoreSnap.data().location);
       setBow(scoreSnap.data().bow);
       setNote(scoreSnap.data().note);
+      setTotalScore(scoreSnap.data().totalScore);
     }
   };
 
@@ -97,6 +100,31 @@ const History = () => {
     setNoteOpen(!noteOpen);
   };
 
+  const toggleDelete = () => {
+    setDeleteOpen(!deleteOpen);
+  };
+
+  const deleteGame = async () => {
+    const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.values().next().value);
+    const userDoc = doc(db, "users", user.uid);
+    const userData = await getDoc(userDoc);
+    const allScores = userData.data().allScores;
+
+    const index = allScores.indexOf(totalScore);
+    if (index > -1) {
+      allScores.splice(index, 1);
+    }
+
+    await setDoc(userDoc, {
+        allScores: allScores
+      },
+      { merge: true }
+    );
+
+    await deleteDoc(scoreDoc);
+    toggleDelete();
+  };
+
   return (
     <>
       <h1>History</h1>
@@ -114,9 +142,24 @@ const History = () => {
             <h2>{distance}{distanceUnit}</h2>
             <h2>{bow}</h2>
             <Button onClick={toggleNote}>Note</Button>
+            <Button class="Trash-Button" onClick={toggleDelete}>X</Button>
           </div>
           <ScoringChart score={JSON.parse(score)} arrowsPerEnd={arrowsPerEnd} splits={splits} history={true} />
           <FinalScoreStats score={JSON.parse(score)} history={true} />
+        </div>
+      ) : null}
+      {deleteOpen ? (
+        <div className="Popup-Overlay">
+          <div className="Popup">
+            <h1>Delete Game</h1>
+            <hr />
+            <h2 className="Delete-Warning" >Are you sure you want to delete this game?</h2>
+            <h2 className="Delete-Warning" >This action cannot be undone!</h2>
+            <div className="Button-Container">
+              <Button onClick={deleteGame} class="Delete-Button" >Yes</Button>
+              <Button onClick={toggleDelete} class="Delete-Button" >No</Button>
+            </div>
+          </div>
         </div>
       ) : null}
       {noteOpen ? (

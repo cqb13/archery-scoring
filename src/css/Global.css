@@ -8,6 +8,7 @@
   --border: 3px solid #496bbe1a;
   --border-radius: 3px;
   --transition-time: 500ms;
+  --trash-scale: 0.25;
 }
 
 body {
