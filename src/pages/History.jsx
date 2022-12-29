@@ -24,6 +24,7 @@ const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [totalScore, setTotalScore] = useState();
 
+  //TODO: limit might need to be made greater than 10
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -41,9 +42,7 @@ const History = () => {
             minute: "2-digit"
           });
           const name = doc.data().name;
-
-          //TODO: add a condition if there is a date and time and a name, and a new same date and time without a name, append (1) in place of the name on the first one, and (2) on the second one, and so on
-          //TODO: add a condition if there is a date and time and a name, and a new same date and time and a name, append (1) in place of the end of the name on the first one, and (2) on the second one, and so on
+  
           if (name) dateMap.set(date + " " + time + " | " + name, doc.id);
           else dateMap.set(date + " " + time, doc.id);
         });
@@ -105,7 +104,8 @@ const History = () => {
   };
 
   const deleteGame = async () => {
-    const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.values().next().value);
+    let reverseDates = Array.from(dateMap.keys()).slice().reverse();
+    const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.get(reverseDates[currentGame - 1]));
     const userDoc = doc(db, "users", user.uid);
     const userData = await getDoc(userDoc);
     const allScores = userData.data().allScores;
@@ -122,6 +122,9 @@ const History = () => {
     );
 
     await deleteDoc(scoreDoc);
+    dateMap.delete(reverseDates[currentGame - 1]);
+    setCurrentGame(dateMap.size);
+    changeGame(dateMap.keys().next().value);
     toggleDelete();
   };
 
