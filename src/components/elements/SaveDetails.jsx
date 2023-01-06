@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Button from "./Button";
+import fixDateTimeFormat from "../../utils/fixDateTimeFormat";
 
 const SaveDetails = (props) => {
   const [name, setName] = useState();
@@ -9,7 +10,6 @@ const SaveDetails = (props) => {
   const confirm = props.confirmSave;
   const cancel = props.cancel;
 
-  //!!!: time issue within the first 10 minutes of the hour time is 19:1 instead of 19:01...
   useEffect(() => {
     const today = new Date();
     const date =
@@ -19,8 +19,11 @@ const SaveDetails = (props) => {
       "-" +
       today.getDate();
     const time = today.getHours() + ":" + today.getMinutes();
-    setDate(date);
-    setTime(time);
+
+    const data = fixDateTimeFormat(date, time);
+
+    setDate(data.date);
+    setTime(data.time);
   }, []);
 
   const handleConfirm = () => {

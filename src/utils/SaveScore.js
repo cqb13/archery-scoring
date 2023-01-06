@@ -1,20 +1,17 @@
 import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
-//TODO: clean up this code
 const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
   const { location, distance, distanceUnit, ends, arrowsPerEnd, sessions, bow } = data;
+
   const encodedScore = JSON.stringify(score);
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection, user.uid);
 
-  const users = collection(db, "users");
-
-  const userRef = doc(users, user.uid);
-  const usersDoc = await getDoc(userRef);
-  const highScore = usersDoc.data().highScore;
-  const lowScore = usersDoc.data().lowScore;
-  const allScores = usersDoc.data().allScores;
+  const userDocRef = await getDoc(userDoc);
+  const highScore = userDocRef.data().highScore;
+  const lowScore = userDocRef.data().lowScore;
+  const allScores = userDocRef.data().allScores;
 
   if (allScores) {
     let newAllScores = [...allScores, totalScore];

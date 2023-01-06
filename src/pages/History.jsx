@@ -24,7 +24,8 @@ const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [totalScore, setTotalScore] = useState();
 
-  //TODO: limit might need to be made greater than 10
+  //TODO: make sure scoreCollection.length works
+  //!!!: date sort issue
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -32,7 +33,7 @@ const History = () => {
         const scoreQuery = query(
           scoreCollection,
           orderBy("date", "desc"),
-          limit(10)
+          limit(scoreCollection.length)
         );
         const scoreQuerySnapshot = await getDocs(scoreQuery);
         scoreQuerySnapshot.forEach((doc) => {
@@ -46,6 +47,10 @@ const History = () => {
           if (name) dateMap.set(date + " " + time + " | " + name, doc.id);
           else dateMap.set(date + " " + time, doc.id);
         });
+
+        // sort the dateMap by date, put newest date first
+        console.log(dateMap)
+
         getScoreDoc(dateMap.values().next().value);
         setCurrentGame(dateMap.size);
       }
@@ -103,12 +108,14 @@ const History = () => {
     setDeleteOpen(!deleteOpen);
   };
 
+  //!!! might be an issue with removing scores from allScores array if only 1 score.
   const deleteGame = async () => {
     let reverseDates = Array.from(dateMap.keys()).slice().reverse();
     const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.get(reverseDates[currentGame - 1]));
     const userDoc = doc(db, "users", user.uid);
     const userData = await getDoc(userDoc);
     const allScores = userData.data().allScores;
+    const lowScore = userData.data().lowScore;
 
     const index = allScores.indexOf(totalScore);
     if (index > -1) {
@@ -120,6 +127,9 @@ const History = () => {
       },
       { merge: true }
     );
+
+    //TODO: if the deleted score was the low score, and there was only 1 instance of low score. Find a new low score
+    
 
     await deleteDoc(scoreDoc);
     dateMap.delete(reverseDates[currentGame - 1]);
