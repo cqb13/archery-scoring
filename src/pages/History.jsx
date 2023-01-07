@@ -7,6 +7,8 @@ import googleSignIn from "../utils/googleSignIn";
 import FinalScoreStats from "../components/pageComponents/FinalScoreStats";
 import ScoringChart from "../components/pageComponents/ScoringChart";
 import DropdownMenu from "../components/elements/DropdownMenu";
+import sortDateTime from "../utils/sortDateTime";
+import mergeDateTimeToValue from "../utils/mergeDateTimeToValue";
 
 const History = () => {
   const [user] = useAuthState(auth);
@@ -24,8 +26,6 @@ const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [totalScore, setTotalScore] = useState();
 
-  //TODO: make sure scoreCollection.length works
-  //!!!: date sort issue
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -48,10 +48,12 @@ const History = () => {
           else dateMap.set(date + " " + time, doc.id);
         });
 
-        // sort the dateMap by date, put newest date first
-        console.log(dateMap)
+        const sortedDates = sortDateTime(dateMap.keys());
 
-        getScoreDoc(dateMap.values().next().value);
+        const sortedMap = mergeDateTimeToValue(sortedDates, dateMap);
+        console.log(sortedMap);
+
+        getScoreDoc(sortedMap.values().next().value);
         setCurrentGame(dateMap.size);
       }
     };
@@ -129,8 +131,6 @@ const History = () => {
     );
 
     //TODO: if the deleted score was the low score, and there was only 1 instance of low score. Find a new low score
-    
-
     await deleteDoc(scoreDoc);
     dateMap.delete(reverseDates[currentGame - 1]);
     setCurrentGame(dateMap.size);
