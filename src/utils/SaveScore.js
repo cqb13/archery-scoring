@@ -10,8 +10,8 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
 
   const userDocRef = await getDoc(userDoc);
   const highScore = userDocRef.data().highScore;
-  const lowScore = userDocRef.data().lowScore;
   const allScores = userDocRef.data().allScores;
+  const lowScore = userDocRef.data().lowScore;
 
   if (allScores) {
     let newAllScores = [...allScores, totalScore];
@@ -43,18 +43,18 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
   const scoreCollection = collection(userDoc, "scores");
 
   await addDoc(scoreCollection, {
-    name: name || "",
-    note: note || "",
-    location: location || "Unknown",
-    distance: distance,
     distanceUnit: distanceUnit || "Unknown", 
-    ends: ends,
+    location: location || "Unknown",
     arrowsPerEnd: arrowsPerEnd,
-    sessions: sessions,
+    totalScore: totalScore,
     bow: bow || "Unknown",
     score: encodedScore,
-    totalScore: totalScore,
-    date: createdAt
+    sessions: sessions,
+    distance: distance,
+    name: name || "",
+    note: note || "",
+    date: createdAt,
+    ends: ends
   });
 };
 

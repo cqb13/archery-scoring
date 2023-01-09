@@ -117,3 +117,25 @@ input[type="time"] {
 input[type="time"]:focus {
   border: var(--border);
 }
+
+.Vertical-Button-Container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Horizontal-Button-Container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+  gap: 25px;
+  margin: 10px;
+  width: 100%;
+}
+
+.Warning-Text {
+  color: #c73f36;
+}

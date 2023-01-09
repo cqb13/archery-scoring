@@ -1,5 +1,5 @@
-import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React from "react";
 //CSS
 import "./css/Global.css";
 import "./css/Profile.css";
@@ -14,10 +14,10 @@ import "./css/components/Button.css";
 import "./css/components/TextArea.css";
 import "./css/components/RadioButton.css";
 //Pages
-import Score from "./pages";
-import About from "./pages/About";
 import Account from "./pages/Account";
 import History from "./pages/History";
+import About from "./pages/About";
+import Score from "./pages";
 
 import NavBar from "./components/elements/NavBar";
 

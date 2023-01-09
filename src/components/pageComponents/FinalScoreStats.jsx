@@ -1,14 +1,14 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import Button from "../elements/Button";
+import React from "react";
 
 const FinalScoreStats = (props) => {
+  const [scoreStats, setScoreStats] = useState([[]]);
   const [totalScore, setTotalScore] = useState(0);
   const history = props.history;
   const score = props.score;
   const reset = props.reset;
   const save = props.save;
-  const [scoreStats, setScoreStats] = useState([[]]);
 
   useEffect(() => {
     const stats = score.map((split) => {
@@ -113,7 +113,7 @@ const FinalScoreStats = (props) => {
         </tbody>
       </table>
       {!history ? (
-        <div className="Button-Container">
+        <div className="Horizontal-Button-Container">
           <Button class="Final-Button" onClick={reset}>Finish</Button>
           <Button class="Final-Button" onClick={handleSave}>Save</Button>
         </div>

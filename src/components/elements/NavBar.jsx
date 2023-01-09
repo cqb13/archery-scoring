@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
+import googleSignIn from "../../utils/googleSignIn";
+import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
 import Button from "./Button";
-import googleSignIn from "../../utils/googleSignIn";
 
 const NavBar = () => {
   const [user] = useAuthState(auth);

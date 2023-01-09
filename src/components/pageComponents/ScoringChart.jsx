@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import Button from "../elements/Button";
 
 function ScoringChart(props) {
-  const [data, setData] = useState([[]]);
   const [currentSplit, setCurrentSplit] = useState(0);
   const arrowsPerEnd = props.arrowsPerEnd;
+  const [data, setData] = useState([[]]);
   const returnData = props.returnData;
   const history = props.history;
   const splits = props.splits;

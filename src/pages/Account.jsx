@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, db } from "../firebase";
-import Button from "../components/elements/Button";
+import { collection, doc, getDoc } from "firebase/firestore";
 import Profile from "../components/pageComponents/Profile";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Button from "../components/elements/Button";
 import googleSignOut from "../utils/googleSignOut";
 import googleSignIn from "../utils/googleSignIn";
-import { collection, doc, getDoc } from "firebase/firestore";
+import React, { useState } from "react";
+import { auth, db } from "../firebase";
 
 const Account = () => {
+  const [deleteAccountPopup, setDeleteAccountPopup] = useState(false);
+  const [averageScore, setAverageScore] = useState(0);
+  const [gamesPlayed, setGamesPlayed] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [lowScore, setLowScore] = useState(0);
-  const [gamesPlayed, setGamesPlayed] = useState(0);
-  const [averageScore, setAverageScore] = useState(0);
   const [user] = useAuthState(auth);
 
   const getUserDoc = async () => {
@@ -23,10 +24,10 @@ const Account = () => {
 
   if (user) {
     getUserDoc().then((res) => {
+      setAverageScore(getAverageScore(res.allScores));
+      setGamesPlayed(res.allScores.length);
       setHighScore(res.highScore);
       setLowScore(res.lowScore);
-      setGamesPlayed(res.allScores.length);
-      setAverageScore(getAverageScore(res.allScores));
     });
   }
 
@@ -34,6 +35,14 @@ const Account = () => {
     let average = allScores.reduce((a, b) => a + b, 0) / allScores.length;
     return Math.round((average + Number.EPSILON) * 100) / 100;
   };
+
+  const deleteAccount = () => {
+    console.log("delete account");
+  };
+
+  const toggleDelete = () => {
+    setDeleteAccountPopup(!deleteAccountPopup)
+  }
 
   return (
     <div className='Account'>
@@ -49,15 +58,35 @@ const Account = () => {
             gamesPlayed={gamesPlayed}
             averageScore={averageScore}
           />
-          <Button class='Account-Button' onClick={googleSignOut}>
-            Sign Out
-          </Button>
+          <div className='Vertical-Button-Container'>
+            <Button class='Account-Button' onClick={googleSignOut}>
+              Sign Out
+            </Button>
+            <Button class='Delete-Account-Button' onClick={toggleDelete}>
+              Delete Account
+            </Button>
+          </div>
         </div>
       ) : (
         <Button class='Account-Button' onClick={googleSignIn}>
           Sign In
         </Button>
       )}
+      {deleteAccountPopup ? (
+        <div className="Popup-Overlay">
+          <div className="Popup">
+            <h1>Delete Account</h1>
+            <hr />
+            <h2 className="Warning-Text" >Are you sure you want to delte this account?</h2>
+            <h2 className="Warning-Text" >All your data will be lost!</h2>
+            <h2 className="Warning-Text" >This action cannot be undone!</h2>
+            <div className="Horizontal-Button-Container">
+              <Button onClick={deleteAccount} class="Delete-Button" >Yes</Button>
+              <Button onClick={toggleDelete} class="Delete-Button" >No</Button>
+            </div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

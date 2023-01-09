@@ -1,19 +1,19 @@
-import React from "react";
-import Slider from "../elements/Slider";
 import RadioButton from "../elements/RadioButton";
 import Button from "../elements/Button";
+import Slider from "../elements/Slider";
+import React from "react";
 
 class SetupMenu extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       location: "Indoor",
-      distance: 18,
       distanceUnit: "m",
-      ends: 10,
       arrowsPerEnd: 3,
+      bow: "Recurve",
+      distance: 18,
       sessions: 1,
-      bow: "Recurve"
+      ends: 10,
     };
   }
 
@@ -27,24 +27,24 @@ class SetupMenu extends React.Component {
     ).className = "Location-Button";
   };
 
+  handleArrowsPerEndChange = (event) => {
+    this.setState({ arrowsPerEnd: parseInt(event.target.value) });
+  };
+
   handleDistanceChange = (event) => {
     this.setState({ distance: parseInt(event.target.value) });
   };
 
-  handleDistanceUnitChange = (event) => {
-    this.setState({ distanceUnit: event.target.value });
+  handleSessionsChange = (event) => {
+    this.setState({ sessions: parseInt(event.target.value) });
   };
 
   handleEndsChange = (event) => {
     this.setState({ ends: parseInt(event.target.value) });
   };
 
-  handleArrowsPerEndChange = (event) => {
-    this.setState({ arrowsPerEnd: parseInt(event.target.value) });
-  };
-
-  handleSessionsChange = (event) => {
-    this.setState({ sessions: parseInt(event.target.value) });
+  handleDistanceUnitChange = (event) => {
+    this.setState({ distanceUnit: event.target.value });
   };
 
   handleBowChange = (event) => {
@@ -64,7 +64,7 @@ class SetupMenu extends React.Component {
         <hr />
         <div className='Location Container'>
           <h3>Location</h3>
-          <div className='Button-Container Container'>
+          <div className='Horizontal-Button-Container Container'>
             <Button class="Location-Button" type="location" value="Outdoor" onClick={this.handleLocationChange}>Outdoor</Button>
             <Button class="Location-Button" type="location" value="Indoor" onClick={this.handleLocationChange}>Indoor</Button>
           </div>

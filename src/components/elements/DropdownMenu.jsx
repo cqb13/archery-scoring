@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
 const DropdownMenu = (props) => {
+  const [selected, setSelected] = useState();
   const [dates] = useState(props.options);
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState();
   const changeGame = props.changeGame;
   const setGame = props.setGame;
 

@@ -10,8 +10,6 @@ DropdownMenu:
 
 Style:
     - Style hr element
-
-History:
-    //TODO: add a condition if there is a date and time and a name, and a new same date and time without a name, append (1) in place of the name on the first one, and (2) on the second one, and so on
-      //TODO: add a condition if there is a date and time and a name, and a new same date and time and a name, append (1) in place of the end of the name on the first one, and (2) on the second one, and so on
     
+Popup:
+    - popup component

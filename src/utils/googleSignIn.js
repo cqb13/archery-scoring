@@ -15,9 +15,9 @@ const googleSignIn = async () => {
       displayName: user.displayName,
       photoURL: user.photoURL,
       email: user.email,
+      allScores: [],
       highScore: 0,
-      lowScore: 0,
-      allScores: []
+      lowScore: 0
     });
   }
 };

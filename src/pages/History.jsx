@@ -1,30 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { getDoc, doc, getDocs, collection, query, orderBy, limit, deleteDoc, setDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
-import Button from "../components/elements/Button";
-import googleSignIn from "../utils/googleSignIn";
 import FinalScoreStats from "../components/pageComponents/FinalScoreStats";
 import ScoringChart from "../components/pageComponents/ScoringChart";
-import DropdownMenu from "../components/elements/DropdownMenu";
-import sortDateTime from "../utils/sortDateTime";
 import mergeDateTimeToValue from "../utils/mergeDateTimeToValue";
+import DropdownMenu from "../components/elements/DropdownMenu";
+import { useAuthState } from "react-firebase-hooks/auth";
+import React, { useState, useEffect } from "react";
+import Button from "../components/elements/Button";
+import sortDateTime from "../utils/sortDateTime";
+import googleSignIn from "../utils/googleSignIn";
+import { auth, db } from "../firebase";
 
+//TODO: clean up code
 const History = () => {
-  const [user] = useAuthState(auth);
-  const [score, setScore] = useState();
-  const [arrowsPerEnd, setArrowsPerEnd] = useState();
-  const [splits, setSplits] = useState();
-  const [distance, setDistance] = useState();
-  const [distanceUnit, setDistanceUnit] = useState();
-  const [location, setLocation] = useState();
-  const [bow, setBow] = useState();
-  const [dateMap] = useState(new Map());
-  const [currentGame, setCurrentGame] = useState(1);
-  const [note, setNote] = useState();
-  const [noteOpen, setNoteOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [distanceUnit, setDistanceUnit] = useState();
+  const [arrowsPerEnd, setArrowsPerEnd] = useState();
+  const [dateMap, setDateMap] = useState(new Map());
+  const [currentGame, setCurrentGame] = useState(1);
+  const [noteOpen, setNoteOpen] = useState(false);
   const [totalScore, setTotalScore] = useState();
+  const [distance, setDistance] = useState();
+  const [location, setLocation] = useState();
+  const [splits, setSplits] = useState();
+  const [score, setScore] = useState();
+  const [note, setNote] = useState();
+  const [user] = useAuthState(auth);
+  const [bow, setBow] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,7 +44,9 @@ const History = () => {
             minute: "2-digit"
           });
           const name = doc.data().name;
-  
+          //TODO: add a condition if there is a date and time and a name, and a new same date and time without a name, append (1) in place of the name on the first one, and (2) on the second one, and so on
+          //TODO: add a condition if there is a date and time and a name, and a new same date and time and a name, append (1) in place of the end of the name on the first one, and (2) on the second one, and so on
+
           if (name) dateMap.set(date + " " + time + " | " + name, doc.id);
           else dateMap.set(date + " " + time, doc.id);
         });
@@ -51,7 +54,8 @@ const History = () => {
         const sortedDates = sortDateTime(dateMap.keys());
 
         const sortedMap = mergeDateTimeToValue(sortedDates, dateMap);
-        console.log(sortedMap);
+
+        setDateMap(sortedMap);
 
         getScoreDoc(sortedMap.values().next().value);
         setCurrentGame(dateMap.size);
@@ -64,15 +68,15 @@ const History = () => {
     const scoreDoc = doc(db, "users", user.uid, "scores", id);
     const scoreSnap = await getDoc(scoreDoc);
     if (scoreSnap.exists()) {
-      setScore(scoreSnap.data().score);
       setArrowsPerEnd(scoreSnap.data().arrowsPerEnd);
+      setDistanceUnit(scoreSnap.data().distanceUnit);
+      setTotalScore(scoreSnap.data().totalScore);
+      setLocation(scoreSnap.data().location);
       setDistance(scoreSnap.data().distance);
       setSplits(scoreSnap.data().sessions);
-      setDistanceUnit(scoreSnap.data().distanceUnit);
-      setLocation(scoreSnap.data().location);
-      setBow(scoreSnap.data().bow);
+      setScore(scoreSnap.data().score);
       setNote(scoreSnap.data().note);
-      setTotalScore(scoreSnap.data().totalScore);
+      setBow(scoreSnap.data().bow);
     }
   };
 
@@ -110,7 +114,6 @@ const History = () => {
     setDeleteOpen(!deleteOpen);
   };
 
-  //!!! might be an issue with removing scores from allScores array if only 1 score.
   const deleteGame = async () => {
     let reverseDates = Array.from(dateMap.keys()).slice().reverse();
     const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.get(reverseDates[currentGame - 1]));
@@ -130,7 +133,24 @@ const History = () => {
       { merge: true }
     );
 
-    //TODO: if the deleted score was the low score, and there was only 1 instance of low score. Find a new low score
+    //!!! might be an issue with removing updating low score
+    if (lowScore === totalScore) {
+      const newLowScore = Math.min(...allScores);
+      await setDoc(userDoc, {
+          lowScore: newLowScore
+        },
+        { merge: true }
+      );
+    }
+
+    if (allScores.length === 0) {
+      await setDoc(userDoc, {
+          lowScore: 0
+        },
+        { merge: true }
+      );
+    }
+
     await deleteDoc(scoreDoc);
     dateMap.delete(reverseDates[currentGame - 1]);
     setCurrentGame(dateMap.size);
@@ -166,9 +186,9 @@ const History = () => {
           <div className="Popup">
             <h1>Delete Game</h1>
             <hr />
-            <h2 className="Delete-Warning" >Are you sure you want to delete this game?</h2>
-            <h2 className="Delete-Warning" >This action cannot be undone!</h2>
-            <div className="Button-Container">
+            <h2 className="Warning-Text" >Are you sure you want to delete this game?</h2>
+            <h2 className="Warning-Text" >This action cannot be undone!</h2>
+            <div className="Horizontal-Button-Container">
               <Button onClick={deleteGame} class="Delete-Button" >Yes</Button>
               <Button onClick={toggleDelete} class="Delete-Button" >No</Button>
             </div>

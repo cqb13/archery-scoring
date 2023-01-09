@@ -1,20 +1,20 @@
-import React from "react";
-import { useState } from "react";
-import ScoringChart from "./ScoringChart";
-import FinalScoreStats from "./FinalScoreStats";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../../firebase";
 import googleSignIn from "../../utils/googleSignIn";
-import SaveToDB from "../../utils/SaveScore";
 import SaveDetails from "../elements/SaveDetails";
+import FinalScoreStats from "./FinalScoreStats";
+import SaveToDB from "../../utils/SaveScore";
+import ScoringChart from "./ScoringChart";
+import { auth } from "../../firebase";
+import { useState } from "react";
+import React from "react";
 
 const ScoringPage = (props) => {
-  const [user] = useAuthState(auth);
-  const [data] = useState(props.data);
-  const [score, setScore] = useState();
-  const [done, setDone] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [totalScore, setTotalScore] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [done, setDone] = useState(false);
+  const [score, setScore] = useState();
+  const [data] = useState(props.data);
+  const [user] = useAuthState(auth);
   const setUp = props.reset;
 
   const handleScore = (finalScore) => {
