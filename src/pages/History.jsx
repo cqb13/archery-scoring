@@ -51,12 +51,8 @@ const History = () => {
         });
 
         const sortedDates = sortDateTime(dateMap.keys());
-
-        console.log(sortedDates)
-
+        
         const sortedMap = mergeDateTimeToValue(sortedDates, dateMap);
-
-        console.log(sortedMap)
 
         setDateMap(sortedMap);
 
@@ -124,6 +120,7 @@ const History = () => {
     const userData = await getDoc(userDoc);
     const allScores = userData.data().allScores;
     const lowScore = userData.data().lowScore;
+    const highScore = userData.data().highScore;
 
     const index = allScores.indexOf(totalScore);
     if (index > -1) {
@@ -136,11 +133,20 @@ const History = () => {
       { merge: true }
     );
 
-    //!!! might be an issue with removing updating low score
     if (lowScore === totalScore) {
       const newLowScore = Math.min(...allScores);
       await setDoc(userDoc, {
           lowScore: newLowScore
+        },
+        { merge: true }
+      );
+    }
+
+    if (highScore === totalScore) {
+      let newHighScore = Math.max(...allScores);
+      if (newHighScore === -Infinity) newHighScore = 0;
+      await setDoc(userDoc, {
+          highScore: newHighScore
         },
         { merge: true }
       );
