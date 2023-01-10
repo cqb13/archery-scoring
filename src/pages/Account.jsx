@@ -1,4 +1,4 @@
-import { collection, doc, getDoc } from "firebase/firestore";
+import { collection, doc, getDoc, deleteDoc } from "firebase/firestore";
 import Profile from "../components/pageComponents/Profile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "../components/elements/Button";
@@ -37,7 +37,11 @@ const Account = () => {
   };
 
   const deleteAccount = () => {
-    console.log("delete account");
+    const users = collection(db, "users");
+    const userRef = doc(users, user.uid);
+    deleteDoc(userRef);
+    googleSignOut();
+    toggleDelete();
   };
 
   const toggleDelete = () => {

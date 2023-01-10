@@ -10,9 +10,6 @@ const mergeDateTimeToValue = (sortedDateTime, dateMap) => {
     }
   }
 
-  // reverse the map to put newest date first
-  tempMap = new Map([...tempMap.entries()].reverse());
-
   return tempMap;
 };
 

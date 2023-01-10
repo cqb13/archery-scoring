@@ -33,6 +33,7 @@ hr {
   width: 80%;
   border-left: none;
   border-right: none;
+  border-top-color: #444;
 }
 
 h1 {

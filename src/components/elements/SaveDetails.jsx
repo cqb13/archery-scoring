@@ -42,7 +42,7 @@ const SaveDetails = (props) => {
   };
 
   const handleNameChange = (e) => {
-    if (e.target.value.length < 15) {
+    if (e.target.value.length < 50) {
       setName(e.target.value);
     }
   };

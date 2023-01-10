@@ -10,7 +10,6 @@ import sortDateTime from "../utils/sortDateTime";
 import googleSignIn from "../utils/googleSignIn";
 import { auth, db } from "../firebase";
 
-//TODO: clean up code
 const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [distanceUnit, setDistanceUnit] = useState();
@@ -53,7 +52,11 @@ const History = () => {
 
         const sortedDates = sortDateTime(dateMap.keys());
 
+        console.log(sortedDates)
+
         const sortedMap = mergeDateTimeToValue(sortedDates, dateMap);
+
+        console.log(sortedMap)
 
         setDateMap(sortedMap);
 

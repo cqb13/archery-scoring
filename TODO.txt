@@ -2,14 +2,22 @@ About:
     - how to score  
         - different scoring systems
 
+    - Add link to github
+
 Scoring Chart:
     - when done, sort the values in each row from highest to lowest
-
-DropdownMenu:
-    - Fix button
-
-Style:
-    - Style hr element
     
 Popup:
     - popup component
+
+Scoring Chart:
+    - when done button is pressed, add an option to continue
+
+Save Details:
+    - more space between buttons
+
+History: 
+    - add margin/pad at the bottom of page
+
+Save:
+    - in multi game scores, add scores to total scores separately
