@@ -1,4 +1,5 @@
 import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
+import addScoreArrayValues from "./addScoreArrayValues";
 import { db } from "../firebase";
 
 const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
@@ -13,8 +14,11 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
   const allScores = userDocRef.data().allScores;
   const lowScore = userDocRef.data().lowScore;
 
+  const splitScoreArrayValues = addScoreArrayValues(score);
+  const encodedSplitScoreArrayValues = JSON.stringify(splitScoreArrayValues);
+
   if (allScores) {
-    let newAllScores = [...allScores, totalScore];
+    let newAllScores = [...allScores, encodedSplitScoreArrayValues];
     await setDoc(userDoc, {
       allScores: newAllScores
     }, { merge: true });
@@ -24,29 +28,33 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
     }, { merge: true });
   }
 
-  if (totalScore > highScore) {
+  splitScoreArrayValues.sort((a, b) => a - b);
+  const lowestValue = splitScoreArrayValues[0];
+  const highestValue = splitScoreArrayValues[splitScoreArrayValues.length - 1];
+
+  if (highestValue > highScore) {
     await setDoc(userDoc, {
-      highScore: totalScore
+      highScore: highestValue
     }, { merge: true });
   }
 
-  if (totalScore < lowScore && lowScore !== 0) {
+  if (lowestValue < lowScore && lowScore !== 0) {
     await setDoc(userDoc, {
-      lowScore: totalScore
+      lowScore: lowestValue
     }, { merge: true });
   } else if (lowScore === 0) {
     await setDoc(userDoc, {
-      lowScore: totalScore
+      lowScore: lowestValue
     }, { merge: true });
   }
-
+  
   const scoreCollection = collection(userDoc, "scores");
 
   await addDoc(scoreCollection, {
-    distanceUnit: distanceUnit || "Unknown", 
+    totalScore: encodedSplitScoreArrayValues,
+    distanceUnit: distanceUnit || "Unknown",
     location: location || "Unknown",
     arrowsPerEnd: arrowsPerEnd,
-    totalScore: totalScore,
     bow: bow || "Unknown",
     score: encodedScore,
     sessions: sessions,

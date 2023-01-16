@@ -5,6 +5,7 @@ const fixDateTime = (date, time) => {
   if (dateArray[1].length < 2) {
     dateArray[1] = "0" + dateArray[1];
   }
+  
   if (dateArray[2].length < 2) {
     dateArray[2] = "0" + dateArray[2];
   }

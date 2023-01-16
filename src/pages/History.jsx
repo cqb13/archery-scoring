@@ -10,6 +10,7 @@ import sortDateTime from "../utils/sortDateTime";
 import googleSignIn from "../utils/googleSignIn";
 import { auth, db } from "../firebase";
 
+//TODO modify all base stats update functions to use the score array
 const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [distanceUnit, setDistanceUnit] = useState();

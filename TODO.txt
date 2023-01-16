@@ -15,9 +15,13 @@ Scoring Chart:
 
 Save Details:
     - more space between buttons
+    - Add an option to save total score of all splits or individual split score, if there is a split
 
 History: 
     - add margin/pad at the bottom of page
 
 Save:
     - in multi game scores, add scores to total scores separately
+
+Account:
+    - delete account issue

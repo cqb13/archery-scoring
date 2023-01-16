@@ -55,6 +55,11 @@ const SaveDetails = (props) => {
     setTime(e.target.value);
   };
 
+  /*
+  The specified value "8:35" does not conform to the required format.  
+  The format is "HH:mm", "HH:mm:ss" or "HH:mm:ss.SSS" where HH is 00-23, mm is 00-59, ss is 00-59, and SSS is 000-999. 
+  */
+
   return (
     <div className='Popup-Overlay'>
       <div className='Popup'>
