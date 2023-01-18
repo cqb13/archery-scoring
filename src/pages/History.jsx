@@ -1,4 +1,4 @@
-import { getDoc, doc, getDocs, collection, query, orderBy, limit, deleteDoc, setDoc } from "firebase/firestore";
+import { getDoc, doc, getDocs, collection, query, orderBy, limit } from "firebase/firestore";
 import FinalScoreStats from "../components/pageComponents/FinalScoreStats";
 import ScoringChart from "../components/pageComponents/ScoringChart";
 import mergeDateTimeToValue from "../utils/mergeDateTimeToValue";
@@ -8,6 +8,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../components/elements/Button";
 import sortDateTime from "../utils/sortDateTime";
 import googleSignIn from "../utils/googleSignIn";
+import removeGame from "../utils/removeGame";
 import { auth, db } from "../firebase";
 
 //TODO modify all base stats update functions to use the score array
@@ -119,49 +120,9 @@ const History = () => {
     const scoreDoc = doc(db, "users", user.uid, "scores", dateMap.get(reverseDates[currentGame - 1]));
     const userDoc = doc(db, "users", user.uid);
     const userData = await getDoc(userDoc);
-    const allScores = userData.data().allScores;
-    const lowScore = userData.data().lowScore;
-    const highScore = userData.data().highScore;
 
-    const index = allScores.indexOf(totalScore);
-    if (index > -1) {
-      allScores.splice(index, 1);
-    }
+    await removeGame({scoreDoc, userDoc, userData, totalScore})
 
-    await setDoc(userDoc, {
-        allScores: allScores
-      },
-      { merge: true }
-    );
-
-    if (lowScore === totalScore) {
-      const newLowScore = Math.min(...allScores);
-      await setDoc(userDoc, {
-          lowScore: newLowScore
-        },
-        { merge: true }
-      );
-    }
-
-    if (highScore === totalScore) {
-      let newHighScore = Math.max(...allScores);
-      if (newHighScore === -Infinity) newHighScore = 0;
-      await setDoc(userDoc, {
-          highScore: newHighScore
-        },
-        { merge: true }
-      );
-    }
-
-    if (allScores.length === 0) {
-      await setDoc(userDoc, {
-          lowScore: 0
-        },
-        { merge: true }
-      );
-    }
-
-    await deleteDoc(scoreDoc);
     dateMap.delete(reverseDates[currentGame - 1]);
     setCurrentGame(dateMap.size);
     changeGame(dateMap.keys().next().value);
