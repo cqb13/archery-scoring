@@ -22,6 +22,10 @@ const ScoringPage = (props) => {
     setDone(true);
   };
 
+  const continueScoring = () => {
+    setDone(false);
+  }
+
   const reset = () => {
     setDone(false);
     setUp();
@@ -52,7 +56,7 @@ const ScoringPage = (props) => {
         done={done}
         returnData={handleScore}
       />
-      {done ? <FinalScoreStats score={score} reset={reset} save={save}/> : null}
+      {done ? <FinalScoreStats score={score} reset={reset} save={save} continueScoring={continueScoring}/> : null}
       {saving ? <SaveDetails confirmSave={confirmSave} cancel={setSaving}/> : null}
     </div>
   );

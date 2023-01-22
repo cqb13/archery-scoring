@@ -11,7 +11,6 @@ import googleSignIn from "../utils/googleSignIn";
 import removeGame from "../utils/removeGame";
 import { auth, db } from "../firebase";
 
-//TODO modify all base stats update functions to use the score array
 const History = () => {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [distanceUnit, setDistanceUnit] = useState();
@@ -45,8 +44,6 @@ const History = () => {
             minute: "2-digit"
           });
           const name = doc.data().name;
-          //TODO: add a condition if there is a date and time and a name, and a new same date and time without a name, append (1) in place of the name on the first one, and (2) on the second one, and so on
-          //TODO: add a condition if there is a date and time and a name, and a new same date and time and a name, append (1) in place of the end of the name on the first one, and (2) on the second one, and so on
 
           if (name) dateMap.set(date + " " + time + " | " + name, doc.id);
           else dateMap.set(date + " " + time, doc.id);

@@ -5,6 +5,7 @@ import React from "react";
 const FinalScoreStats = (props) => {
   const [scoreStats, setScoreStats] = useState([[]]);
   const [totalScore, setTotalScore] = useState(0);
+  const continueScoring = props.continueScoring;
   const history = props.history;
   const score = props.score;
   const reset = props.reset;
@@ -13,62 +14,29 @@ const FinalScoreStats = (props) => {
   useEffect(() => {
     const stats = score.map((split) => {
       const splitStats = [0, 0, 0, 0, 0];
+      console.log(splitStats)
       split.forEach((end) => {
         end.forEach((arrow) => {
-          switch (arrow) {
-            case "10":
-              splitStats[0]++;
-              splitStats[4] += 10;
-              break;
-            case "9":
-              splitStats[1]++;
-              splitStats[4] += 9;
-              break;
-            case "8":
-              splitStats[4] += 8;
-              break;
-            case "7":
-              splitStats[4] += 7;
-              break;
-            case "6":
-              splitStats[4] += 6;
-              break;
-            case "5":
-              splitStats[4] += 5;
-              break;
-            case "4":
-              splitStats[4] += 4;
-              break;
-            case "3":
-              splitStats[4] += 3;
-              break;
-            case "2":
-              splitStats[4] += 2;
-              break;
-            case "1":
-              splitStats[4] += 1;
-              break;
-            case "x":
-            case "X":
-              splitStats[2]++;
-              splitStats[4] += 10;
-              break;
-            case "m":
-            case "M":
-            case "0":
-              splitStats[3]++;
-              splitStats[4] += 0;
-              break;
-            default:
-              break;
+          if (arrow === "x" || arrow === "X") {
+            splitStats[2]++;
+            splitStats[4] += 10;
+          } else if (arrow === "10") {
+            splitStats[0]++;
+            splitStats[4] += 10;
+          } else if (arrow === "9") {
+            splitStats[1]++;
+            splitStats[4] += 9;
+          } else if (arrow === "m" || arrow === "M" || arrow === "0") {
+            splitStats[3]++;
+            splitStats[4] += 0;
+          } else {
+            splitStats[4] += Number(arrow);
           }
         });
       });
       return splitStats;
     });
-    const total = stats.reduce((a, b) => {
-      return a + b[4];
-    }, 0);
+    const total = stats.reduce((a, b) => a + b[4], 0);
     setTotalScore(total);
     setScoreStats(stats);
   }, [score]);
@@ -77,6 +45,7 @@ const FinalScoreStats = (props) => {
     save(totalScore);
   };
 
+  //prettier-ignore
   return (
     <div className="Final-Score-Stats">
       <table>
@@ -115,6 +84,7 @@ const FinalScoreStats = (props) => {
       {!history ? (
         <div className="Horizontal-Button-Container">
           <Button class="Final-Button" onClick={reset}>Finish</Button>
+          <Button class="Final-Button" onClick={continueScoring}>Continue</Button>
           <Button class="Final-Button" onClick={handleSave}>Save</Button>
         </div>
       ) : null}
