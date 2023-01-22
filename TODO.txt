@@ -3,25 +3,12 @@ About:
         - different scoring systems
 
     - Add link to github
-
-Scoring Chart:
-    - when done, sort the values in each row from highest to lowest
     
 Popup:
     - popup component
 
-Scoring Chart:
-    - when done button is pressed, add an option to continue
-
 Save Details:
-    - more space between buttons
     - Add an option to save total score of all splits or individual split score, if there is a split
 
 History: 
     - add margin/pad at the bottom of page
-
-Save:
-    - in multi game scores, add scores to total scores separately
-
-Account:
-    - delete account issue

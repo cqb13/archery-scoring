@@ -1,11 +1,14 @@
 import { collection, addDoc, doc, getDoc, setDoc } from "firebase/firestore";
 import addScoreArrayValues from "./addScoreArrayValues";
-import { db } from "../firebase";
+import sortScores from "./sortScores";
+import { db } from "../../firebase";
 
 const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
   const { location, distance, distanceUnit, ends, arrowsPerEnd, sessions, bow } = data;
 
-  const encodedScore = JSON.stringify(score);
+  const sortedScore = await sortScores(score);
+
+  const encodedScore = JSON.stringify(sortedScore);
   const usersCollection = collection(db, "users");
   const userDoc = doc(usersCollection, user.uid);
 

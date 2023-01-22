@@ -84,7 +84,7 @@ const SaveDetails = (props) => {
             onChange={handleNoteChange}
           ></textarea>
         </div>
-        <div className='Button-Container'>
+        <div className='Horizontal-Button-Container'>
           <Button onClick={handleCancel}>Cancel</Button>
           <Button onClick={handleConfirm}>Confirm</Button>
         </div>

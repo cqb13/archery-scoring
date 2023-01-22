@@ -4,11 +4,11 @@ import ScoringChart from "../components/pageComponents/ScoringChart";
 import mergeDateTimeToValue from "../utils/mergeDateTimeToValue";
 import DropdownMenu from "../components/elements/DropdownMenu";
 import { useAuthState } from "react-firebase-hooks/auth";
+import googleSignIn from "../utils/account/googleSignIn";
+import removeGame from "../utils/score/removeGame";
 import React, { useState, useEffect } from "react";
 import Button from "../components/elements/Button";
 import sortDateTime from "../utils/sortDateTime";
-import googleSignIn from "../utils/googleSignIn";
-import removeGame from "../utils/removeGame";
 import { auth, db } from "../firebase";
 
 const History = () => {

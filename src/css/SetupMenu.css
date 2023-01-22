@@ -2,6 +2,10 @@
   width: 30%;
 }
 
+.Location {
+  gap: 25px;
+}
+
 .Options {
   display: flex;
   width: fit-content;

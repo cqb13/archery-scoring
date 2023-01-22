@@ -1,8 +1,8 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import googleSignIn from "../../utils/googleSignIn";
+import googleSignIn from "../../utils/account/googleSignIn";
+import SaveToDB from "../../utils/score/SaveScore";
 import SaveDetails from "../elements/SaveDetails";
 import FinalScoreStats from "./FinalScoreStats";
-import SaveToDB from "../../utils/SaveScore";
 import ScoringChart from "./ScoringChart";
 import { auth } from "../../firebase";
 import { useState } from "react";

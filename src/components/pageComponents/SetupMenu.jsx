@@ -64,7 +64,7 @@ class SetupMenu extends React.Component {
         <hr />
         <div className='Location Container'>
           <h3>Location</h3>
-          <div className='Horizontal-Button-Container Container'>
+          <div className='Horizontal-Button-Container Container Location'>
             <Button class="Location-Button" type="location" value="Outdoor" onClick={this.handleLocationChange}>Outdoor</Button>
             <Button class="Location-Button" type="location" value="Indoor" onClick={this.handleLocationChange}>Indoor</Button>
           </div>

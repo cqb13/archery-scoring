@@ -14,7 +14,6 @@ const FinalScoreStats = (props) => {
   useEffect(() => {
     const stats = score.map((split) => {
       const splitStats = [0, 0, 0, 0, 0];
-      console.log(splitStats)
       split.forEach((end) => {
         end.forEach((arrow) => {
           if (arrow === "x" || arrow === "X") {
@@ -45,7 +44,6 @@ const FinalScoreStats = (props) => {
     save(totalScore);
   };
 
-  //prettier-ignore
   return (
     <div className="Final-Score-Stats">
       <table>

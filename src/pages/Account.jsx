@@ -1,9 +1,10 @@
-import { collection, doc, getDoc, deleteDoc } from "firebase/firestore";
+import { collection, doc, getDoc } from "firebase/firestore";
 import Profile from "../components/pageComponents/Profile";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Button from "../components/elements/Button";
-import googleSignOut from "../utils/googleSignOut";
-import googleSignIn from "../utils/googleSignIn";
+import googleSignOut from "../utils/account/googleSignOut";
+import googleSignIn from "../utils/account/googleSignIn";
+import deleteAccount from "../utils/account/deleteAccount";
 import React, { useState } from "react";
 import { auth, db } from "../firebase";
 
@@ -34,14 +35,6 @@ const Account = () => {
   const getAverageScore = (allScores) => {
     let average = allScores.reduce((a, b) => a + b, 0) / allScores.length;
     return Math.round((average + Number.EPSILON) * 100) / 100;
-  };
-
-  const deleteAccount = () => {
-    const users = collection(db, "users");
-    const userRef = doc(users, user.uid);
-    deleteDoc(userRef);
-    googleSignOut();
-    toggleDelete();
   };
 
   const toggleDelete = () => {
@@ -85,7 +78,7 @@ const Account = () => {
             <h2 className="Warning-Text" >All your data will be lost!</h2>
             <h2 className="Warning-Text" >This action cannot be undone!</h2>
             <div className="Horizontal-Button-Container">
-              <Button onClick={deleteAccount} class="Delete-Button" >Yes</Button>
+              <Button onClick={() => deleteAccount(toggleDelete, user)} class="Delete-Button" >Yes</Button>
               <Button onClick={toggleDelete} class="Delete-Button" >No</Button>
             </div>
           </div>
