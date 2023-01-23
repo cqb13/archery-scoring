@@ -12,3 +12,7 @@ Save Details:
 
 History: 
     - add margin/pad at the bottom of page
+
+CSS:
+    - mobile view
+    

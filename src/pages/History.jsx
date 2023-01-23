@@ -127,7 +127,7 @@ const History = () => {
   };
 
   return (
-    <>
+    <div className="History">
       <h1>History</h1>
       <hr />
       {score ? (
@@ -175,7 +175,7 @@ const History = () => {
       ) : null}
       {!user ? <Button class='Account-Button' onClick={googleSignIn}>Sign In</Button> : null}
       {user && !score ? <h2>no saved scores!</h2> : null}
-    </>
+    </div>
   );
 };
 
