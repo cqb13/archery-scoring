@@ -3,16 +3,28 @@ About:
         - different scoring systems
 
     - Add link to github
-    
-Popup:
-    - popup component
-
-Save Details:
-    - Add an option to save total score of all splits or individual split score, if there is a split
-
-History: 
-    - add margin/pad at the bottom of page
 
 CSS:
+    - better design
     - mobile view
+
+History:
+    - add the ability to download a file with all the data
+
+Score:
+    - add the ability to upload files as score.
     
+Account:
+    - Sharing system:
+        allow users to share their scores with other users
+
+        - add a share button to the score page
+            - prompt for user email
+        
+        - add a page to account screen:
+            - give users the ability to not accept shares from users
+
+            - display all incoming shares there, display name of share/email/username of sender
+                - give the option to accept
+
+            - if accepted add the score to the user's account

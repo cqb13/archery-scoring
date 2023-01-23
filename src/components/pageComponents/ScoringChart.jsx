@@ -119,6 +119,7 @@ function ScoringChart(props) {
                 <td key={columnIndex}>
                 <input
                   type="text"
+                  class="Chart-Value-Input"
                   value={column}
                   onChange={event => handleChange(event, rowIndex, columnIndex)}
                 />

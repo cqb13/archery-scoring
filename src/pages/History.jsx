@@ -9,6 +9,7 @@ import removeGame from "../utils/score/removeGame";
 import React, { useState, useEffect } from "react";
 import Button from "../components/elements/Button";
 import sortDateTime from "../utils/sortDateTime";
+import Popup from "../components/elements/Popup";
 import { auth, db } from "../firebase";
 
 const History = () => {
@@ -150,28 +151,28 @@ const History = () => {
         </div>
       ) : null}
       {deleteOpen ? (
-        <div className="Popup-Overlay">
-          <div className="Popup">
-            <h1>Delete Game</h1>
-            <hr />
-            <h2 className="Warning-Text" >Are you sure you want to delete this game?</h2>
-            <h2 className="Warning-Text" >This action cannot be undone!</h2>
-            <div className="Horizontal-Button-Container">
-              <Button onClick={deleteGame} class="Delete-Button" >Yes</Button>
-              <Button onClick={toggleDelete} class="Delete-Button" >No</Button>
-            </div>
-          </div>
-        </div>
+        <Popup 
+          title="Delete Game?" 
+          message={`Are you sure you want to delete this game?\nThis action cannot be undone!`} 
+          messageClass="Warning-Text"
+          confirmButtonValue={"Yes"}
+          confirmButtonFunction={deleteGame}
+          confirmButtonClass="Delete-Button"
+          cancelButtonValue={"No"}
+          cancelButtonFunction={toggleDelete}
+          cancelButtonClass="Delete-Button"
+          >
+        </Popup>
       ) : null}
       {noteOpen ? (
-        <div className="Popup-Overlay">
-          <div className="Popup">
-            <h1>Note</h1>
-            <hr />
-            <pre className="Note">{note}</pre>
-            <Button onClick={toggleNote}>Close</Button>
-          </div>
-        </div>
+        <Popup 
+          title="Note" 
+          confirmButtonValue={"Close"}
+          confirmButtonFunction={toggleNote}
+          confirmButtonClass=""
+          >
+          <pre className="Note">{note}</pre>
+        </Popup>
       ) : null}
       {!user ? <Button class='Account-Button' onClick={googleSignIn}>Sign In</Button> : null}
       {user && !score ? <h2>no saved scores!</h2> : null}

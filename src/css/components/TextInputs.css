@@ -1,0 +1,22 @@
+input[type="text"],
+input[type="date"],
+input[type="time"] {
+  font-family: inherit;
+  text-align: center;
+  all: unset;
+  color: var(--main-text-color);
+  width: 70%;
+  background-color: var(--light-background);
+  transition: var(--transition-time);
+  padding: 5px;
+  border-radius: var(--border-radius);
+  border: 3px solid rgb(73, 107, 190, 0);
+}
+
+/*merge the following code*/
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+input[type="time"]:focus {
+  border: var(--border);
+}

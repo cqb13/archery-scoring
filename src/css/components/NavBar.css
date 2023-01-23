@@ -36,11 +36,6 @@ nav {
   scale: 1.1;
 }
 
-.Switch-Page:active {
-  color: var(--main-text-color);
-  border: 2px solid #444;
-}
-
 @media only screen and (max-width: 300px) {
   .Switch-Page {
     width: 30%;

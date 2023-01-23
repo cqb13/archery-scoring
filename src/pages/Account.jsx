@@ -6,6 +6,7 @@ import googleSignIn from "../utils/account/googleSignIn";
 import deleteAccount from "../utils/account/deleteAccount";
 import getAverageScore from "../utils/score/getAverageScore";
 import getUserDoc from "../utils/account/getUserDoc";
+import Popup from "../components/elements/Popup";
 import React, { useState } from "react";
 import { auth } from "../firebase";
 
@@ -29,6 +30,11 @@ const Account = () => {
   const toggleDelete = () => {
     setDeleteAccountPopup(!deleteAccountPopup);
   };
+
+  const confirmDelete = () => {
+    deleteAccount(user);
+    toggleDelete();
+  }
 
   return (
     <div className='Account'>
@@ -59,28 +65,18 @@ const Account = () => {
         </Button>
       )}
       {deleteAccountPopup ? (
-        <div className='Popup-Overlay'>
-          <div className='Popup'>
-            <h1>Delete Account</h1>
-            <hr />
-            <h2 className='Warning-Text'>
-              Are you sure you want to delete this account?
-            </h2>
-            <h2 className='Warning-Text'>All your data will be lost!</h2>
-            <h2 className='Warning-Text'>This action cannot be undone!</h2>
-            <div className='Horizontal-Button-Container'>
-              <Button
-                onClick={() => deleteAccount(toggleDelete, user)}
-                class='Delete-Button'
-              >
-                Yes
-              </Button>
-              <Button onClick={toggleDelete} class='Delete-Button'>
-                No
-              </Button>
-            </div>
-          </div>
-        </div>
+        <Popup 
+          title="Delete Account?" 
+          message={`Are you sure you want to delete this account?\nAll your data will be lost!\nThis action cannot be undone!`} 
+          messageClass="Warning-Text"
+          confirmButtonValue={"Yes"}
+          confirmButtonFunction={confirmDelete}
+          confirmButtonClass="Delete-Button"
+          cancelButtonValue={"No"}
+          cancelButtonFunction={toggleDelete}
+          cancelButtonClass="Delete-Button"
+          >
+        </Popup>
       ) : null}
     </div>
   );

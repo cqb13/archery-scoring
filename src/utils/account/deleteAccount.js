@@ -2,7 +2,7 @@ import { collection, doc, getDocs, deleteDoc, query } from "firebase/firestore";
 import googleSignOut from "./googleSignOut";
 import { db } from "../../firebase";
 
-const deleteAccount = async (toggleDelete, user) => {
+const deleteAccount = async (user) => {
   const users = collection(db, "users");
   const userRef = doc(users, user.uid);
   const scoreCollection = collection(users, user.uid, "scores");
@@ -20,7 +20,6 @@ const deleteAccount = async (toggleDelete, user) => {
 
   deleteDoc(userRef);
   googleSignOut();
-  toggleDelete();
 };
 
 export default deleteAccount;
