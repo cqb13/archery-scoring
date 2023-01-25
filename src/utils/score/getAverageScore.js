@@ -1,12 +1,14 @@
-const getAverageScore = (allScores) => {
-  let allGameScores = JSON.parse(allScores);
-  let totalScore = 0;
+import countTotalSplits from "./countTotalSplits";
 
-  allGameScores.forEach((score) => {
-    totalScore += score;
+const getAverageScore = (allScores) => {
+  let total = 0;
+
+  allScores.forEach((score) => {
+    score = score.replace(/[[\]]/g, '').split(',').map(Number);
+    total += score.reduce((a, b) => a + b);
   });
 
-  return totalScore / allGameScores.length;
+  return total / countTotalSplits(allScores);
 };
 
 export default getAverageScore;

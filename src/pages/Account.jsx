@@ -1,11 +1,12 @@
+import countTotalSplits from "../utils/score/countTotalSplits";
+import getAverageScore from "../utils/score/getAverageScore";
+import deleteAccount from "../utils/account/deleteAccount";
 import Profile from "../components/pageComponents/Profile";
-import { useAuthState } from "react-firebase-hooks/auth";
-import Button from "../components/elements/Button";
 import googleSignOut from "../utils/account/googleSignOut";
 import googleSignIn from "../utils/account/googleSignIn";
-import deleteAccount from "../utils/account/deleteAccount";
-import getAverageScore from "../utils/score/getAverageScore";
+import { useAuthState } from "react-firebase-hooks/auth";
 import getUserDoc from "../utils/account/getUserDoc";
+import Button from "../components/elements/Button";
 import Popup from "../components/elements/Popup";
 import React, { useState } from "react";
 import { auth } from "../firebase";
@@ -13,6 +14,7 @@ import { auth } from "../firebase";
 const Account = () => {
   const [deleteAccountPopup, setDeleteAccountPopup] = useState(false);
   const [averageScore, setAverageScore] = useState(0);
+  const [totalSplits, setTotalSplits] = useState(0);
   const [gamesPlayed, setGamesPlayed] = useState(0);
   const [highScore, setHighScore] = useState(0);
   const [lowScore, setLowScore] = useState(0);
@@ -21,6 +23,7 @@ const Account = () => {
   if (user) {
     getUserDoc(user).then((res) => {
       setAverageScore(getAverageScore(res.allScores));
+      setTotalSplits(countTotalSplits(res.allScores));
       setGamesPlayed(res.allScores.length);
       setHighScore(res.highScore);
       setLowScore(res.lowScore);
@@ -49,6 +52,7 @@ const Account = () => {
             lowScore={lowScore}
             gamesPlayed={gamesPlayed}
             averageScore={averageScore}
+            totalSplits={totalSplits}
           />
           <div className='Vertical-Button-Container'>
             <Button class='Account-Button' onClick={googleSignOut}>

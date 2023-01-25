@@ -18,26 +18,6 @@
   border-radius: var(--border-radius);
 }
 
-.Profile-Body {
-  background-color: var(--light-background);
-  border-radius: var(--border-radius);
-}
-
-.Stats-Container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  gap: 10px;
-  padding: 10px;
-}
-
-.Stat {
-  background-color: var(--light-background);
-  border-radius: var(--border-radius);
-  width: 30%;
-}
-
 .Account-Button {
   width: 30%;
 }

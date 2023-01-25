@@ -7,6 +7,7 @@ import "./css/History.css";
 import "./css/SetupMenu.css";
 import "./css/ScoringChart.css";
 import "./css/FinalScoreStats.css";
+import "./css/components/Stat.css";
 import "./css/components/Popup.css";
 import "./css/components/NavBar.css";
 import "./css/components/Slider.css";

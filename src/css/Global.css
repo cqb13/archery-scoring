@@ -66,6 +66,16 @@ h3 {
   scale: 1.1;
 }
 
+.Container-Title {
+  font-size: 2.5rem;
+  margin: 10px;
+}
+
+.Colored-Container {
+  background-color: var(--light-background);
+  border-radius: var(--border-radius);
+}
+
 .Vertical-Button-Container {
   display: flex;
   flex-direction: column;

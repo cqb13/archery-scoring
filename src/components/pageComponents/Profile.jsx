@@ -1,4 +1,4 @@
-import React from "react";
+import Stat from "../elements/Stat";
 
 const Profile = (props) => {
   return (
@@ -6,21 +6,14 @@ const Profile = (props) => {
       <div className='Profile-Header'>
         <h1 class='Welcome'>{"Welcome " + props.name}</h1>
       </div>
-      <div className='Profile-Body'>
-        <h2>Stats</h2>
+      <div className='Colored-Container'>
+        <h2 className='Container-Title'>Stats</h2>
         <div className='Stats-Container'>
-          <div className='Stat'>
-            <h2>High Score: {props.highScore}</h2>
-          </div>
-          <div className='Stat'>
-            <h2>Average Score: {props.averageScore}</h2>
-          </div>
-          <div className='Stat'>
-            <h2>Lowest Score: {props.lowScore}</h2>
-          </div>
-          <div className='Stat'>
-            <h2>Games Played: {props.gamesPlayed}</h2>
-          </div>
+          <Stat title='High Score' stat={props.highScore}></Stat>
+          <Stat title='Low Score' stat={props.lowScore}></Stat>
+          <Stat title='Average Score' stat={props.averageScore}></Stat>
+          <Stat title='Games Played' stat={props.gamesPlayed}></Stat>
+          <Stat title='Total Splits' stat={props.totalSplits} note='Includes Splits'></Stat>
         </div>
       </div>
     </div>
