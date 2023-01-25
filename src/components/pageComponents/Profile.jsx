@@ -13,7 +13,7 @@ const Profile = (props) => {
           <Stat title='Low Score' stat={props.lowScore}></Stat>
           <Stat title='Average Score' stat={props.averageScore}></Stat>
           <Stat title='Games Played' stat={props.gamesPlayed}></Stat>
-          <Stat title='Total Splits' stat={props.totalSplits} note='Includes Splits'></Stat>
+          <Stat title='Total Splits' stat={props.totalSplits}></Stat>
         </div>
       </div>
     </div>

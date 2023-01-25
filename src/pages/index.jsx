@@ -6,7 +6,7 @@ const Score = () => {
   const [settingUp, setSettingUp] = useState(true);
   const [state, setState] = useState();
 
-  const handleStateChange = (newState) => {
+  const updateState = (newState) => {
     setState(newState);
     setSettingUp(false);
   };
@@ -18,7 +18,7 @@ const Score = () => {
   return (
     <main className='Score'>
       {settingUp ? (
-        <SetupMenu onStateChange={handleStateChange} />
+        <SetupMenu updateState={updateState} />
       ) : (
         <ScoringPage data={state} reset={reset} />
       )}

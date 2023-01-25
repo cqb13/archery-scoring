@@ -1,12 +1,13 @@
+CSS:
+    - better note display
+    - better design
+    - mobile view
+
 About:
     - how to score  
         - different scoring systems
 
     - Add link to github
-
-CSS:
-    - better design
-    - mobile view
 
 History:
     - add the ability to download a file with all the data
