@@ -8,7 +8,9 @@ const getAverageScore = (allScores) => {
     total += score.reduce((a, b) => a + b);
   });
 
-  return total / countTotalSplits(allScores);
+  let average = total / countTotalSplits(allScores);
+  
+  return Math.round(average * 10) / 10;
 };
 
 export default getAverageScore;

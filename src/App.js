@@ -14,7 +14,7 @@ import "./css/components/Slider.css";
 import "./css/components/Button.css";
 import "./css/components/TextArea.css";
 import "./css/components/TextInputs.css";
-import "./css/components/RadioButton.css";
+import "./css/components/ToggleButton.css";
 //Pages
 import Account from "./pages/Account";
 import History from "./pages/History";

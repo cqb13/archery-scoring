@@ -93,6 +93,13 @@ h3 {
   width: 80%;
 }
 
+.Vertical-Container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .Warning-Text {
   color: #c73f36;
 }

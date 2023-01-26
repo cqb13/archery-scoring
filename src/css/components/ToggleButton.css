@@ -1,12 +1,15 @@
+.CheckBox,
 .RadioButton {
   cursor: pointer;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  width: fit-content;
   margin: 5px 0px 5px 0px;
 }
 
+input[type="checkbox"],
 input[type="radio"] {
   cursor: pointer;
   -webkit-appearance: none;
@@ -18,15 +21,19 @@ input[type="radio"] {
   transition: var(--transition-time);
 }
 
+input[type="checkbox"]:checked,
 input[type="radio"]:checked {
   background: var(--main-color-transparent);
   scale: 1.1;
 }
 
+input[type="checkbox"]:hover,
 input[type="radio"]:hover {
   scale: 1.1;
 }
 
+
+.CheckBox label,
 .RadioButton label {
   margin-left: 5px;
   font-size: 25px;

@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
+import predictFinalScore from "../../utils/score/predictFinalScore";
+import CheckBox from "../elements/CheckBox";
 import Button from "../elements/Button";
 
 function ScoringChart(props) {
+  const [finalScorePrediction, setFinalScorePrediction] = useState(false);
   const [currentSplit, setCurrentSplit] = useState(0);
+  const [finalScore, setFinalScore] = useState(0);
   const arrowsPerEnd = props.arrowsPerEnd;
   const [data, setData] = useState([[]]);
   const returnData = props.returnData;
@@ -41,6 +45,8 @@ function ScoringChart(props) {
       newArray[currentSplit] = updatedData;
       return newArray;
     });
+
+    setFinalScore(predictFinalScore(updatedData, ends));
   };
 
   const handleSwitch = (event) => {
@@ -57,6 +63,10 @@ function ScoringChart(props) {
       }
       setCurrentSplit(currentSplit + 1);
     }
+  };
+
+  const toggleFinalScorePrediction = () => {
+    setFinalScorePrediction(!finalScorePrediction);
   };
 
   const addScores = (a, b) => {
@@ -146,7 +156,12 @@ function ScoringChart(props) {
     </div>
     {splits > 1 ? <Button class="Switch-Chart" type="switch" value=">" onClick={handleSwitch} >{">"}</Button> : null}
     </div>
-    {!done && !history ? <Button class="Done" type="button" value="Done" onClick={handleDone} >Done</Button> : null}
+    {!done && !history ? (
+      <div className="Vertical-Container">
+        <CheckBox class='Score-Prediction' name='prediction' value={finalScorePrediction ? `Predicted final score: ${finalScore}` : 'Predict final score?'} onChange={toggleFinalScorePrediction}/>
+        <Button class="Done" type="button" value="Done" onClick={handleDone} >Done</Button>
+      </div>
+    ) : null}
     </>
   );
 }
