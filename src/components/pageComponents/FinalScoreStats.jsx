@@ -80,7 +80,7 @@ const FinalScoreStats = (props) => {
         </tbody>
       </table>
       {!history ? (
-        <div className="Horizontal-Button-Container">
+        <div className="Horizontal-Button-Container Container">
           <Button class="Final-Button" onClick={reset}>Finish</Button>
           <Button class="Final-Button" onClick={continueScoring}>Continue</Button>
           <Button class="Final-Button" onClick={handleSave}>Save</Button>
