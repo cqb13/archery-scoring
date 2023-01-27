@@ -1,5 +1,4 @@
 CSS:
-    - better note display
     - better design
     - mobile view
 

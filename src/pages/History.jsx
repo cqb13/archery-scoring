@@ -144,7 +144,7 @@ const History = () => {
             <h2>{distance}{distanceUnit}</h2>
             <h2>{bow}</h2>
             <Button onClick={toggleNote}>Note</Button>
-            <Button class="Trash-Button" onClick={toggleDelete}>X</Button>
+            <Button class="Warning-Text" onClick={toggleDelete}>X</Button>
           </div>
           <ScoringChart score={JSON.parse(score)} arrowsPerEnd={arrowsPerEnd} splits={splits} history={true} />
           <FinalScoreStats score={JSON.parse(score)} history={true} />

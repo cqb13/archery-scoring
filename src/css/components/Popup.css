@@ -21,16 +21,6 @@
   margin: 10px;
 }
 
-.Note {
-  text-align: left;
-  font-size: 25px;
-  height: 55%;
-  background-color: var(--light-background);
-  border-radius: var(--border-radius);
-  overflow-y: auto;
-  padding: 10px;
-}
-
 .Save-Details-Item {
   margin: 10px;
   display: flex;

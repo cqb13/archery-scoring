@@ -5,7 +5,13 @@ const predictFinalScore = (scores, ends) => {
   for (let i = 0; i < scores.length; i++) {
     let total = 0;
     for (let j = 0; j < scores[i].length; j++) {
-      total += Number(scores[i][j]);
+      if (scores[i][j] === "X" || scores[i][j] === "x") {
+        total += 10;
+      } else if (scores[i][j] === "M" || scores[i][j] === "m") {
+        total += 0;
+      } else {
+        total += Number(scores[i][j]);
+      }
     }
     endTotals.push(total);
   }
