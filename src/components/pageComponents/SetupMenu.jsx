@@ -5,13 +5,13 @@ import Slider from "../elements/Slider";
 import React, { useState } from "react";
 
 const SetupMenu = (props) => {
-  const updateState = props.updateState;
-  const [location, setLocation] = useState("Indoor");
   const [distanceUnit, setDistanceUnit] = useState("m");
   const [arrowsPerEnd, setArrowsPerEnd] = useState(3);
-  const [bow, setBow] = useState("Recurve");
+  const [location, setLocation] = useState("Indoor");
   const [distance, setDistance] = useState(18);
   const [sessions, setSessions] = useState(1);
+  const [bow, setBow] = useState("Recurve");
+  const updateState = props.updateState;
   const [ends, setEnds] = useState(10);
   const mobile = isMobile();
 
@@ -52,7 +52,15 @@ const SetupMenu = (props) => {
   };
 
   const handleBegin = () => {
-    updateState({location, distanceUnit, arrowsPerEnd, bow, distance, sessions, ends});
+    updateState({
+      location,
+      distanceUnit,
+      arrowsPerEnd,
+      bow,
+      distance,
+      sessions,
+      ends
+    });
   };
 
   return (

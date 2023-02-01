@@ -1,5 +1,5 @@
-import React from "react";
 import Button from "./Button";
+import React from "react";
 
 const Popup = (props) => {
   const confirmAction = props.confirmButtonFunction;
@@ -11,21 +11,23 @@ const Popup = (props) => {
         <h1>{props.title}</h1>
         <hr />
         {props.message ? (
-            <pre class={props.messageClass}>{props.message}</pre>
+          <pre class={props.messageClass}>{props.message}</pre>
         ) : null}
 
-        {props.children ? (
-            <>{props.children}</>
-        ): null}
-        
-        <div className='Horizontal-Container'>
-            {props.confirmButtonValue ? (
-                <Button onClick={confirmAction} class={props.confirmButtonClass} >{props.confirmButtonValue}</Button>
-            ) : null}
+        {props.children ? <>{props.children}</> : null}
 
-            {props.cancelButtonValue ? (
-                <Button onClick={cancelAction} class={props.cancelButtonClass} >{props.cancelButtonValue}</Button>
-            ) : null}
+        <div className='Horizontal-Container'>
+          {props.confirmButtonValue ? (
+            <Button onClick={confirmAction} class={props.confirmButtonClass}>
+              {props.confirmButtonValue}
+            </Button>
+          ) : null}
+
+          {props.cancelButtonValue ? (
+            <Button onClick={cancelAction} class={props.cancelButtonClass}>
+              {props.cancelButtonValue}
+            </Button>
+          ) : null}
         </div>
       </div>
     </div>

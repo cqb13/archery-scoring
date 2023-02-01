@@ -31,12 +31,16 @@ function ScoringChart(props) {
               case "M":
               case "x":
               case "X":
-                setTimeout(() => {switchFocus(event) }, delay);
+                setTimeout(() => {
+                  switchFocus(event);
+                }, delay);
                 return event.target.value;
               default:
                 break;
             }
-            return /^(0|[1-9]|1[0-1])$/.test(event.target.value) ? event.target.value : "";
+            return /^(0|[1-9]|1[0-1])$/.test(event.target.value)
+              ? event.target.value
+              : "";
           }
           return column;
         });
@@ -52,7 +56,9 @@ function ScoringChart(props) {
     });
 
     if (/^(0|[1-9]|1[0-1])$/.test(event.target.value)) {
-      setTimeout(() => {switchFocus(event) }, delay);
+      setTimeout(() => {
+        switchFocus(event);
+      }, delay);
     }
 
     setFinalScore(predictFinalScore(updatedData, ends));
@@ -69,7 +75,7 @@ function ScoringChart(props) {
         }
       }
     }
-  }
+  };
 
   const switchFocus = (event) => {
     if (event.target.nextSibling) {
@@ -77,7 +83,7 @@ function ScoringChart(props) {
     } else if (event.target.parentNode.nextSibling) {
       event.target.parentNode.nextSibling.firstChild.focus();
     }
-  }
+  };
 
   const handleSwitch = (event) => {
     if (event.target.value === "<") {
@@ -141,71 +147,69 @@ function ScoringChart(props) {
         {splits > 1 ? <h2>Split {currentSplit + 1}/{splits}</h2> : null}
         {splits > 1 ? <Button class="Small-Button" type="switch" value=">" onClick={handleSwitch} >{">"}</Button> : null}
       </section>
-
-    <main className='Scoring-Chart Colored-Container'>
-      <table>
-        <thead>
-          <tr>
-            {mobile & arrowsPerEnd > 3? (
-              null
-            ) : (
-                <th>End</th>
-            )}
-            {Array.from(Array(arrowsPerEnd), (x, i) => i + 1).map((_, columnIndex) => (
-              <th key={columnIndex}>Arrow {columnIndex + 1}</th>
-            ))}
-            <th>Total</th>
-            <th>Running Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {data[currentSplit].map((row, rowIndex) => (
-            <tr key={rowIndex}>
+      <main className='Scoring-Chart Colored-Container'>
+        <table>
+          <thead>
+            <tr>
               {mobile & arrowsPerEnd > 3? (
                 null
-              ) : <td>{rowIndex + 1}</td>}
-              {row.map((column, columnIndex) => (
-                <td key={columnIndex}>
-                <input
-                  type="text"
-                  class="Chart-Value-Input"
-                  pattern="[0-9mxMX]*"
-                  inputmode="numeric"
-                  value={column}
-                  onChange={event => handleChange(event, rowIndex, columnIndex)}
-                />
-              </td>
+              ) : (
+                  <th>End</th>
+              )}
+              {Array.from(Array(arrowsPerEnd), (x, i) => i + 1).map((_, columnIndex) => (
+                <th key={columnIndex}>Arrow {columnIndex + 1}</th>
               ))}
-              <td>{
-                data[currentSplit][rowIndex].some(value => value === '') ? '0' :
-                data[currentSplit][rowIndex].reduce((a, b) => {
-                  return addScores(a, b)
-                }, 0)
-                }</td>
-              <td>{
-                data[currentSplit][rowIndex].some(value => value === '') ? '0' :
-                data[currentSplit].slice(0, rowIndex + 1).reduce((a, b) => {
-                  return a + b.reduce((c, d) => {
-                    return addScores(c, d);
-                  }, 0);
-                }, 0)
-              }</td>
+              <th>Total</th>
+              <th>Running Total</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </main>
-
-    {!done && !history ? (
-      <div className="Vertical-Container">
-        <CheckBox class='Score-Prediction' name='prediction' value={finalScorePrediction ? `Predicted final score: ${finalScore}` : 'Predict final score?'} onChange={toggleFinalScorePrediction}/>
-        <section className="Horizontal-Container">
-          {mobile ? <Button class="Mobile-Letter-Input" value="x" onClick={specialInput}>X</Button> : null}
-          <Button class="Done" value="Done" onClick={handleDone} >Done</Button>
-          {mobile ? <Button class="Mobile-Letter-Input" value="m" onClick={specialInput}>M</Button> : null}
-        </section>
-      </div>
-    ) : null}
+          </thead>
+          <tbody>
+            {data[currentSplit].map((row, rowIndex) => (
+              <tr key={rowIndex}>
+                {mobile & arrowsPerEnd > 3? (
+                  null
+                ) : <td>{rowIndex + 1}</td>}
+                {row.map((column, columnIndex) => (
+                  <td key={columnIndex}>
+                  <input
+                    type="text"
+                    class="Chart-Value-Input"
+                    pattern="[0-9mxMX]*"
+                    inputmode="numeric"
+                    value={column}
+                    onChange={event => handleChange(event, rowIndex, columnIndex)}
+                  />
+                </td>
+                ))}
+                <td>{
+                  data[currentSplit][rowIndex].some(value => value === '') ? '0' :
+                  data[currentSplit][rowIndex].reduce((a, b) => {
+                    return addScores(a, b)
+                  }, 0)
+                  }</td>
+                <td>{
+                  data[currentSplit][rowIndex].some(value => value === '') ? '0' :
+                  data[currentSplit].slice(0, rowIndex + 1).reduce((a, b) => {
+                    return a + b.reduce((c, d) => {
+                      return addScores(c, d);
+                    }, 0);
+                  }, 0)
+                }</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </main>
+      {!done && !history ? (
+        <div className="Vertical-Container">
+          <CheckBox class='Score-Prediction' name='prediction' value={finalScorePrediction ? `Predicted final score: ${finalScore}` : 'Predict final score?'} onChange={toggleFinalScorePrediction}/>
+          <section className="Horizontal-Container">
+            {mobile ? <Button class="Mobile-Letter-Input" value="x" onClick={specialInput}>X</Button> : null}
+            <Button class="Done" value="Done" onClick={handleDone} >Done</Button>
+            {mobile ? <Button class="Mobile-Letter-Input" value="m" onClick={specialInput}>M</Button> : null}
+          </section>
+        </div>
+      ) : null}
     </section>
   );
 }

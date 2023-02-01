@@ -55,7 +55,6 @@ const FinalScoreStats = (props) => {
           <th>M's</th>
           <th>Score</th>
         </thead>
-
         <tbody>
           {scoreStats.length > 1 ? (
             scoreStats.map((split, splitIndex) => (

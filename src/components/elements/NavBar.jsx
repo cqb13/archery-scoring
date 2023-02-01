@@ -8,7 +8,7 @@ const NavBar = () => {
   //!!!: if the back arrow in the browser is used, the active class is not updated to the correct page
   const changePage = (event) => {
     const buttons = document.querySelectorAll(".Switch-Page");
-    
+
     buttons.forEach((button) => {
       button.classList.remove("Active");
     });
@@ -17,7 +17,7 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="Sticky">
+    <nav className='Sticky'>
       <Link to='/' className='Switch-Page Active' onClick={changePage}>
         Score
       </Link>
@@ -28,7 +28,7 @@ const NavBar = () => {
         About
       </Link>
       <Link to='/account' className='Switch-Page' onClick={changePage}>
-        {user? user.displayName : "Account"}
+        {user ? user.displayName : "Account"}
       </Link>
     </nav>
   );

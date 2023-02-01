@@ -2,8 +2,8 @@ import { deleteDoc, setDoc } from "firebase/firestore";
 
 const removeGame = async ({ scoreDoc, userDoc, userData, totalScore }) => {
   const allScores = userData.data().allScores;
-  const lowScore = userData.data().lowScore;
   const highScore = userData.data().highScore;
+  const lowScore = userData.data().lowScore;
 
   // removes score from all scores list
   const index = allScores.indexOf(totalScore);

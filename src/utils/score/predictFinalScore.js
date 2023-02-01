@@ -1,6 +1,6 @@
 const predictFinalScore = (scores, ends) => {
-  let endTotals = [];
   let actualValues = [];
+  let endTotals = [];
 
   for (let i = 0; i < scores.length; i++) {
     let total = 0;

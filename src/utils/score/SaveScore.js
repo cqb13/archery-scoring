@@ -3,7 +3,8 @@ import addScoreArrayValues from "./addScoreArrayValues";
 import sortScores from "./sortScores";
 import { db } from "../../firebase";
 
-const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) => {
+const SaveToDB = async ( user, score, data, totalScore, name, note, createdAt ) => { 
+  
   const { location, distance, distanceUnit, ends, arrowsPerEnd, sessions, bow } = data;
 
   const sortedScore = await sortScores(score);
@@ -22,13 +23,21 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
 
   if (allScores) {
     let newAllScores = [...allScores, encodedSplitScoreArrayValues];
-    await setDoc(userDoc, {
-      allScores: newAllScores
-    }, { merge: true });
+    await setDoc(
+      userDoc,
+      {
+        allScores: newAllScores
+      },
+      { merge: true }
+    );
   } else {
-    await setDoc(userDoc, {
-      allScores: [totalScore]
-    }, { merge: true });
+    await setDoc(
+      userDoc,
+      {
+        allScores: [totalScore]
+      },
+      { merge: true }
+    );
   }
 
   splitScoreArrayValues.sort((a, b) => a - b);
@@ -36,21 +45,33 @@ const SaveToDB = async (user, score, data, totalScore, name, note, createdAt) =>
   const highestValue = splitScoreArrayValues[splitScoreArrayValues.length - 1];
 
   if (highestValue > highScore) {
-    await setDoc(userDoc, {
-      highScore: highestValue
-    }, { merge: true });
+    await setDoc(
+      userDoc,
+      {
+        highScore: highestValue
+      },
+      { merge: true }
+    );
   }
 
   if (lowestValue < lowScore && lowScore !== 0) {
-    await setDoc(userDoc, {
-      lowScore: lowestValue
-    }, { merge: true });
+    await setDoc(
+      userDoc,
+      {
+        lowScore: lowestValue
+      },
+      { merge: true }
+    );
   } else if (lowScore === 0) {
-    await setDoc(userDoc, {
-      lowScore: lowestValue
-    }, { merge: true });
+    await setDoc(
+      userDoc,
+      {
+        lowScore: lowestValue
+      },
+      { merge: true }
+    );
   }
-  
+
   const scoreCollection = collection(userDoc, "scores");
 
   await addDoc(scoreCollection, {
