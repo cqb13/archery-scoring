@@ -18,7 +18,7 @@ const Popup = (props) => {
             <>{props.children}</>
         ): null}
         
-        <div className='Horizontal-Button-Container'>
+        <div className='Horizontal-Container'>
             {props.confirmButtonValue ? (
                 <Button onClick={confirmAction} class={props.confirmButtonClass} >{props.confirmButtonValue}</Button>
             ) : null}

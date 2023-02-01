@@ -10,6 +10,7 @@ import React, { useState, useEffect } from "react";
 import Button from "../components/elements/Button";
 import sortDateTime from "../utils/sortDateTime";
 import Popup from "../components/elements/Popup";
+import isMobile from "../utils/isMobile";
 import { auth, db } from "../firebase";
 
 const History = () => {
@@ -27,6 +28,7 @@ const History = () => {
   const [note, setNote] = useState();
   const [user] = useAuthState(auth);
   const [bow, setBow] = useState();
+  const mobile = isMobile();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,23 +131,23 @@ const History = () => {
 
   return (
     <div className="History">
-      <h1>History</h1>
-      <hr />
       {score ? (
         <div>
-          <div className="Info-Bar">
+          <div className={mobile ? "Vertical-Button-Container" : "Horizontal-Container"}>
             <DropdownMenu options={Array.from(dateMap.keys())} setGame={setCurrentGame} changeGame={changeGame} currentGame={currentGame} />
-            <div className="Switch-Game-Container">
-              <Button class="Switch-Game" type="switch" value="<" onClick={switchGame}>{"<"}</Button>
+            <div className="Horizontal-Container Switch-Game">
+              <Button type="switch" value="<" onClick={switchGame}>{"<"}</Button>
               <h2 className="Game-Count">Game {currentGame}/{dateMap.size}</h2>
-              <Button class="Switch-Game" type="switch" value=">" onClick={switchGame}>{">"}</Button>
+              <Button type="switch" value=">" onClick={switchGame}>{">"}</Button>
             </div>
+          </div>
+          <section className="Horizontal-Container">
             <h2>{location}</h2>
             <h2>{distance}{distanceUnit}</h2>
             <h2>{bow}</h2>
-            <Button onClick={toggleNote}>Note</Button>
-            <Button class="Warning-Text" onClick={toggleDelete}>X</Button>
-          </div>
+            <Button class="Small-Button" onClick={toggleNote}>Note</Button>
+            <Button class="Warning-Text Small-Button" onClick={toggleDelete}>X</Button>
+          </section>
           <ScoringChart score={JSON.parse(score)} arrowsPerEnd={arrowsPerEnd} splits={splits} history={true} />
           <FinalScoreStats score={JSON.parse(score)} history={true} />
         </div>
@@ -174,7 +176,7 @@ const History = () => {
           <pre className="Note">{note}</pre>
         </Popup>
       ) : null}
-      {!user ? <Button class='Account-Button' onClick={googleSignIn}>Sign In</Button> : null}
+      {!user ? <Button class='Account-Button Sign-In' onClick={googleSignIn}>Sign In</Button> : null}
       {user && !score ? <h2>no saved scores!</h2> : null}
     </div>
   );

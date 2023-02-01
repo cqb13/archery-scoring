@@ -17,3 +17,16 @@ textarea {
 textarea:focus {
   border: var(--border);
 }
+
+.Note {
+  text-align: left;
+  font-size: 25px;
+  background-color: var(--light-background);
+  border-radius: var(--border-radius);
+  overflow-y: auto;
+  width: 90%;
+  height: fit-content;
+  max-height: 300px;
+  padding: 10px;
+  white-space: pre-wrap;
+}

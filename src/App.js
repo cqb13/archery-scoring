@@ -2,17 +2,15 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 //CSS
 import "./css/Global.css";
-import "./css/Profile.css";
-import "./css/History.css";
-import "./css/SetupMenu.css";
-import "./css/ScoringChart.css";
 import "./css/FinalScoreStats.css";
 import "./css/components/Stat.css";
+import "./css/components/Chart.css";
 import "./css/components/Popup.css";
 import "./css/components/NavBar.css";
 import "./css/components/Slider.css";
 import "./css/components/Button.css";
 import "./css/components/TextArea.css";
+import "./css/components/Dropdown.css";
 import "./css/components/TextInputs.css";
 import "./css/components/ToggleButton.css";
 //Pages

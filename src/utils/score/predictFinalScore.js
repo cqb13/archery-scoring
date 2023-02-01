@@ -26,6 +26,10 @@ const predictFinalScore = (scores, ends) => {
 
   let predictedFinalScore = currentEndAverage * ends;
 
+  if (currentEndAverage === null) {
+    predictedFinalScore = 0;
+  }
+
   return Math.round(predictedFinalScore);
 };
 

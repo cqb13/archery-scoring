@@ -1,36 +1,35 @@
 import { useAuthState } from "react-firebase-hooks/auth";
-import googleSignIn from "../../utils/account/googleSignIn";
 import { Link } from "react-router-dom";
 import { auth } from "../../firebase";
-import Button from "./Button";
 
 const NavBar = () => {
   const [user] = useAuthState(auth);
 
+  //!!!: if the back arrow in the browser is used, the active class is not updated to the correct page
+  const changePage = (event) => {
+    const buttons = document.querySelectorAll(".Switch-Page");
+    
+    buttons.forEach((button) => {
+      button.classList.remove("Active");
+    });
+
+    event.target.classList.add("Active");
+  };
+
   return (
-    <nav>
-      <div className='Links'>
-        <Link to='/' className='Switch-Page'>
-          Score
-        </Link>
-        <Link to='/history' className='Switch-Page'>
-          History
-        </Link>
-        <Link to='/about' className='Switch-Page'>
-          About
-        </Link>
-      </div>
-      <div className='User'>
-        {user ? (
-          <Link to='/account' className='Switch-Page'>
-            {user.displayName}
-          </Link>
-        ) : (
-          <Button class='Switch-Page' onClick={googleSignIn}>
-            Sign In
-          </Button>
-        )}
-      </div>
+    <nav className="Sticky">
+      <Link to='/' className='Switch-Page Active' onClick={changePage}>
+        Score
+      </Link>
+      <Link to='/history' className='Switch-Page' onClick={changePage}>
+        History
+      </Link>
+      <Link to='/about' className='Switch-Page' onClick={changePage}>
+        About
+      </Link>
+      <Link to='/account' className='Switch-Page' onClick={changePage}>
+        {user? user.displayName : "Account"}
+      </Link>
     </nav>
   );
 };

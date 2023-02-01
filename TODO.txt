@@ -1,6 +1,4 @@
-CSS:
-    - better design
-    - mobile view
+isMobile, on ipads and larger screen devices, mobile is detected but not needed.
 
 About:
     - how to score  

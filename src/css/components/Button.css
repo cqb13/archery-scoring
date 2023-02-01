@@ -1,24 +1,55 @@
 button {
   cursor: pointer;
-  border: 2px solid #44444400;
+  border: 2px solid #496bbe;
   border-radius: var(--border-radius);
-  background-color: var(--light-background);
-  border: var(--border);
-  color: var(--main-text-color);
   transition: var(--transition-time);
+  background: var(--background-color);
+  color: var(--text-color);
+  width: 30%;
   padding: 5px;
   font-size: 25px;
 }
 
 button:hover {
-  background-color: #496bbeb3;
+  background: #496bbe;
+  color: var(--background-color);
 }
 
 button:active {
-  scale: 1.1;
+  scale: 1.05;
+}
+
+.Small-Button {
+  max-width: 10%;
+  font-size: 20px;
 }
 
 .Delete-Button {
   width: 40%;
   font-size: 50px;
+}
+
+.Sign-In {
+  margin: 10px;
+}
+
+.Switch-Game {
+  width: 30%;
+  margin: 0;
+}
+
+@media only screen and (max-width: 520px) {
+  button {
+    width: 80%;
+    font-size: 20px;
+  }
+
+  .Small-Button {
+    width: 40%;
+  }
+
+  .Delete-Button {
+    width: 80%;
+    font-size: 40px;
+  }
 }

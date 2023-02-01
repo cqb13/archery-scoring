@@ -19,6 +19,12 @@
   padding: 10px;
 }
 
+@media only screen and (max-width: 600px) {
+  .Stat {
+    width: 90%;
+  }
+}
+
 .Stat h2 {
   margin: 0;
 }

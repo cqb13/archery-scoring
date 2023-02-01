@@ -47,8 +47,6 @@ const ScoringPage = (props) => {
 
   return (
     <div className='Scoring-Page'>
-      <h1>Score</h1>
-      <hr />
       <ScoringChart
         arrowsPerEnd={data.arrowsPerEnd}
         ends={data.ends}

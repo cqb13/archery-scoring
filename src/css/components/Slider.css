@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 80%;
 }
 
 input[type="range"] {
@@ -42,4 +43,14 @@ input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+}
+
+@media only screen and (max-width: 520px) {
+  .Slider input[type="text"] {
+    width: 20%;
+  }
+
+  .Slider input[type="range"] {
+    width: 80%;
+  }
 }

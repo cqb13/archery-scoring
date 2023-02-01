@@ -3,9 +3,10 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50%;
+  min-width: 50%;
+  width: fit-content;
   height: fit-content;
-  background-color: var(--main-background-color);
+  background-color: var(--background-color);
   z-index: 1000;
   border-radius: 5px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
@@ -19,6 +20,7 @@
   font-size: 30px;
   padding: 10px;
   margin: 10px;
+  white-space: pre-wrap;
 }
 
 .Save-Details-Item {
@@ -41,4 +43,26 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
+}
+
+@media only screen and (max-width: 520px) {
+  .Popup {
+    width: 80%;
+  }
+
+  .Popup pre {
+    font-size: 20px;
+  }
+
+  .Popup p {
+    font-size: 20px;
+  }
+
+  .Save-Details-Item {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
 }
