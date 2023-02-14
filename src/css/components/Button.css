@@ -45,7 +45,7 @@ button:active {
   }
 
   .Small-Button {
-    width: 40%;
+    max-width: 30%;
   }
 
   .Delete-Button {

@@ -141,12 +141,12 @@ const History = () => {
               <Button type="switch" value=">" onClick={switchGame}>{">"}</Button>
             </div>
           </div>
-          <section className="Horizontal-Container">
-            <h2>{location}</h2>
-            <h2>{distance}{distanceUnit}</h2>
-            <h2>{bow}</h2>
-            <Button class="Small-Button" onClick={toggleNote}>Note</Button>
-            <Button class="Warning-Text Small-Button" onClick={toggleDelete}>X</Button>
+          <section className={mobile ? "Vertical-Container" : "Special"}>
+            <h2 className="test">{location} {distance}{distanceUnit} {bow}</h2>
+            <div className="Horizontal-Container">
+              <Button class="Small-Button" onClick={toggleNote}>Note</Button>
+              <Button class="Warning-Text Small-Button" onClick={toggleDelete}>X</Button>
+            </div>
           </section>
           <ScoringChart score={JSON.parse(score)} arrowsPerEnd={arrowsPerEnd} splits={splits} history={true} />
           <FinalScoreStats score={JSON.parse(score)} history={true} />

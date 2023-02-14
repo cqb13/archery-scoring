@@ -74,8 +74,27 @@ h3 {
   gap: 10px;
 }
 
+.Special {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.Special .Horizontal-Container {
+  margin: unset;
+  width: 20%;
+}
+
+.Special .Horizontal-Container .Small-Button {
+  max-width: 100%;
+  width: 100%;
+}
+
 .Horizontal-Container {
-  margin: 10px auto;
+  margin: 0 auto;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -103,3 +122,4 @@ h3 {
 .Warning-Text {
   color: #c73f36;
 }
+
