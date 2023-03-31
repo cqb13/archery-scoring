@@ -24,9 +24,6 @@ const NavBar = () => {
       <Link to='/history' className='Switch-Page' onClick={changePage}>
         History
       </Link>
-      <Link to='/about' className='Switch-Page' onClick={changePage}>
-        About
-      </Link>
       <Link to='/account' className='Switch-Page' onClick={changePage}>
         {user ? user.displayName : "Account"}
       </Link>

@@ -16,7 +16,6 @@ import "./css/components/ToggleButton.css";
 //Pages
 import Account from "./pages/Account";
 import History from "./pages/History";
-import About from "./pages/About";
 import Score from "./pages";
 
 import NavBar from "./components/elements/NavBar";
@@ -27,10 +26,9 @@ function App() {
       <NavBar />
       <Routes>
         <Route exact path='/' element={<Score />} />
-        <Route path='/about' element={<About />} />
         <Route path='/history' element={<History />} />
         <Route path='/account' element={<Account />} />
-        <Route path='*' element={<About />} />
+        <Route path='*' element={<Score />} />
       </Routes>
     </Router>
   );
