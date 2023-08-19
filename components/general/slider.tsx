@@ -21,12 +21,15 @@ export default function Slider({
 }: Props) {
   const [value, setValue] = useState(defaultValue);
   const updateValue = (value: number) => {
+    if (value < min) value = min;
+    if (value > max) value = max;
+
     setValue(value);
     update(value);
   };
 
   return (
-    <section className="bg-lightest px-4 py-2 rounded-md border border-gray-300 shadow-sm">
+    <section className="bg-lightest px-4 py-2 rounded-md border w-60 border-gray-300 shadow-sm">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <h1>

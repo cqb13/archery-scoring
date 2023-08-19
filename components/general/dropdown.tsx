@@ -5,14 +5,12 @@ import { useState } from "react";
 type Props = {
   title: string;
   items: string[];
-  selected: string;
   setSelected: (value: string) => void;
 };
 
 export default function Dropdown({
   title,
   items,
-  selected,
   setSelected
 }: Props) {
   const [opened, setOpened] = useState(false);
@@ -22,11 +20,11 @@ export default function Dropdown({
   
   return (
     <section>
-      <div className="relative inline-block w-56 text-left">
+      <div className="relative inline-block w-60 text-left ">
         <div>
           <button
             type="button"
-            className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-lightest text-sm font-medium text-gray-700 hover:bg-lighter focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lighter"
+            className="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-lightest text-sm font-medium text-gray-700 hover:shadow-card focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-lighter"
             onClick={toggle}
           >
             {selectedItem != "" ? selectedItem : title}
@@ -54,6 +52,7 @@ export default function Dropdown({
                 onClick={() => {
                     setSelectedItem(item);
                     setSelected(item);
+                    setOpened(false);
                 }}
                 className="block px-4 py-2 text-sm text-gray-700 w-full hover:shadow-card transition-none"
                 role="menuitem"
