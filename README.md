@@ -1,3 +1,3 @@
 # Website for archery scoring
 
-[Try The Website](https://archeryscoring.cqb13.dev/)
+[Try The Website](https://archery.cqb13.dev/)
