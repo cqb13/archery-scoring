@@ -5,7 +5,7 @@ import useIsScrolling from "@hooks/useIsScrolling";
 import { useRouter, usePathname } from "next/navigation";
 import { routes } from "@lib/routes";
 
-const NavBar = () => {
+export default function NavBar() {
   const router = useRouter();
   const pathname = usePathname();
 
@@ -13,10 +13,9 @@ const NavBar = () => {
     <nav
       className={`${useScroll(10)
         ? "shadow-bar backdrop-blur-md"
-        : ""}
-        ${useIsScrolling()? "bg-opacity-50" : ""}
-        flex flex-row items-center justify-between p-4 sticky top-0 z-50 bg-darkest text-lightest transition-all
-        `}
+        : ""} ${useIsScrolling()
+        ? "bg-opacity-50"
+        : ""} flex flex-row items-center justify-between p-4 sticky top-0 z-50 bg-darkest text-lightest transition-all`}
     >
       <div className="flex gap-4 flex-wrap items-center justify-center">
         {routes.map(([name, path]) =>
@@ -32,6 +31,4 @@ const NavBar = () => {
       </div>
     </nav>
   );
-};
-
-export default NavBar;
+}

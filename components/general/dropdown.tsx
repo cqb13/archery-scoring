@@ -8,16 +8,12 @@ type Props = {
   setSelected: (value: string) => void;
 };
 
-export default function Dropdown({
-  title,
-  items,
-  setSelected
-}: Props) {
+export default function Dropdown({ title, items, setSelected }: Props) {
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
   const toggle = () => setOpened(!opened);
-  
+
   return (
     <section>
       <div className="relative inline-block w-60 text-left ">
@@ -39,7 +35,11 @@ export default function Dropdown({
             </svg>
           </button>
         </div>
-        <div className={`${opened? " absolute" : "hidden"} mt-2 w-56 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5`}>
+        <div
+          className={`${opened
+            ? " absolute"
+            : "hidden"} mt-2 w-56 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5`}
+        >
           <div
             className="py-1"
             role="menu"
@@ -50,9 +50,9 @@ export default function Dropdown({
               <button
                 key={item}
                 onClick={() => {
-                    setSelectedItem(item);
-                    setSelected(item);
-                    setOpened(false);
+                  setSelectedItem(item);
+                  setSelected(item);
+                  setOpened(false);
                 }}
                 className="block px-4 py-2 text-sm text-gray-700 w-full hover:shadow-card transition-none"
                 role="menuitem"
