@@ -4,6 +4,7 @@ import Dropdown from "@/components/general/dropdown";
 import Slider from "@/components/general/slider";
 import Button from "@/components/general/button";
 import ErrorPopup from "@/components/general/errorPopup";
+import ScoringChart from "@/components/layout/scoringChart";
 import { useState } from "react";
 
 export default function Home() {
@@ -112,7 +113,15 @@ export default function Home() {
             />
             <Button title="Start Scoring" onClick={startScoring} />
           </section>
-        : null}
+        : <section>
+            <ScoringChart
+              arrowsPerEnd={arrowsPerEnd}
+              history={false}
+              splits={splitEnds}
+              ends={ends}
+              done={false}
+            />
+          </section>}
       {error
         ? <ErrorPopup
             title="Error"

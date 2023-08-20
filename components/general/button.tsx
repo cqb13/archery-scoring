@@ -2,10 +2,12 @@
 
 type Props = {
   title: string;
-  onClick: () => void;
+  onClick: (event: any) => void;
 };
 
 export default function Button({ title, onClick }: Props) {
+
+
   return (
     <button
       type="button"
