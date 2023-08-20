@@ -53,7 +53,7 @@ export default function Slider({
           step={jump}
           value={value}
           onChange={e => updateValue(parseInt(e.target.value))}
-          className="w-full h-2 bg-lightest rounded-md appearance-none outline-gray-300 focus:outline-none ring-1 focus:ring-light"
+          className="w-full h-2 bg-lightest rounded-md appearance-none focus:outline-none ring-1 accent-highlight hover:accent-highlight-dark transition-colors ring-gray-300 focus:ring-light"
         />
       </div>
     </section>
