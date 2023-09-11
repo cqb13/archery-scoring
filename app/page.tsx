@@ -6,6 +6,7 @@ import { useState } from "react";
 import DraggableElement from "@/components/wrappers/draggable";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
+import FinalScoringStats from "@/components/scoring/finalScoringStats";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);
@@ -18,6 +19,8 @@ export default function Home() {
   const [arrowsPerEnd, setArrowsPerEnd] = useState(3);
   const [splitEnds, setSplitEnds] = useState(1);
   const [bow, setBow] = useState("");
+
+  const [data, setData] = useState({} as any);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,6 +35,8 @@ export default function Home() {
   const updateArrowsPerEnd = (value: number) => setArrowsPerEnd(value);
   const updateSplitEnds = (value: number) => setSplitEnds(value);
   const updateBow = (value: string) => setBow(value);
+  
+  const updateData = (value: any) => setData(value);
 
   const defaultSetup = () => {
     setLocation("");
@@ -99,7 +104,11 @@ export default function Home() {
               splits={splitEnds}
               ends={ends}
               done={false}
+              updateData={updateData}
             />
+            {finished ? (
+              <FinalScoringStats score={data}/>
+            ) : null}
             <SessionOptions
               done={finished}
               updateFinished={updateFinished}

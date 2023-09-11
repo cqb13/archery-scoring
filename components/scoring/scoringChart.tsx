@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import Button from "@components/general/button";
 
 type Props = {
@@ -10,11 +10,16 @@ type Props = {
   score?: number;
   done: boolean;
   ends: number;
+  updateData: (value: any) => void;
 };
 
 export default function ScoringChart(props: Props) {
   const [currentSplit, setCurrentSplit] = useState(0);
   const [data, setData] = useState({} as any);
+
+  useEffect(() => {
+    props.updateData(data);
+  }, [data, props]);
 
   const handleSwitch = (event: React.ChangeEvent<HTMLButtonElement>) => {
     if (event.target.value === "next") {
