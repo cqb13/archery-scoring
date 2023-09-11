@@ -1,15 +1,16 @@
 "use client";
 
-import Dropdown from "@/components/general/dropdown";
-import Slider from "@/components/general/slider";
-import Button from "@/components/general/button";
 import ErrorPopup from "@/components/general/errorPopup";
-import ScoringChart from "@/components/scorring/scoringChart";
+import ScoringChart from "@/components/scoring/scoringChart";
 import { useState } from "react";
 import DraggableElement from "@/components/wrappers/draggable";
+import SessionOptions from "@/components/scoring/sessionOptions";
+import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);
+  const [finished, setFinished] = useState(false);
+
   const [location, setLocation] = useState("");
   const [distanceUnit, setDistanceUnit] = useState("");
   const [distance, setDistance] = useState(18);
@@ -21,6 +22,9 @@ export default function Home() {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  const updateSetup = (value: boolean) => setSetup(value);
+  const updateFinished = (value: boolean) => setFinished(value);
+
   const updateLocation = (value: string) => setLocation(value);
   const updateDistanceUnit = (value: string) => setDistanceUnit(value);
   const updateDistance = (value: number) => setDistance(value);
@@ -28,6 +32,16 @@ export default function Home() {
   const updateArrowsPerEnd = (value: number) => setArrowsPerEnd(value);
   const updateSplitEnds = (value: number) => setSplitEnds(value);
   const updateBow = (value: string) => setBow(value);
+
+  const defaultSetup = () => {
+    setLocation("");
+    setDistanceUnit("");
+    setDistance(18);
+    setEnds(10);
+    setArrowsPerEnd(3);
+    setSplitEnds(1);
+    setBow("");
+  }
 
   const startScoring = () => {
     if (!checkIfReady()) return;
@@ -57,64 +71,28 @@ export default function Home() {
     return true;
   };
 
+  const beginSaving = () => {
+    console.log("Saving");
+  };
+
   const updateError = (value: boolean) => setError(value);
 
   return (
-    <main className="flex items-center justify-center pt-4 text-black">
-      {setup
-        ? <section className="flex flex-col gap-2 items-center">
-            <Dropdown
-              title="Location"
-              items={["Indoor", "Outdoor"]}
-              setSelected={updateLocation}
-            />
-            <div className="flex gap-2 items-center">
-              <Slider
-                title="Distance"
-                jump={1}
-                defaultValue={18}
-                min={1}
-                max={100}
-                update={updateDistance}
-              />
-              <Dropdown
-                title="Distance Unit"
-                items={["M (meters)", "YD (yards)", "FT (feet)"]}
-                setSelected={updateDistanceUnit}
-              />
-            </div>
-            <Slider
-              title="Ends"
-              jump={1}
-              defaultValue={10}
-              min={1}
-              max={40}
-              update={updateEnds}
-            />
-            <Slider
-              title="Arrow Per End"
-              jump={1}
-              defaultValue={3}
-              min={1}
-              max={12}
-              update={updateArrowsPerEnd}
-            />
-            <Slider
-              title="Split Ends"
-              jump={1}
-              defaultValue={1}
-              min={1}
-              max={4}
-              update={updateSplitEnds}
-            />
-            <Dropdown
-              title="Bow"
-              items={["Barebow", "Olympic Recurve", "Compound"]}
-              setSelected={updateBow}
-            />
-            <Button title="Start Scoring" onClick={startScoring} />
-          </section>
-        : <section>
+    <main className='flex items-center justify-center pt-4 text-black'>
+      {setup ? (
+        <ScoreSetupMenu
+          updateLocation={updateLocation}
+          updateDistanceUnit={updateDistanceUnit}
+          updateDistance={updateDistance}
+          updateEnds={updateEnds}
+          updateArrowsPerEnd={updateArrowsPerEnd}
+          updateSplitEnds={updateSplitEnds}
+          updateBow={updateBow}
+          startScoring={startScoring}
+        />
+      ) : (
+        <section className=''>
+          <div className='flex flex-col gap-2'>
             <ScoringChart
               arrowsPerEnd={arrowsPerEnd}
               history={false}
@@ -122,15 +100,24 @@ export default function Home() {
               ends={ends}
               done={false}
             />
-          </section>}
-      {error
-        ? <ErrorPopup
-            title="Error"
-            message={errorMessage}
-            timeout={5000}
-            updateError={updateError}
-          />
-        : null}
+            <SessionOptions
+              done={finished}
+              updateFinished={updateFinished}
+              updateSetup={updateSetup}
+              beginSaving={beginSaving}
+              defaultSetup={defaultSetup}
+            />
+          </div>
+        </section>
+      )}
+      {error ? (
+        <ErrorPopup
+          title='Error'
+          message={errorMessage}
+          timeout={5000}
+          updateError={updateError}
+        />
+      ) : null}
     </main>
   );
 }

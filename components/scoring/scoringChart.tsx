@@ -142,7 +142,7 @@ export default function ScoringChart(props: Props) {
           <Button title='next' onClick={handleSwitch} />
         </div>
       ) : null}
-      <table className='shadow-card block rounded-md p-2 border border-gray-300'>
+      <table className='shadow-card block rounded-md p-10 border border-gray-300'>
         <thead className=''>
           {window.innerWidth > 768 ? <th>End</th> : null}
           {Array.from(Array(props.arrowsPerEnd), (x, i) => i + 1).map(
