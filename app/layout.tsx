@@ -1,6 +1,5 @@
-'use client'
-
 import { NavigationEvents } from '@/lib/nav-events'
+import { AuthContextProvider } from '@/lib/context/authContext'
 import { Inter } from 'next/font/google'
 import NavBar from '@/components/layout/nav'
 import type { Metadata } from 'next'
@@ -51,8 +50,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} bg-lightest min-h-screen`}>
-        <NavBar />
-        {children}
+        <AuthContextProvider>
+          <NavBar />
+          {children}
+        </AuthContextProvider>
         <Suspense fallback={null}>
           <NavigationEvents />
         </Suspense>

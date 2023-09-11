@@ -38,7 +38,7 @@ export default function Dropdown({ title, items, setSelected }: Props) {
         <div
           className={`${opened
             ? " absolute"
-            : "hidden"} mt-2 w-56 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5`}
+            : "hidden"} mt-2 w-56 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5 z-10`}
         >
           <div
             className="py-1"

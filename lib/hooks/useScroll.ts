@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { useCallback, useEffect, useState } from "react";
 
@@ -15,4 +15,4 @@ export default function useScroll(threshold: number) {
   }, [onScroll]);
 
   return scrolled;
-};
+}

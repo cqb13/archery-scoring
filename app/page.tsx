@@ -59,7 +59,7 @@ export default function Home() {
   const updateError = (value: boolean) => setError(value);
 
   return (
-    <main className="flex items-center justify-center pt-4">
+    <main className="flex items-center justify-center pt-4 text-black">
       {setup
         ? <section className="flex flex-col gap-2 items-center">
             <Dropdown
