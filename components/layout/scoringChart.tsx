@@ -144,15 +144,17 @@ export default function ScoringChart(props: Props) {
         </div>
       ) : null}
       <table className='shadow-card block rounded-md p-2 border border-gray-300'>
-        <thead className='flex gap-2'>
+        <thead className=''>
           {window.innerWidth > 768 ? <th>End</th> : null}
           {Array.from(Array(props.arrowsPerEnd), (x, i) => i + 1).map(
             (_, columnIndex) => (
               <th key={columnIndex}>Arrow {columnIndex + 1}</th>
             )
           )}
-          <th>Total</th>
-          <th>Running Total</th>
+          <div className="flex items-center justify-between gap-2">
+            <th>Total</th>
+            <th>Running Total</th>
+          </div>
         </thead>
         <tbody>
           {data[currentSplit]?.map((row: number[], rowIndex: number) => (
@@ -172,13 +174,14 @@ export default function ScoringChart(props: Props) {
                   />
                 </td>
               ))}
-              <td>{
+              <div className="flex gap-2 items-center justify-between">
+              <td className="text-center w-full">{
                   data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
                   data[currentSplit][rowIndex].reduce((a: string, b: string) => {
                     return addScores(a, b)
                   }, 0)
                   }</td>
-                <td>{
+                <td className="text-center w-full">{
                   data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
                   data[currentSplit].slice(0, rowIndex + 1).reduce((a: any, b: any) => {
                     return a + b.reduce((c: any, d: any) => {
@@ -186,6 +189,7 @@ export default function ScoringChart(props: Props) {
                     }, 0);
                   }, 0)
                 }</td>
+              </div>
             </tr>
           ))}
         </tbody>
