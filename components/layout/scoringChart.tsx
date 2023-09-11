@@ -33,76 +33,161 @@ export default function ScoringChart(props: Props) {
     }
   };
 
+  const handleChange = (event: any, rowIndex: any, columnIndex: any) => {
+    if (props.history) return;
+    let delay = event.target.value.startsWith("1") ? 1000 : 0;
+    const updatedData = data[currentSplit].map((row: any, rIndex: any) => {
+      if (rIndex === rowIndex) {
+        return row.map((column: any, cIndex: any) => {
+          if (cIndex === columnIndex) {
+            switch (event.target.value) {
+              case "m":
+              case "M":
+              case "x":
+              case "X":
+                setTimeout(() => {
+                  switchFocus(event, columnIndex, rowIndex);
+                }, delay);
+                return event.target.value;
+              default:
+                break;
+            }
+            return /^(0|[1-9]|1[0-1])$/.test(event.target.value)
+              ? event.target.value
+              : "";
+          }
+          return column;
+        });
+      }
+      return row;
+    });
+    // keeps end splits from being overwritten
+    setData((prevData: any) => {
+      const newArray = [...prevData];
+      newArray[currentSplit] = updatedData;
+      return newArray;
+    });
 
-  useEffect(
-    () => {
-      if (history && props.score) {
-        setData(props.score);
-      } else {
-        if (!props.splits || !props.ends || !props.arrowsPerEnd) return;
-        let endsPerSplit = props.ends / props.splits;
+    if (/^(0|[1-9]|1[0-1])$/.test(event.target.value)) {
+      setTimeout(() => {
+        switchFocus(event, columnIndex, rowIndex);
+      }, delay);
+    }
+  };
 
-        if (endsPerSplit % 1 !== 0) {
-          endsPerSplit = Math.floor(endsPerSplit);
-          const setupArray = Array.from(Array(props.splits), () =>
-            new Array(endsPerSplit).fill(
-              Array.from(Array(props.arrowsPerEnd), () => "")
-            )
-          );
-          setupArray[props.splits - 1].push(
-            Array.from(Array(props.arrowsPerEnd), () => "")
-          );
-          setData(setupArray);
-          return;
-        }
+  const switchFocus = (event: any, columnIndex: number, rowIndex: number) => {
+    let arrowsPerEnd = props.arrowsPerEnd;
+    let ends = props.ends;
+    let currentArrow = columnIndex + 1;
+    let currentEnd = rowIndex + 1;
 
+    // set the focus the next arrow
+    if (currentArrow < arrowsPerEnd) {
+      document
+        .getElementById(`${currentArrow + 1}-${currentEnd}`)
+        ?.focus();
+      return;
+    } else {
+      // if the end is not the last end, set the focus to the first arrow of the next end
+      if (currentEnd < ends) {
+        document.getElementById(`1-${currentEnd + 1}`)?.focus();
+        return;
+      }
+    }
+  };
+
+  const addScores = (a: string, b: string) => {
+    if (b === "m" || b === "M") return parseInt(a, 10) + 0;
+    if (b === "x" || b === "X") return parseInt(a, 10) + 10;
+    return parseInt(a, 10) + parseInt(b, 10);
+  };
+
+  useEffect(() => {
+    if (history && props.score) {
+      setData(props.score);
+    } else {
+      if (!props.splits || !props.ends || !props.arrowsPerEnd) return;
+      let endsPerSplit = props.ends / props.splits;
+
+      if (endsPerSplit % 1 !== 0) {
+        endsPerSplit = Math.floor(endsPerSplit);
         const setupArray = Array.from(Array(props.splits), () =>
           new Array(endsPerSplit).fill(
             Array.from(Array(props.arrowsPerEnd), () => "")
           )
         );
+        setupArray[props.splits - 1].push(
+          Array.from(Array(props.arrowsPerEnd), () => "")
+        );
         setData(setupArray);
+        return;
       }
-    },
-    [props.arrowsPerEnd, props.ends, props.splits]
-  );
+
+      const setupArray = Array.from(Array(props.splits), () =>
+        new Array(endsPerSplit).fill(
+          Array.from(Array(props.arrowsPerEnd), () => "")
+        )
+      );
+      setData(setupArray);
+    }
+  }, [props.arrowsPerEnd, props.ends, props.splits]);
 
   return (
-    <section className="flex flex-col gap-2">
-      {props.splits > 1
-        ? <div className="flex gap-4 items-center justify-center border border-gray-300 shadow-card p-2 rounded-md">
-            <Button title="back" onClick={handleSwitch} />
-            <h2 className="w-56 text-center ">Split {currentSplit + 1}/{props.splits}</h2>
-            <Button title="next" onClick={handleSwitch} />
-          </div>
-        : null}
-      <table className="shadow-card block rounded-md p-2 border border-gray-300">
-        <thead className="flex gap-2">
+    <section className='flex flex-col gap-2'>
+      {props.splits > 1 ? (
+        <div className='flex gap-4 items-center justify-center border border-gray-300 shadow-card p-2 rounded-md'>
+          <Button title='back' onClick={handleSwitch} />
+          <h2 className='w-56 text-center '>
+            Split {currentSplit + 1}/{props.splits}
+          </h2>
+          <Button title='next' onClick={handleSwitch} />
+        </div>
+      ) : null}
+      <table className='shadow-card block rounded-md p-2 border border-gray-300'>
+        <thead className='flex gap-2'>
           {window.innerWidth > 768 ? <th>End</th> : null}
-          {Array.from(Array(props.arrowsPerEnd), (x, i) => i + 1).map((_, columnIndex) => (
-            <th key={columnIndex}>Arrow {columnIndex + 1}</th>
-          ))}
+          {Array.from(Array(props.arrowsPerEnd), (x, i) => i + 1).map(
+            (_, columnIndex) => (
+              <th key={columnIndex}>Arrow {columnIndex + 1}</th>
+            )
+          )}
           <th>Total</th>
           <th>Running Total</th>
         </thead>
         <tbody>
-        {data[currentSplit].map((row: number[], rowIndex: number) => (
-              <tr key={rowIndex}>
-                {window.innerWidth < 768 && props.arrowsPerEnd > 3? (
-                  null
-                ) : <td>{rowIndex + 1}</td>}
-                {row.map((column: number, columnIndex: number) => (
-                  <td key={columnIndex}>
+          {data[currentSplit]?.map((row: number[], rowIndex: number) => (
+            <tr key={rowIndex}>
+              {window.innerWidth < 768 && props.arrowsPerEnd > 3 ? null : (
+                <td>{rowIndex + 1}</td>
+              )}
+              {row.map((column: number, columnIndex: number) => (
+                <td key={columnIndex}>
                   <input
-                    type="text"
+                    type='text'
+                    id={`${columnIndex + 1}-${rowIndex + 1}`}
                     pattern="[0-9mxMX]*"
+                    className="bg-lightest border border-gray-300 text-center"
                     value={column}
-                    //onChange={event => handleChange(event, rowIndex, columnIndex)}
+                    onChange={event => handleChange(event, rowIndex, columnIndex)}
                   />
                 </td>
-                ))}
-              </tr>
-            ))}
+              ))}
+              <td>{
+                  data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
+                  data[currentSplit][rowIndex].reduce((a: string, b: string) => {
+                    return addScores(a, b)
+                  }, 0)
+                  }</td>
+                <td>{
+                  data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
+                  data[currentSplit].slice(0, rowIndex + 1).reduce((a: any, b: any) => {
+                    return a + b.reduce((c: any, d: any) => {
+                      return addScores(c, d);
+                    }, 0);
+                  }, 0)
+                }</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </section>

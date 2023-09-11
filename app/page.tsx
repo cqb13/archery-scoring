@@ -11,10 +11,10 @@ export default function Home() {
   const [setup, setSetup] = useState(true);
   const [location, setLocation] = useState("");
   const [distanceUnit, setDistanceUnit] = useState("");
-  const [distance, setDistance] = useState(0);
-  const [ends, setEnds] = useState(0);
-  const [arrowsPerEnd, setArrowsPerEnd] = useState(0);
-  const [splitEnds, setSplitEnds] = useState(0);
+  const [distance, setDistance] = useState(18);
+  const [ends, setEnds] = useState(10);
+  const [arrowsPerEnd, setArrowsPerEnd] = useState(3);
+  const [splitEnds, setSplitEnds] = useState(1);
   const [bow, setBow] = useState("");
 
   const [error, setError] = useState(false);
