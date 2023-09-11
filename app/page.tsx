@@ -4,8 +4,9 @@ import Dropdown from "@/components/general/dropdown";
 import Slider from "@/components/general/slider";
 import Button from "@/components/general/button";
 import ErrorPopup from "@/components/general/errorPopup";
-import ScoringChart from "@/components/layout/scoringChart";
+import ScoringChart from "@/components/scorring/scoringChart";
 import { useState } from "react";
+import DraggableElement from "@/components/wrappers/draggable";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);

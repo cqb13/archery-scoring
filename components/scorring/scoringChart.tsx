@@ -14,7 +14,6 @@ type Props = {
 
 export default function ScoringChart(props: Props) {
   const [currentSplit, setCurrentSplit] = useState(0);
-  const [finalScore, setFinalScore] = useState(0);
   const [data, setData] = useState({} as any);
 
   const handleSwitch = (event: React.ChangeEvent<HTMLButtonElement>) => {
