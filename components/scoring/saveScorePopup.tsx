@@ -17,7 +17,7 @@ type SaveScorePopupProps = {
     note: string;
   }) => void;
   updateNotification: (value: boolean) => void;
-  updateNotificationType: (value: string) => void;
+  updateNotificationType: (value: "error" | "success") => void;
   updateNotificationTitle: (value: string) => void;
   updateNotificationMessage: (value: string) => void;
 };

@@ -2,16 +2,22 @@
 
 import NotificationPopup from "@/components/general/notificationPopup";
 import ScoringChart from "@/components/scoring/scoringChart";
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import SaveScorePopup from "@/components/scoring/saveScorePopup";
+import { useAuthContext } from "@context/authContext";
+import SignUpPopup from "@/components/misc/signUpPopup";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);
   const [finished, setFinished] = useState(false);
   const [savingPopup, setSavingPopup] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+  const [signUpPopup, setSignUpPopup] = useState(false);
+
+  const { user } = useAuthContext() as { user: any };
 
   const [location, setLocation] = useState("");
   const [distanceUnit, setDistanceUnit] = useState("");
@@ -31,6 +37,7 @@ export default function Home() {
   const updateSetup = (value: boolean) => setSetup(value);
   const updateFinished = (value: boolean) => setFinished(value);
   const updateSavingPopup = (value: boolean) => setSavingPopup(value);
+  const updateSignUpPopup = (value: boolean) => setSignUpPopup(value);
 
   const updateLocation = (value: string) => setLocation(value);
   const updateDistanceUnit = (value: string) => setDistanceUnit(value);
@@ -51,6 +58,11 @@ export default function Home() {
     setSplitEnds(1);
     setBow("");
   };
+
+  useEffect(() => {
+    if (user) setSignedIn(true);
+    else setSignedIn(false);
+  }, [user]);
 
   const startScoring = () => {
     if (!checkIfReady()) return;
@@ -84,6 +96,11 @@ export default function Home() {
   };
 
   const beginSaving = () => {
+    if (!signedIn) {
+      setSignUpPopup(true);
+      return;
+    }
+
     updateSavingPopup(true);
   };
 
@@ -144,6 +161,11 @@ export default function Home() {
           </div>
         </section>
       )}
+      {signUpPopup ? (
+        <SignUpPopup
+          updateSignUpPopup={setSignUpPopup}
+        />
+      ) : null}
       {savingPopup ? (
         <SaveScorePopup
           updateSavingPopup={updateSavingPopup}
