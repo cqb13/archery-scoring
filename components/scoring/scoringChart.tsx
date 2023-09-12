@@ -87,9 +87,7 @@ export default function ScoringChart(props: Props) {
 
     // set the focus the next arrow
     if (currentArrow < arrowsPerEnd) {
-      document
-        .getElementById(`${currentArrow + 1}-${currentEnd}`)
-        ?.focus();
+      document.getElementById(`${currentArrow + 1}-${currentEnd}`)?.focus();
       return;
     } else {
       // if the end is not the last end, set the focus to the first arrow of the next end
@@ -155,7 +153,7 @@ export default function ScoringChart(props: Props) {
               <th key={columnIndex}>Arrow {columnIndex + 1}</th>
             )
           )}
-          <div className="flex items-center justify-between gap-2">
+          <div className='flex items-center justify-between gap-2'>
             <th>Total</th>
             <th>Running Total</th>
           </div>
@@ -171,28 +169,44 @@ export default function ScoringChart(props: Props) {
                   <input
                     type='text'
                     id={`${columnIndex + 1}-${rowIndex + 1}`}
-                    pattern="[0-9mxMX]*"
-                    className="bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2"
+                    pattern='[0-9mxMX]*'
+                    className='bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2'
                     value={column}
-                    onChange={event => handleChange(event, rowIndex, columnIndex)}
+                    onChange={(event) =>
+                      handleChange(event, rowIndex, columnIndex)
+                    }
                   />
                 </td>
               ))}
-              <div className="flex gap-2 items-center justify-between">
-              <td className="text-center w-full">{
-                  data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
-                  data[currentSplit][rowIndex].reduce((a: string, b: string) => {
-                    return addScores(a, b)
-                  }, 0)
-                  }</td>
-                <td className="text-center w-full">{
-                  data[currentSplit][rowIndex].some((value: string) => value === '') ? '0' :
-                  data[currentSplit].slice(0, rowIndex + 1).reduce((a: any, b: any) => {
-                    return a + b.reduce((c: any, d: any) => {
-                      return addScores(c, d);
-                    }, 0);
-                  }, 0)
-                }</td>
+              <div className='flex gap-2 items-center justify-between'>
+                <td className='text-center w-full'>
+                  {data[currentSplit][rowIndex].some(
+                    (value: string) => value === ""
+                  )
+                    ? "0"
+                    : data[currentSplit][rowIndex].reduce(
+                        (a: string, b: string) => {
+                          return addScores(a, b);
+                        },
+                        0
+                      )}
+                </td>
+                <td className='text-center w-full'>
+                  {data[currentSplit][rowIndex].some(
+                    (value: string) => value === ""
+                  )
+                    ? "0"
+                    : data[currentSplit]
+                        .slice(0, rowIndex + 1)
+                        .reduce((a: any, b: any) => {
+                          return (
+                            a +
+                            b.reduce((c: any, d: any) => {
+                              return addScores(c, d);
+                            }, 0)
+                          );
+                        }, 0)}
+                </td>
               </div>
             </tr>
           ))}

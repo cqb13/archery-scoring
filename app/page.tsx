@@ -1,9 +1,8 @@
 "use client";
 
-import ErrorPopup from "@/components/general/errorPopup";
+import NotificationPopup from "@/components/general/notificationPopup";
 import ScoringChart from "@/components/scoring/scoringChart";
 import { useState } from "react";
-import DraggableElement from "@/components/wrappers/draggable";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
@@ -12,7 +11,6 @@ import SaveScorePopup from "@/components/scoring/saveScorePopup";
 export default function Home() {
   const [setup, setSetup] = useState(true);
   const [finished, setFinished] = useState(false);
-  const [saving, setSaving] = useState(false);
   const [savingPopup, setSavingPopup] = useState(false);
 
   const [location, setLocation] = useState("");
@@ -25,12 +23,13 @@ export default function Home() {
 
   const [data, setData] = useState({} as any);
 
-  const [error, setError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [notification, setNotification] = useState(false);
+  const [notificationType, setNotificationType] = useState({} as "success" | "error");
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   const updateSetup = (value: boolean) => setSetup(value);
   const updateFinished = (value: boolean) => setFinished(value);
-  const updateSaving = (value: boolean) => setSaving(value);
   const updateSavingPopup = (value: boolean) => setSavingPopup(value);
 
   const updateLocation = (value: string) => setLocation(value);
@@ -40,7 +39,7 @@ export default function Home() {
   const updateArrowsPerEnd = (value: number) => setArrowsPerEnd(value);
   const updateSplitEnds = (value: number) => setSplitEnds(value);
   const updateBow = (value: string) => setBow(value);
-  
+
   const updateData = (value: any) => setData(value);
 
   const defaultSetup = () => {
@@ -51,7 +50,7 @@ export default function Home() {
     setArrowsPerEnd(3);
     setSplitEnds(1);
     setBow("");
-  }
+  };
 
   const startScoring = () => {
     if (!checkIfReady()) return;
@@ -60,21 +59,24 @@ export default function Home() {
   };
 
   const checkIfReady = () => {
+    setNotificationType("error");
+    setNotificationTitle("Error");
+
     if (location === "") {
-      setError(true);
-      setErrorMessage("Please select a location");
+      setNotification(true);
+      setNotificationMessage("Please select a location");
       return false;
     }
 
     if (distanceUnit === "") {
-      setError(true);
-      setErrorMessage("Please select a distance unit");
+      setNotification(true);
+      setNotificationMessage("Please select a distance unit");
       return false;
     }
 
     if (bow === "") {
-      setError(true);
-      setErrorMessage("Please select a bow");
+      setNotification(true);
+      setNotificationMessage("Please select a bow");
       return false;
     }
 
@@ -85,7 +87,27 @@ export default function Home() {
     updateSavingPopup(true);
   };
 
-  const updateError = (value: boolean) => setError(value);
+  const continueSaving = ({
+    title,
+    date,
+    time,
+    note
+  }: {
+    title: string;
+    date: string;
+    time: string;
+    note: string;
+  }) => {
+    updateSavingPopup(false);
+    setNotification(true);
+    setNotificationType("success");
+    setNotificationTitle("Success");
+    setNotificationMessage("Score saved successfully!");
+
+    console.log(title, date, time, note);
+  };
+
+  const updateNotification = (value: boolean) => setNotification(value);
 
   return (
     <main className='flex items-center justify-center pt-4 text-black'>
@@ -111,9 +133,7 @@ export default function Home() {
               done={false}
               updateData={updateData}
             />
-            {finished ? (
-              <FinalScoringStats score={data}/>
-            ) : null}
+            {finished ? <FinalScoringStats score={data} /> : null}
             <SessionOptions
               done={finished}
               updateFinished={updateFinished}
@@ -125,14 +145,22 @@ export default function Home() {
         </section>
       )}
       {savingPopup ? (
-        <SaveScorePopup updateSavingPopup={updateSavingPopup}/>
+        <SaveScorePopup
+          updateSavingPopup={updateSavingPopup}
+          continueSaving={continueSaving}
+          updateNotification={updateNotification}
+          updateNotificationType={setNotificationType}
+          updateNotificationTitle={setNotificationTitle}
+          updateNotificationMessage={setNotificationMessage}
+        />
       ) : null}
-      {error ? (
-        <ErrorPopup
-          title='Error'
-          message={errorMessage}
+      {notification ? (
+        <NotificationPopup
+          title={notificationTitle}
+          type={notificationType}
+          message={notificationMessage}
           timeout={5000}
-          updateError={updateError}
+          updateNotification={updateNotification}
         />
       ) : null}
     </main>

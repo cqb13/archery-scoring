@@ -5,10 +5,30 @@ import { useState, useEffect } from "react";
 
 type SaveScorePopupProps = {
   updateSavingPopup: (value: boolean) => void;
+  continueSaving: ({
+    title,
+    date,
+    time,
+    note
+  }: {
+    title: string;
+    date: string;
+    time: string;
+    note: string;
+  }) => void;
+  updateNotification: (value: boolean) => void;
+  updateNotificationType: (value: string) => void;
+  updateNotificationTitle: (value: string) => void;
+  updateNotificationMessage: (value: string) => void;
 };
 
 export default function SaveScorePopup({
-  updateSavingPopup
+  updateSavingPopup,
+  continueSaving,
+  updateNotification,
+  updateNotificationType,
+  updateNotificationTitle,
+  updateNotificationMessage
 }: SaveScorePopupProps) {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
@@ -35,8 +55,16 @@ export default function SaveScorePopup({
     setNote(event.target.value);
   };
 
-  const handleDateChange = (event: React.ChangeEvent<HTMLDataElement>) => {
-    setDate(event.target.value);
+  const handleSave = () => {
+    if (title === "") {
+      updateNotification(true);
+      updateNotificationType("error");
+      updateNotificationTitle("Error");
+      updateNotificationMessage("Please add a title");
+      return;
+    }
+
+    continueSaving({ title, date, time, note });
   };
 
   return (
@@ -71,7 +99,7 @@ export default function SaveScorePopup({
           onChange={handleNoteChange}
         ></textarea>{" "}
         <div className='flex gap-2'>
-          <Button title='Save' onClick={() => updateSavingPopup(false)} />
+          <Button title='Save' onClick={handleSave} />
           <Button title='Cancel' onClick={() => updateSavingPopup(false)} />
         </div>
       </section>

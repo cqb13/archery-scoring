@@ -2,23 +2,25 @@ import { useState, useEffect } from "react";
 
 type Props = {
   title: string;
+  type: "success" | "error";
   message: string;
   timeout: number;
-  updateError: (value: boolean) => void;
+  updateNotification: (value: boolean) => void;
 };
 
-export default function ErrorPopup({
+export default function NotificationPopup({
   title,
+  type,
   message,
   timeout,
-  updateError
+  updateNotification
 }: Props) {
   const [opened, setOpened] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setOpened(false);
-      updateError(false);
+      updateNotification(false);
     }, timeout);
     return () => clearTimeout(timer);
   });
@@ -27,13 +29,13 @@ export default function ErrorPopup({
     <section
       className={`${opened
         ? ""
-        : "absolute bottom-2 left-2"} p-4 w-80 bg-red-500 rounded-md`}
+        : "absolute bottom-2 left-2"} p-4 w-80 ${type == "error" ? "bg-red-500" : "bg-green-500"} rounded-md`}
     >
       <div className="flex items-center justify-between">
         <h1 className="text-white">
           {title}
         </h1>
-        <button className="text-white" onClick={() => updateError(false)}>
+        <button className="text-white" onClick={() => updateNotification(false)}>
           <svg
             className="h-5 w-5"
             xmlns="http://www.w3.org/2000/svg"
