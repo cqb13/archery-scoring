@@ -172,7 +172,7 @@ export default function ScoringChart(props: Props) {
                     type='text'
                     id={`${columnIndex + 1}-${rowIndex + 1}`}
                     pattern="[0-9mxMX]*"
-                    className="bg-lightest border border-gray-300 text-center"
+                    className="bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2"
                     value={column}
                     onChange={event => handleChange(event, rowIndex, columnIndex)}
                   />

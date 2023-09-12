@@ -7,10 +7,13 @@ import DraggableElement from "@/components/wrappers/draggable";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
+import SaveScorePopup from "@/components/scoring/saveScorePopup";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);
   const [finished, setFinished] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savingPopup, setSavingPopup] = useState(false);
 
   const [location, setLocation] = useState("");
   const [distanceUnit, setDistanceUnit] = useState("");
@@ -27,6 +30,8 @@ export default function Home() {
 
   const updateSetup = (value: boolean) => setSetup(value);
   const updateFinished = (value: boolean) => setFinished(value);
+  const updateSaving = (value: boolean) => setSaving(value);
+  const updateSavingPopup = (value: boolean) => setSavingPopup(value);
 
   const updateLocation = (value: string) => setLocation(value);
   const updateDistanceUnit = (value: string) => setDistanceUnit(value);
@@ -77,7 +82,7 @@ export default function Home() {
   };
 
   const beginSaving = () => {
-    console.log("Saving");
+    updateSavingPopup(true);
   };
 
   const updateError = (value: boolean) => setError(value);
@@ -119,6 +124,9 @@ export default function Home() {
           </div>
         </section>
       )}
+      {savingPopup ? (
+        <SaveScorePopup updateSavingPopup={updateSavingPopup}/>
+      ) : null}
       {error ? (
         <ErrorPopup
           title='Error'

@@ -6,8 +6,6 @@ type Props = {
 };
 
 export default function Button({ title, onClick }: Props) {
-
-
   return (
     <button
       type="button"
