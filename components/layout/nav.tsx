@@ -11,7 +11,7 @@ export default function NavBar() {
   return (
     <nav
       className={`${useScroll(10)
-        ? "shadow-bar backdrop-blur-md bg-opacity-50"
+        ? "shadow-bar backdrop-blur-md"
         : ""}
         : ""} flex flex-row items-center justify-between p-4 sticky top-0 z-50 bg-darkest text-lightest transition-all`}
     >
