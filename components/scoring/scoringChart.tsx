@@ -147,7 +147,7 @@ export default function ScoringChart(props: Props) {
       ) : null}
       <table className='shadow-card block rounded-md p-10 border border-gray-300'>
         <thead className=''>
-          {window.innerWidth > 768 ? <th>End</th> : null}
+          <th>End</th>
           {Array.from(Array(props.arrowsPerEnd), (x, i) => i + 1).map(
             (_, columnIndex) => (
               <th key={columnIndex}>Arrow {columnIndex + 1}</th>
@@ -160,17 +160,15 @@ export default function ScoringChart(props: Props) {
         </thead>
         <tbody>
           {data[currentSplit]?.map((row: number[], rowIndex: number) => (
-            <tr key={rowIndex}>
-              {window.innerWidth < 768 && props.arrowsPerEnd > 3 ? null : (
+            <tr key={rowIndex} className="w-full">
                 <td>{rowIndex + 1}</td>
-              )}
               {row.map((column: number, columnIndex: number) => (
                 <td key={columnIndex}>
                   <input
                     type='text'
                     id={`${columnIndex + 1}-${rowIndex + 1}`}
                     pattern='[0-9mxMX]*'
-                    className='bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2'
+                    className='bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2 w-11/12'
                     value={column}
                     onChange={(event) =>
                       handleChange(event, rowIndex, columnIndex)

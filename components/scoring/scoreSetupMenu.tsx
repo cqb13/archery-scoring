@@ -32,7 +32,7 @@ export default function ScoreSetupMenu(props: ScoreSetupMenuProps) {
         items={["Indoor", "Outdoor"]}
         setSelected={updateLocation}
       />
-      <div className='flex gap-2 items-center'>
+      <div className='flex gap-2 items-center max-smSm:flex-col'>
         <Slider
           title='Distance'
           jump={1}
