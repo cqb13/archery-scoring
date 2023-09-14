@@ -1,5 +1,5 @@
 export const routes = [
-  ["Home", "/"],
-  ["History", "/history"],
-  ["Account", "/account"]
+  ["Home", "/", "false"],
+  ["History", "/history", "true"],
+  ["Account", "/account", "true"]
 ];

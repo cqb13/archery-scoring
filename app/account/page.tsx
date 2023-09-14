@@ -8,30 +8,46 @@ import Image from "next/image";
 import getUserDoc from "@/utils/firebase/db/getUserDoc";
 import Input from "@/components/general/input";
 import Dropdown from "@/components/general/dropdown";
+import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
+import deleteAccount from "@/utils/firebase/account/deleteAccount";
+import googleSignOut from "@/utils/firebase/account/googleSignOut";
+import { useRouter } from "next/navigation";
 
 export default function History() {
+  // general
   const [signedIn, setSignedIn] = useState(false);
   const [userDoc, setUserDoc] = useState({} as any);
   const { user } = useAuthContext() as { user: any };
+  const router = useRouter();
+
+  // account
+  const [name, setName] = useState("");
+  const [namePlaceholder, setNamePlaceholder] = useState("");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setSignedIn(true);
       } else {
-        setSignedIn(false);
+        router.push("/");
       }
     });
 
     getUserDoc(auth.currentUser).then((doc: any) => {
       setUserDoc(doc);
+      setNamePlaceholder(doc.displayName);
     });
-  }, [user]);
+  }, []);
 
   const [currentWindow, setCurrentWindow] = useState("stats");
 
   const updateCurrentWindow = (window: string) => {
     setCurrentWindow(window);
+  };
+
+  const updateName = () => {
+    updateDisplayName(auth.currentUser, name);
+    setName("");
   };
 
   return (
@@ -64,16 +80,15 @@ export default function History() {
             width={300}
             height={300}
           />
-          <div className="flex gap-2 w-full max-smSm:flex-col">
+          <div className='flex gap-2 w-full max-smSm:flex-col'>
             <div className='flex flex-col py-4 gap-2 w-full'>
-              <p>Display Name</p>
               <Input
-                value='name'
-                placeholder='current name'
+                value={name}
+                placeholder={`username: ${namePlaceholder}`}
                 type='text'
-                updateValue={() => {}}
+                updateValue={setName}
               />
-              <Button title='Update Name' onClick={() => {}} />
+              <Button title='Update Name' onClick={updateName} />
               <div className='flex items-center justify-center'>
                 <Dropdown
                   title='Profile Type'
@@ -83,7 +98,7 @@ export default function History() {
               </div>
             </div>
             <div className='flex flex-col-reverse py-4 gap-2 w-full'>
-              <Button title='Sign Out' onClick={() => {}} />
+              <Button title='Sign Out' onClick={() => googleSignOut()} />
               <Button title='Delete Account' onClick={() => {}} />
             </div>
           </div>
