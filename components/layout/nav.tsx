@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import useScroll from "@hooks/useScroll";
 import { useRouter, usePathname } from "next/navigation";
@@ -13,29 +13,29 @@ export default function NavBar() {
 
   return (
     <nav
-      className={`${useScroll(10)
-        ? "shadow-bar backdrop-blur-md"
-        : ""}
+      className={`${useScroll(10) ? "shadow-bar backdrop-blur-md" : ""}
         : ""} flex flex-row items-center justify-between p-4 sticky top-0 z-50 bg-darkest text-lightest transition-all`}
     >
-      <div className="flex gap-4 flex-wrap items-center justify-center">
-        {routes.map(([name, path, signedIn]) =>
+      <div className='flex gap-4 flex-wrap items-center justify-center'>
+        {routes.map(([name, path, signedIn]) => (
           <button
-            type="button"
+            type='button'
             key={name}
             onClick={() => router.push(path)}
-            className={`${pathname === path ? "text-highlight" : ""} ${signedIn == "true" && !user ? "hidden" : ""}`}
+            className={`${pathname === path ? "text-highlight" : ""} ${
+              signedIn == "true" && !user ? "hidden" : ""
+            }`}
           >
             {name}
           </button>
-        )}
+        ))}
         <button
-            type="button"
-            onClick={() => googleSignIn()}
-            className={`${user ? "hidden" : ""}`}
-          >
-            Sign In
-          </button>
+          type='button'
+          onClick={() => googleSignIn()}
+          className={`${user ? "hidden" : ""}`}
+        >
+          Sign In
+        </button>
       </div>
     </nav>
   );

@@ -9,6 +9,7 @@ import getUserDoc from "@/utils/firebase/db/getUserDoc";
 import Input from "@/components/general/input";
 import Dropdown from "@/components/general/dropdown";
 import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
+import updateProfileType from "@/utils/firebase/db/updateProfileType";
 import deleteAccount from "@/utils/firebase/account/deleteAccount";
 import googleSignOut from "@/utils/firebase/account/googleSignOut";
 import { useRouter } from "next/navigation";
@@ -23,6 +24,7 @@ export default function History() {
   // account
   const [name, setName] = useState("");
   const [namePlaceholder, setNamePlaceholder] = useState("");
+  const [profileType, setProfileType] = useState("Private");
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -36,6 +38,7 @@ export default function History() {
     getUserDoc(auth.currentUser).then((doc: any) => {
       setUserDoc(doc);
       setNamePlaceholder(doc.displayName);
+      setProfileType(doc.profileType);
     });
   }, []);
 
@@ -48,6 +51,11 @@ export default function History() {
   const updateName = () => {
     updateDisplayName(auth.currentUser, name);
     setName("");
+  };
+
+  const changeProfileType = (type: string) => {
+    setProfileType(type);
+    updateProfileType(auth.currentUser, type);
   };
 
   return (
@@ -89,11 +97,12 @@ export default function History() {
                 updateValue={setName}
               />
               <Button title='Update Name' onClick={updateName} />
-              <div className='flex items-center justify-center'>
+              <div className='flex flex-col items-center justify-center'>
+                <p>Social Profile</p>
                 <Dropdown
-                  title='Profile Type'
+                  title={profileType}
                   items={["Private", "Public", "Email Only"]}
-                  setSelected={() => {}}
+                  setSelected={changeProfileType}
                 />
               </div>
             </div>

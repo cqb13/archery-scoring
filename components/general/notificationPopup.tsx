@@ -27,32 +27,31 @@ export default function NotificationPopup({
 
   return (
     <section
-      className={`${opened
-        ? ""
-        : "absolute bottom-2 left-2"} p-4 w-80 ${type == "error" ? "bg-red-500" : "bg-green-500"} rounded-md`}
+      className={`${opened ? "" : "absolute bottom-2 left-2"} p-4 w-80 ${
+        type == "error" ? "bg-red-500" : "bg-green-500"
+      } rounded-md`}
     >
-      <div className="flex items-center justify-between">
-        <h1 className="text-white">
-          {title}
-        </h1>
-        <button className="text-white" onClick={() => updateNotification(false)}>
+      <div className='flex items-center justify-between'>
+        <h1 className='text-white'>{title}</h1>
+        <button
+          className='text-white'
+          onClick={() => updateNotification(false)}
+        >
           <svg
-            className="h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+            className='h-5 w-5'
+            xmlns='http://www.w3.org/2000/svg'
+            viewBox='0 0 20 20'
+            fill='currentColor'
           >
             <path
-              fillRule="evenodd"
-              d="M10.707 10l4.147-4.146a.5.5 0 10-.708-.708L10 9.293 5.854 5.147a.5.5 0 00-.708.708L9.293 10l-4.147 4.146a.5.5 0 10.708.708L10 10.707l4.146 4.147a.5.5 0 00.708-.708L10.707 10z"
-              clipRule="evenodd"
+              fillRule='evenodd'
+              d='M10.707 10l4.147-4.146a.5.5 0 10-.708-.708L10 9.293 5.854 5.147a.5.5 0 00-.708.708L9.293 10l-4.147 4.146a.5.5 0 10.708.708L10 10.707l4.146 4.147a.5.5 0 00.708-.708L10.707 10z'
+              clipRule='evenodd'
             />
           </svg>
         </button>
       </div>
-      <p className="text-white">
-        {message}
-      </p>
+      <p className='text-white'>{message}</p>
     </section>
   );
 }

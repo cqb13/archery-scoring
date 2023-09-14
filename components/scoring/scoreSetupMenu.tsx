@@ -3,27 +3,27 @@ import Slider from "@/components/general/slider";
 import Button from "@/components/general/button";
 
 type ScoreSetupMenuProps = {
-    updateLocation: (value: string) => void;
-    updateDistanceUnit: (value: string) => void;
-    updateDistance: (value: number) => void;
-    updateEnds: (value: number) => void;
-    updateArrowsPerEnd: (value: number) => void;
-    updateSplitEnds: (value: number) => void;
-    updateBow: (value: string) => void;
-    startScoring: () => void;
-}
+  updateLocation: (value: string) => void;
+  updateDistanceUnit: (value: string) => void;
+  updateDistance: (value: number) => void;
+  updateEnds: (value: number) => void;
+  updateArrowsPerEnd: (value: number) => void;
+  updateSplitEnds: (value: number) => void;
+  updateBow: (value: string) => void;
+  startScoring: () => void;
+};
 
 export default function ScoreSetupMenu(props: ScoreSetupMenuProps) {
-    const {
-        updateLocation,
-        updateDistanceUnit,
-        updateDistance,
-        updateEnds,
-        updateArrowsPerEnd,
-        updateSplitEnds,
-        updateBow,
-        startScoring,
-    } = props;
+  const {
+    updateLocation,
+    updateDistanceUnit,
+    updateDistance,
+    updateEnds,
+    updateArrowsPerEnd,
+    updateSplitEnds,
+    updateBow,
+    startScoring
+  } = props;
 
   return (
     <section className='flex flex-col gap-2 items-center'>

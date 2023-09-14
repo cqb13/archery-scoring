@@ -18,4 +18,4 @@ export default function fixDateTimeFormat(date: string, time: string) {
   time = timeArray.join(":");
 
   return { date, time };
-};
+}

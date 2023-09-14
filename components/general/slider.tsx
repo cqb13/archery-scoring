@@ -29,31 +29,29 @@ export default function Slider({
   };
 
   return (
-    <section className="bg-lightest px-4 py-2 rounded-md border w-60 border-gray-300 shadow-sm">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <h1>
-            {title}
-          </h1>
+    <section className='bg-lightest px-4 py-2 rounded-md border w-60 border-gray-300 shadow-sm'>
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center'>
+          <h1>{title}</h1>
         </div>
-        <div className="flex items-center">
+        <div className='flex items-center'>
           <input
-            type="number"
+            type='number'
             value={value}
-            onChange={e => updateValue(parseInt(e.target.value))}
-            className="w-16 text-center bg-transparent border-none focus:outline-none"
+            onChange={(e) => updateValue(parseInt(e.target.value))}
+            className='w-16 text-center bg-transparent border-none focus:outline-none'
           />
         </div>
       </div>
-      <div className="mt-4">
+      <div className='mt-4'>
         <input
-          type="range"
+          type='range'
           min={min}
           max={max}
           step={jump}
           value={value}
-          onChange={e => updateValue(parseInt(e.target.value))}
-          className="w-full h-2 bg-lightest rounded-md appearance-none focus:outline-none ring-1 accent-highlight hover:accent-highlight-dark transition-colors ring-gray-300 focus:ring-light"
+          onChange={(e) => updateValue(parseInt(e.target.value))}
+          className='w-full h-2 bg-lightest rounded-md appearance-none focus:outline-none ring-1 accent-highlight hover:accent-highlight-dark transition-colors ring-gray-300 focus:ring-light'
         />
       </div>
     </section>

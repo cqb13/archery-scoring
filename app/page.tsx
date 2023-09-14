@@ -2,7 +2,7 @@
 
 import NotificationPopup from "@/components/general/notificationPopup";
 import ScoringChart from "@/components/scoring/scoringChart";
-import { useState, useEffect} from "react";
+import { useState, useEffect } from "react";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
@@ -30,7 +30,9 @@ export default function Home() {
   const [data, setData] = useState({} as any);
 
   const [notification, setNotification] = useState(false);
-  const [notificationType, setNotificationType] = useState({} as "success" | "error");
+  const [notificationType, setNotificationType] = useState(
+    {} as "success" | "error"
+  );
   const [notificationTitle, setNotificationTitle] = useState("");
   const [notificationMessage, setNotificationMessage] = useState("");
 
@@ -161,11 +163,7 @@ export default function Home() {
           </div>
         </section>
       )}
-      {signUpPopup ? (
-        <SignUpPopup
-          updateSignUpPopup={setSignUpPopup}
-        />
-      ) : null}
+      {signUpPopup ? <SignUpPopup updateSignUpPopup={setSignUpPopup} /> : null}
       {savingPopup ? (
         <SaveScorePopup
           updateSavingPopup={updateSavingPopup}

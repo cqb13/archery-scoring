@@ -25,34 +25,38 @@ export default function FinalScoringStats(score: any) {
 
   return (
     <section className='shadow-card p-5 border border-gray-300'>
-    <table className="w-full">
-      <thead>
-        <th className="text-center">Split</th>
-        <th className="text-center">{"10's"}</th>
-        <th className="text-center">{"9's"}</th>
-        <th className="text-center">{"X's"}</th>
-        <th className="text-center">{"M's"}</th>
-        <th className="text-center">Score</th>
-      </thead>
-      <tbody>
-        {scoreStats.length > 1
-          ? scoreStats.map((split: any, splitIndex: number) => (
-              <tr key={splitIndex}>
-                <td className="text-center">{splitIndex + 1}</td>
-                {split.map((stat: string, statIndex: number) => (
-                  <td key={statIndex} className="text-center">{stat}</td>
-                ))}
-              </tr>
-            ))
-          : null}
-        <tr className="">
-          <td className="text-center">Total</td>
-          {combinedStats.map((stat: string, statIndex: number) => (
-            <td key={statIndex} className="text-center">{stat}</td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
+      <table className='w-full'>
+        <thead>
+          <th className='text-center'>Split</th>
+          <th className='text-center'>{"10's"}</th>
+          <th className='text-center'>{"9's"}</th>
+          <th className='text-center'>{"X's"}</th>
+          <th className='text-center'>{"M's"}</th>
+          <th className='text-center'>Score</th>
+        </thead>
+        <tbody>
+          {scoreStats.length > 1
+            ? scoreStats.map((split: any, splitIndex: number) => (
+                <tr key={splitIndex}>
+                  <td className='text-center'>{splitIndex + 1}</td>
+                  {split.map((stat: string, statIndex: number) => (
+                    <td key={statIndex} className='text-center'>
+                      {stat}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            : null}
+          <tr className=''>
+            <td className='text-center'>Total</td>
+            {combinedStats.map((stat: string, statIndex: number) => (
+              <td key={statIndex} className='text-center'>
+                {stat}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
     </section>
   );
 }
