@@ -13,6 +13,9 @@ import updateProfileType from "@/utils/firebase/db/updateProfileType";
 import deleteAccount from "@/utils/firebase/account/deleteAccount";
 import googleSignOut from "@/utils/firebase/account/googleSignOut";
 import { useRouter } from "next/navigation";
+import getAverageScore from "@/utils/score/getAverageScore";
+import countTotalSplits from "@/utils/score/countTotalSplits";
+import StatBox from "@/components/account/statBox";
 
 export default function History() {
   // general
@@ -20,6 +23,13 @@ export default function History() {
   const [userDoc, setUserDoc] = useState({} as any);
   const { user } = useAuthContext() as { user: any };
   const router = useRouter();
+
+  // stats
+  const [averageScore, setAverageScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
+  const [lowScore, setLowScore] = useState(0);
+  const [totalGames, setTotalGames] = useState(0);
+  const [totalSplits, setTotalSplits] = useState(0);
 
   // account
   const [name, setName] = useState("");
@@ -39,6 +49,11 @@ export default function History() {
       setUserDoc(doc);
       setNamePlaceholder(doc.displayName);
       setProfileType(doc.profileType);
+      setAverageScore(getAverageScore(doc.allScores));
+      setTotalSplits(countTotalSplits(doc.allScores));
+      setTotalGames(doc.allScores.length);
+      setHighScore(doc.highScore);
+      setLowScore(doc.lowScore);
     });
   }, []);
 
@@ -77,7 +92,15 @@ export default function History() {
           selected={currentWindow == "account" ? true : false}
         />
       </div>
-      {currentWindow == "stats" ? <h1>Stats</h1> : null}
+      {currentWindow == "stats" ? (
+        <section className='flex flex-wrap justify-center gap-2'>
+          <StatBox name='Average Score' value={averageScore} />
+          <StatBox name='High Score' value={highScore} />
+          <StatBox name='Low Score' value={lowScore} />
+          <StatBox name='Total Games' value={totalGames} />
+          <StatBox name='Total Splits' value={totalSplits} />
+        </section>
+      ) : null}
       {currentWindow == "social" ? <h1>Social</h1> : null}
       {currentWindow == "account" ? (
         <section className='shadow-card p-10 border border-gray-300 rounded-md flex gap-2 w-full max-mdLg:flex-col max-mdLg:items-center'>
