@@ -101,7 +101,7 @@ export default function History() {
           <StatBox name='Total Splits' value={totalSplits} />
         </section>
       ) : null}
-      {currentWindow == "social" ? <h1>Social</h1> : null}
+      {currentWindow == "social" ? <h1>Ill get around to this at some point</h1> : null}
       {currentWindow == "account" ? (
         <section className='shadow-card p-10 border border-gray-300 rounded-md flex gap-2 w-full max-mdLg:flex-col max-mdLg:items-center'>
           <Image

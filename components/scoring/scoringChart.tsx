@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import Button from "@components/general/button";
 
 type Props = {
@@ -160,8 +160,8 @@ export default function ScoringChart(props: Props) {
         </thead>
         <tbody>
           {data[currentSplit]?.map((row: number[], rowIndex: number) => (
-            <tr key={rowIndex} className="w-full">
-                <td>{rowIndex + 1}</td>
+            <tr key={rowIndex} className='w-full'>
+              <td>{rowIndex + 1}</td>
               {row.map((column: number, columnIndex: number) => (
                 <td key={columnIndex}>
                   <input
