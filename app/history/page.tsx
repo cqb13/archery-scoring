@@ -4,9 +4,13 @@ import { useEffect, useState } from "react";
 import getAllSessions from "@/utils/score/getAllSessions";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "@lib/firebase";
+import Dropdown from "@/components/general/dropdown";
+import Button from "@/components/general/button";
 
 export default function History() {
   const [currentGame, setCurrentGame] = useState(1);
+  const [currentGameName, setCurrentGameName] = useState("");
+  const [gameNameList, setGameNameList] = useState([] as string[]);
   const [dateMap, setDateMap] = useState(new Map());
 
   // session info
@@ -24,6 +28,11 @@ export default function History() {
     getAllSessions(auth.currentUser).then(({ sortedMap, dateMap }) => {
       setDateMap(dateMap);
       setCurrentGame(dateMap.size);
+      setCurrentGameName(sortedMap.keys().next().value);
+
+      let listOfGames = Array.from(sortedMap.keys());
+      setGameNameList(listOfGames);
+
       getScoreDoc(sortedMap.values().next().value);
     });
   }, []);
@@ -72,8 +81,27 @@ export default function History() {
   };
 
   return (
-    <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-      <h1>Some Stuff</h1>
+    <main className='flex flex-col gap-2 items-center justify-center pt-4 text-black'>
+      <section className='flex gap-2 w-full items-center justify-center'>
+        <Dropdown
+          title={currentGameName}
+          items={gameNameList}
+          customClass=' w-full'
+          setSelected={() => {}}
+        />
+        <div className='flex items-center justify-center gap-2'>
+          <Button title='Back' onClick={switchGame} />
+          <h2 className='whitespace-nowrap'>{`Game ${currentGame}/${gameNameList.length}`}</h2>
+          <Button title='Next' onClick={switchGame} />
+        </div>
+      </section>
+      <section className='flex gap-2'>
+        <h2 className="whitespace-nowrap">
+          {`${location} ${distance} ${distanceUnit} ${bow}`}
+        </h2>
+        <Button title='Note' onClick={() => {}} />
+        <Button title='Delete' onClick={() => {}} />
+      </section>
     </main>
   );
 }

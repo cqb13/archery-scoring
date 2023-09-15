@@ -5,10 +5,16 @@ import { useState } from "react";
 type Props = {
   title: string;
   items: string[];
+  customClass?: string; // meant for width changes only
   setSelected: (value: string) => void;
 };
 
-export default function Dropdown({ title, items, setSelected }: Props) {
+export default function Dropdown({
+  title,
+  items,
+  customClass,
+  setSelected
+}: Props) {
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
@@ -16,7 +22,11 @@ export default function Dropdown({ title, items, setSelected }: Props) {
 
   return (
     <section>
-      <div className='relative inline-block w-60 text-left '>
+      <div
+        className={`relative inline-block w-60 text-left ${
+          customClass ? customClass : ""
+        }`}
+      >
         <div>
           <button
             type='button'
@@ -38,7 +48,7 @@ export default function Dropdown({ title, items, setSelected }: Props) {
         <div
           className={`${
             opened ? " absolute" : "hidden"
-          } mt-2 w-56 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5 z-10`}
+          } mt-2 w-60 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5 z-10 ${customClass ? customClass : ""}`}
         >
           <div
             className='py-1'
