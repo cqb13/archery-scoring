@@ -48,7 +48,9 @@ export default function Dropdown({
         <div
           className={`${
             opened ? " absolute" : "hidden"
-          } mt-2 w-60 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5 z-10 ${customClass ? customClass : ""}`}
+          } mt-2 w-60 rounded-md shadow-lg bg-lightest ring-1 ring-black ring-opacity-5 z-10 ${
+            customClass ? customClass : ""
+          }`}
         >
           <div
             className='py-1'

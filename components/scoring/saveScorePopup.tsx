@@ -1,6 +1,6 @@
+import fixDateTimeFormat from "@/utils/fixDateTimeFormat";
 import Button from "@components/general/button";
 import Input from "@components/general/input";
-import fixDateTimeFormat from "@/utils/fixDateTimeFormat";
 import { useState, useEffect } from "react";
 
 type SaveScorePopupProps = {

@@ -1,9 +1,9 @@
 "use client";
 
-import useScroll from "@hooks/useScroll";
-import { useRouter, usePathname } from "next/navigation";
-import { useAuthContext } from "@/lib/context/authContext";
 import googleSignIn from "@/utils/firebase/account/googleSignIn";
+import { useAuthContext } from "@/lib/context/authContext";
+import { useRouter, usePathname } from "next/navigation";
+import useScroll from "@hooks/useScroll";
 import { routes } from "@lib/routes";
 
 export default function NavBar() {

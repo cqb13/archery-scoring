@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import getAllSessions from "@/utils/score/getAllSessions";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "@lib/firebase";
 import Dropdown from "@/components/general/dropdown";
+import { doc, getDoc } from "firebase/firestore";
 import Button from "@/components/general/button";
+import { useEffect, useState } from "react";
+import { auth, db } from "@lib/firebase";
 
 export default function History() {
   const [currentGame, setCurrentGame] = useState(1);
@@ -95,9 +95,9 @@ export default function History() {
           <Button title='Next' onClick={switchGame} />
         </div>
       </section>
-      <section className='flex gap-2'>
-        <h2 className="whitespace-nowrap">
-          {`${location} ${distance} ${distanceUnit} ${bow}`}
+      <section className='flex gap-2 items-center justify-center'>
+        <h2 className='whitespace-nowrap'>
+          {`${location} ${distance}${distanceUnit} ${bow}`}
         </h2>
         <Button title='Note' onClick={() => {}} />
         <Button title='Delete' onClick={() => {}} />

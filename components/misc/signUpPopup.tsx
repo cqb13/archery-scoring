@@ -1,5 +1,5 @@
-import Button from "@components/general/button";
 import googleSignIn from "@/utils/firebase/account/googleSignIn";
+import Button from "@components/general/button";
 
 export default function SignUpPopup({
   updateSignUpPopup

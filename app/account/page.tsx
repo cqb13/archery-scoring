@@ -1,21 +1,21 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useAuthContext } from "@context/authContext";
-import Button from "@/components/general/button";
-import { db, auth } from "@lib/firebase";
-import Image from "next/image";
-import getUserDoc from "@/utils/firebase/db/getUserDoc";
-import Input from "@/components/general/input";
-import Dropdown from "@/components/general/dropdown";
 import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
 import updateProfileType from "@/utils/firebase/db/updateProfileType";
 import deleteAccount from "@/utils/firebase/account/deleteAccount";
 import googleSignOut from "@/utils/firebase/account/googleSignOut";
-import { useRouter } from "next/navigation";
-import getAverageScore from "@/utils/score/getAverageScore";
 import countTotalSplits from "@/utils/score/countTotalSplits";
+import getAverageScore from "@/utils/score/getAverageScore";
+import getUserDoc from "@/utils/firebase/db/getUserDoc";
+import { useAuthContext } from "@context/authContext";
+import Dropdown from "@/components/general/dropdown";
 import StatBox from "@/components/account/statBox";
+import Button from "@/components/general/button";
+import Input from "@/components/general/input";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { db, auth } from "@lib/firebase";
+import Image from "next/image";
 
 export default function History() {
   // general
@@ -101,7 +101,9 @@ export default function History() {
           <StatBox name='Total Splits' value={totalSplits} />
         </section>
       ) : null}
-      {currentWindow == "social" ? <h1>Ill get around to this at some point</h1> : null}
+      {currentWindow == "social" ? (
+        <h1>Ill get around to this at some point</h1>
+      ) : null}
       {currentWindow == "account" ? (
         <section className='shadow-card p-10 border border-gray-300 rounded-md flex gap-2 w-full max-mdLg:flex-col max-mdLg:items-center'>
           <Image

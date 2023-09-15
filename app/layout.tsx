@@ -1,7 +1,7 @@
-import { NavigationEvents } from "@/lib/nav-events";
 import { AuthContextProvider } from "@/lib/context/authContext";
-import { Inter } from "next/font/google";
+import { NavigationEvents } from "@/lib/nav-events";
 import NavBar from "@/components/layout/nav";
+import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import "./globals.css";

@@ -1,5 +1,4 @@
 import Button from "@components/general/button";
-import { update } from "firebase/database";
 
 export default function SessionOptions({
   done,

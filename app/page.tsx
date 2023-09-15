@@ -1,14 +1,14 @@
 "use client";
 
 import NotificationPopup from "@/components/general/notificationPopup";
-import ScoringChart from "@/components/scoring/scoringChart";
-import { useState, useEffect } from "react";
+import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import SessionOptions from "@/components/scoring/sessionOptions";
 import ScoreSetupMenu from "@/components/scoring/scoreSetupMenu";
-import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import SaveScorePopup from "@/components/scoring/saveScorePopup";
-import { useAuthContext } from "@context/authContext";
+import ScoringChart from "@/components/scoring/scoringChart";
 import SignUpPopup from "@/components/misc/signUpPopup";
+import { useAuthContext } from "@context/authContext";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [setup, setSetup] = useState(true);

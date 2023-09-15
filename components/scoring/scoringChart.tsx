@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import Button from "@components/general/button";
+import { useState, useEffect } from "react";
 
 type Props = {
   arrowsPerEnd: number;
