@@ -9,8 +9,8 @@ type Props = {
   splits: number;
   score?: number;
   done: boolean;
-  ends: number;
-  updateData: (value: any) => void;
+  ends?: number;
+  updateData?: (value: any) => void;
 };
 
 export default function ScoringChart(props: Props) {
@@ -18,11 +18,12 @@ export default function ScoringChart(props: Props) {
   const [data, setData] = useState({} as any);
 
   useEffect(() => {
+    if (!props.updateData) return;
     props.updateData(data);
   }, [data, props]);
 
-  const handleSwitch = (event: React.ChangeEvent<HTMLButtonElement>) => {
-    if (event.target.value === "next") {
+  const handleSwitch = (direction: string) => {
+    if (direction === "back") {
       if (currentSplit === 0) {
         setCurrentSplit(props.splits - 1);
         return;
@@ -90,6 +91,7 @@ export default function ScoringChart(props: Props) {
       document.getElementById(`${currentArrow + 1}-${currentEnd}`)?.focus();
       return;
     } else {
+      if (!ends) return;
       // if the end is not the last end, set the focus to the first arrow of the next end
       if (currentEnd < ends) {
         document.getElementById(`1-${currentEnd + 1}`)?.focus();
@@ -138,11 +140,11 @@ export default function ScoringChart(props: Props) {
     <section className='flex flex-col gap-2'>
       {props.splits > 1 ? (
         <div className='flex gap-4 items-center justify-center border border-gray-300 shadow-card p-2 rounded-md'>
-          <Button title='back' onClick={handleSwitch} />
+          <Button title='back' onClick={() => handleSwitch("back")} />
           <h2 className='w-56 text-center '>
             Split {currentSplit + 1}/{props.splits}
           </h2>
-          <Button title='next' onClick={handleSwitch} />
+          <Button title='next' onClick={() => handleSwitch("next")} />
         </div>
       ) : null}
       <table className='shadow-card block rounded-md p-10 border border-gray-300'>

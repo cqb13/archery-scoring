@@ -142,25 +142,23 @@ export default function Home() {
           startScoring={startScoring}
         />
       ) : (
-        <section className=''>
-          <div className='flex flex-col gap-2'>
-            <ScoringChart
-              arrowsPerEnd={arrowsPerEnd}
-              history={false}
-              splits={splitEnds}
-              ends={ends}
-              done={false}
-              updateData={updateData}
-            />
-            {finished ? <FinalScoringStats score={data} /> : null}
-            <SessionOptions
-              done={finished}
-              updateFinished={updateFinished}
-              updateSetup={updateSetup}
-              beginSaving={beginSaving}
-              defaultSetup={defaultSetup}
-            />
-          </div>
+        <section className='flex flex-col gap-2'>
+          <ScoringChart
+            arrowsPerEnd={arrowsPerEnd}
+            history={false}
+            splits={splitEnds}
+            ends={ends}
+            done={false}
+            updateData={updateData}
+          />
+          {finished ? <FinalScoringStats score={data} /> : null}
+          <SessionOptions
+            done={finished}
+            updateFinished={updateFinished}
+            updateSetup={updateSetup}
+            beginSaving={beginSaving}
+            defaultSetup={defaultSetup}
+          />
         </section>
       )}
       {signUpPopup ? <SignUpPopup updateSignUpPopup={setSignUpPopup} /> : null}
