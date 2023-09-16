@@ -134,7 +134,7 @@ export default function ScoringChart(props: Props) {
       );
       setData(setupArray);
     }
-  }, [props.arrowsPerEnd, props.ends, props.splits]);
+  }, [props.arrowsPerEnd, props.ends, props.splits, props.score]);
 
   return (
     <section className='flex flex-col gap-2'>

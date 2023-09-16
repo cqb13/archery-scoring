@@ -5,20 +5,20 @@ import { db } from "@lib/firebase";
 
 type Props = {
   user: any;
-  score: any;
   data: any;
-  totalScore: any;
-  name: any;
+  sessionInfo: any;
+  total: any;
+  title: any;
   note: any;
   createdAt: any;
 };
 
 export default async function saveSession({
   user,
-  score,
   data,
-  totalScore,
-  name,
+  sessionInfo,
+  total,
+  title,
   note,
   createdAt
 }: Props) {
@@ -28,11 +28,10 @@ export default async function saveSession({
     distanceUnit,
     ends,
     arrowsPerEnd,
-    sessions,
+    splitEnds,
     bow
-  } = data;
-
-  const sortedScore = await sortScores(score);
+  } = sessionInfo;
+  const sortedScore = await sortScores(data);
 
   const encodedScore = JSON.stringify(sortedScore);
   const usersCollection = collection(db, "users");
@@ -46,7 +45,7 @@ export default async function saveSession({
   const allScores = userDocRef.data().allScores;
   const lowScore = userDocRef.data().lowScore;
 
-  const splitScoreArrayValues = await addScoreArrayValues(score);
+  const splitScoreArrayValues = await addScoreArrayValues(data);
   const encodedSplitScoreArrayValues = JSON.stringify(splitScoreArrayValues);
 
   if (allScores) {
@@ -62,7 +61,7 @@ export default async function saveSession({
     await setDoc(
       userDoc,
       {
-        allScores: [totalScore]
+        allScores: [total]
       },
       { merge: true }
     );
@@ -109,9 +108,9 @@ export default async function saveSession({
     arrowsPerEnd: arrowsPerEnd,
     bow: bow || "Unknown",
     score: encodedScore,
-    sessions: sessions,
+    sessions: splitEnds,
     distance: distance,
-    name: name || "",
+    name: title || "",
     note: note || "",
     date: createdAt,
     ends: ends

@@ -8,7 +8,6 @@ import { doc, getDoc } from "firebase/firestore";
 import Button from "@/components/general/button";
 import { useEffect, useState } from "react";
 import { auth, db } from "@lib/firebase";
-import { json } from "stream/consumers";
 
 export default function History() {
   const [currentGame, setCurrentGame] = useState(1);
@@ -85,7 +84,7 @@ export default function History() {
 
   return (
     <main className='flex flex-col gap-2 items-center justify-center pt-4 text-black'>
-      <section className='flex gap-2 w-full items-center justify-center'>
+      <section className='flex gap-2 w-full items-center justify-center max-smSm:flex-col'>
         <Dropdown
           title={currentGameName}
           items={gameNameList}
@@ -106,16 +105,16 @@ export default function History() {
         <Button title='Delete' onClick={() => {}} />
       </section>
       {score.length > 0 ? (
-            <section className="flex flex-col gap-2">
-              <ScoringChart
-                arrowsPerEnd={arrowsPerEnd}
-                history={true}
-                splits={splits}
-                done={false}
-                score={score}
-              />
-              <FinalScoringStats score={score} />
-            </section>
+        <section className='flex flex-col gap-2'>
+          <ScoringChart
+            arrowsPerEnd={arrowsPerEnd}
+            history={true}
+            splits={splits}
+            done={false}
+            score={score}
+          />
+          <FinalScoringStats score={score} />
+        </section>
       ) : null}
     </main>
   );

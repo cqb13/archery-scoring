@@ -4,12 +4,10 @@ import { useEffect, useState } from "react";
 export default function FinalScoringStats(score: any) {
   const [scoreStats, setScoreStats] = useState({} as any);
   const [combinedStats, setCombinedStats] = useState([0, 0, 0, 0, 0] as any);
-  const [total, setTotal] = useState(0);
 
   useEffect(() => {
     const { stats, total } = countTotals(score);
     setScoreStats(stats);
-    setTotal(total);
     combineStats(stats);
   }, [score]);
 
@@ -24,7 +22,7 @@ export default function FinalScoringStats(score: any) {
   };
 
   return (
-    <section className='shadow-card p-5 border border-gray-300'>
+    <section className='shadow-card p-5 border border-gray-300 rounded-md'>
       <table className='w-full'>
         <thead>
           <th className='text-center'>Split</th>

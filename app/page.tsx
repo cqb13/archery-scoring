@@ -8,6 +8,8 @@ import SaveScorePopup from "@/components/scoring/saveScorePopup";
 import ScoringChart from "@/components/scoring/scoringChart";
 import SignUpPopup from "@/components/misc/signUpPopup";
 import { useAuthContext } from "@context/authContext";
+import countTotals from "@/utils/score/countTotals";
+import saveSession from "@/utils/score/saveSession";
 import { useState, useEffect } from "react";
 
 export default function Home() {
@@ -106,7 +108,7 @@ export default function Home() {
     updateSavingPopup(true);
   };
 
-  const continueSaving = ({
+  const continueSaving = async ({
     title,
     date,
     time,
@@ -121,9 +123,40 @@ export default function Home() {
     setNotification(true);
     setNotificationType("success");
     setNotificationTitle("Success");
-    setNotificationMessage("Score saved successfully!");
+    setNotificationMessage("Session saved!");
 
-    console.log(title, date, time, note);
+    let cleanDistanceUnit = distanceUnit;
+    // we are using distance unit from dropdown, but we don't need all the extra info
+    if (distanceUnit.includes("(")) {
+      cleanDistanceUnit = distanceUnit.substring(0, distanceUnit.indexOf("("));
+    }
+    cleanDistanceUnit = cleanDistanceUnit.trim();
+    cleanDistanceUnit = cleanDistanceUnit.toLowerCase();
+
+    const sessionInfo = {
+      location,
+      distance,
+      distanceUnit: cleanDistanceUnit,
+      ends,
+      arrowsPerEnd,
+      splitEnds,
+      bow
+    };
+    let score = data;
+    const { total } = countTotals({ score });
+    const createdAt = date + "," + time;
+
+    await saveSession({
+      user,
+      data,
+      sessionInfo,
+      total,
+      title,
+      note,
+      createdAt
+    });
+
+    setSetup(true);
   };
 
   const updateNotification = (value: boolean) => setNotification(value);
