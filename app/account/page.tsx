@@ -1,6 +1,8 @@
 "use client";
 
 import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
+import ConfirmPopup from "@/components/misc/confirmPopup";
+import NotificationPopup from "@/components/general/notificationPopup";
 import updateProfileType from "@/utils/firebase/db/updateProfileType";
 import deleteAccount from "@/utils/firebase/account/deleteAccount";
 import googleSignOut from "@/utils/firebase/account/googleSignOut";
@@ -16,6 +18,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { db, auth } from "@lib/firebase";
 import Image from "next/image";
+import { set } from "firebase/database";
 
 export default function History() {
   // general
@@ -23,6 +26,16 @@ export default function History() {
   const [userDoc, setUserDoc] = useState({} as any);
   const { user } = useAuthContext() as { user: any };
   const router = useRouter();
+
+  // popup
+  const [deletePopup, setDeletePopup] = useState(false);
+
+  const [notification, setNotification] = useState(false);
+  const [notificationType, setNotificationType] = useState(
+    {} as "success" | "error"
+  );
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   // stats
   const [averageScore, setAverageScore] = useState(0);
@@ -72,6 +85,19 @@ export default function History() {
   const changeProfileType = (type: string) => {
     setProfileType(type);
     updateProfileType(auth.currentUser, type);
+  };
+
+  const deleteAction = () => {
+    setDeletePopup(true);
+  };
+
+  const confirmDelete = async () => {
+    await deleteAccount(auth.currentUser);
+    router.push("/");
+  };
+
+  const cancelDelete = () => {
+    setDeletePopup(false);
   };
 
   return (
@@ -136,7 +162,7 @@ export default function History() {
                 </div>
                 <div className='flex flex-col-reverse py-4 gap-2 w-full'>
                   <Button title='Sign Out' onClick={() => googleSignOut()} />
-                  <Button title='Delete Account' onClick={() => {}} />
+                  <Button title='Delete Account' onClick={deleteAction} />
                 </div>
               </div>
             </section>
@@ -147,6 +173,28 @@ export default function History() {
           Authenticating User
         </h1>
       )}
+      {deletePopup ? (
+        <ConfirmPopup
+          title='Delete Game'
+          message='Are you sure you want to delete your account?'
+          expectedValue={"DELETE ACCOUNT"}
+          confirm={confirmDelete}
+          cancel={cancelDelete}
+          setNotification={setNotification}
+          setNotificationType={setNotificationType}
+          setNotificationTitle={setNotificationTitle}
+          setNotificationMessage={setNotificationMessage}
+        />
+      ) : null}
+      {notification ? (
+        <NotificationPopup
+          title={notificationTitle}
+          message={notificationMessage}
+          type={notificationType}
+          timeout={5000}
+          updateNotification={setNotification}
+        />
+      ) : null}
     </main>
   );
 }

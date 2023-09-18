@@ -10,5 +10,11 @@ export default function getAverageScore(allScores: any) {
 
   let average = total / countTotalSplits(allScores);
 
-  return Math.round(average * 10) / 10;
+  let averageScore = Math.round(average * 10) / 10;
+
+  if (isNaN(averageScore)) {
+    return 0;
+  }
+
+  return averageScore;
 }

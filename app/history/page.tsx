@@ -12,7 +12,6 @@ import { doc, getDoc } from "firebase/firestore";
 import Button from "@/components/general/button";
 import { useEffect, useState } from "react";
 import { auth, db } from "@lib/firebase";
-import { set } from "firebase/database";
 
 export default function History() {
   const [currentGame, setCurrentGame] = useState(1);
