@@ -12,6 +12,7 @@ import { doc, getDoc } from "firebase/firestore";
 import Button from "@/components/general/button";
 import { useEffect, useState } from "react";
 import { auth, db } from "@lib/firebase";
+import { set } from "firebase/database";
 
 export default function History() {
   const [currentGame, setCurrentGame] = useState(1);
@@ -19,6 +20,7 @@ export default function History() {
   const [gameNameList, setGameNameList] = useState([] as string[]);
   const [dateMap, setDateMap] = useState(new Map());
   const { user } = useAuthContext() as { user: any };
+  const [noGames, setNoGames] = useState(false);
 
   // popup
   const [deletePopup, setDeletePopup] = useState(false);
@@ -48,6 +50,10 @@ export default function History() {
 
   const setupHistory = async () => {
     let { sortedMap, dateMap } = await getAllSessions(auth.currentUser);
+    if (dateMap.size === 0) {
+      setNoGames(true);
+      return;
+    }
 
     setDateMap(dateMap);
     setCurrentGame(dateMap.size);
@@ -125,15 +131,21 @@ export default function History() {
     await deleteSession({ scoreDoc, userDoc, userData, totalScore });
 
     dateMap.delete(reverseDates[currentGame - 1]);
-    setCurrentGame(dateMap.size);
-    setGameNameList(Array.from(dateMap.keys()));
-    changeGame(dateMap.keys().next().value);
+
     setDeletePopup(false);
 
     setNotification(true);
     setNotificationType("success");
     setNotificationTitle("Success");
     setNotificationMessage("Session deleted!");
+
+    if (dateMap.size === 0) {
+      setNoGames(true);
+    }
+
+    setCurrentGame(dateMap.size);
+    setGameNameList(Array.from(dateMap.keys()));
+    changeGame(dateMap.keys().next().value);
   };
 
   const cancelDelete = () => {
@@ -148,7 +160,7 @@ export default function History() {
 
   return (
     <main className='flex flex-col gap-2 items-center justify-center pt-4 text-black'>
-      {user ? (
+      {user && !noGames ? (
         <>
           <section className='flex gap-2 w-full items-center justify-center max-smSm:flex-col'>
             <Dropdown
@@ -183,11 +195,17 @@ export default function History() {
             </section>
           ) : null}
         </>
-      ) : (
+      ) : null}
+      {!user ? (
         <h1 className=' animate-pulse border-gray-300 p-10 rounded-md shadow-card'>
           Authenticating User
         </h1>
-      )}
+      ) : null}
+      {noGames ? (
+        <h1 className=' animate-pulse border-gray-300 p-10 rounded-md shadow-card'>
+          No Games Found
+        </h1>
+      ) : null}
       {deletePopup ? (
         <ConfirmPopup
           title='Delete Game'
