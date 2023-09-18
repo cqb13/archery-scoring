@@ -1,6 +1,7 @@
 "use client";
 
 import getAllSessions from "@/utils/score/getAllSessions";
+import NotificationPopup from "@/components/general/notificationPopup";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import deleteSession from "@/utils/firebase/db/deleteSession";
 import ConfirmPopup from "@/components/misc/confirmPopup";
@@ -21,6 +22,13 @@ export default function History() {
 
   // popup
   const [deletePopup, setDeletePopup] = useState(false);
+
+  const [notification, setNotification] = useState(false);
+  const [notificationType, setNotificationType] = useState(
+    {} as "success" | "error"
+  );
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [notificationMessage, setNotificationMessage] = useState("");
 
   // session info
   const [arrowsPerEnd, setArrowsPerEnd] = useState(0);
@@ -121,6 +129,11 @@ export default function History() {
     setGameNameList(Array.from(dateMap.keys()));
     changeGame(dateMap.keys().next().value);
     setDeletePopup(false);
+
+    setNotification(true);
+    setNotificationType("success");
+    setNotificationTitle("Success");
+    setNotificationMessage("Session deleted!");
   };
 
   const cancelDelete = () => {
@@ -182,6 +195,19 @@ export default function History() {
           expectedValue={extractName(currentGameName)}
           confirm={confirmDelete}
           cancel={cancelDelete}
+          setNotification={setNotification}
+          setNotificationType={setNotificationType}
+          setNotificationTitle={setNotificationTitle}
+          setNotificationMessage={setNotificationMessage}
+        />
+      ) : null}
+      {notification ? (
+        <NotificationPopup
+          title={notificationTitle}
+          message={notificationMessage}
+          type={notificationType}
+          timeout={5000}
+          updateNotification={setNotification}
         />
       ) : null}
     </main>

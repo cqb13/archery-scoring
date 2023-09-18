@@ -8,6 +8,10 @@ type Props = {
   expectedValue: string;
   confirm: () => void;
   cancel: () => void;
+  setNotification?: (active: boolean) => void;
+  setNotificationType?: (value: "success" | "error") => void;
+  setNotificationTitle?: (title: string) => void;
+  setNotificationMessage?: (message: string) => void;
 };
 
 export default function ConfirmPopup({
@@ -15,7 +19,11 @@ export default function ConfirmPopup({
   message,
   expectedValue,
   confirm,
-  cancel
+  cancel,
+  setNotification,
+  setNotificationType,
+  setNotificationTitle,
+  setNotificationMessage
 }: Props) {
   const [value, setValue] = useState("");
 
@@ -24,6 +32,13 @@ export default function ConfirmPopup({
       confirm();
     } else {
       setValue("");
+      if (setNotification) setNotification(true);
+      if (setNotificationType) setNotificationType("error");
+      if (setNotificationTitle) setNotificationTitle("Error");
+      if (setNotificationMessage)
+        setNotificationMessage(
+          `Expected value: "${expectedValue}", received: "${value}"`
+        );
     }
   };
 

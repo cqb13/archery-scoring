@@ -21,6 +21,7 @@ export default async function deleteSession({
     allScores.splice(index, 1);
   }
 
+  // !!! high/low score are not updating
   await setDoc(
     userDoc,
     {
