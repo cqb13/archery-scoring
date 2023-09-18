@@ -3,6 +3,7 @@
 import getAllSessions from "@/utils/score/getAllSessions";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import ScoringChart from "@/components/scoring/scoringChart";
+import { useAuthContext } from "@context/authContext";
 import Dropdown from "@/components/general/dropdown";
 import { doc, getDoc } from "firebase/firestore";
 import Button from "@/components/general/button";
@@ -14,6 +15,7 @@ export default function History() {
   const [currentGameName, setCurrentGameName] = useState("");
   const [gameNameList, setGameNameList] = useState([] as string[]);
   const [dateMap, setDateMap] = useState(new Map());
+  const { user } = useAuthContext() as { user: any };
 
   // session info
   const [arrowsPerEnd, setArrowsPerEnd] = useState(0);
@@ -27,17 +29,22 @@ export default function History() {
   const [bow, setBow] = useState("");
 
   useEffect(() => {
-    getAllSessions(auth.currentUser).then(({ sortedMap, dateMap }) => {
-      setDateMap(dateMap);
-      setCurrentGame(dateMap.size);
-      setCurrentGameName(sortedMap.keys().next().value);
+    if (!user) return;
+    setupHistory();
+  }, [user]);
 
-      let listOfGames = Array.from(sortedMap.keys());
-      setGameNameList(listOfGames);
+  const setupHistory = async () => {
+    let { sortedMap, dateMap } = await getAllSessions(auth.currentUser);
 
-      getScoreDoc(sortedMap.values().next().value);
-    });
-  }, []);
+    setDateMap(dateMap);
+    setCurrentGame(dateMap.size);
+    setCurrentGameName(sortedMap.keys().next().value);
+
+    let listOfGames = Array.from(sortedMap.keys());
+    setGameNameList(listOfGames);
+
+    getScoreDoc(sortedMap.values().next().value);
+  };
 
   const getScoreDoc = async (id: string) => {
     if (!auth.currentUser) return;
@@ -57,7 +64,11 @@ export default function History() {
     }
   };
 
+  //!!! dropdown name not updating
   const changeGame = (date: string) => {
+    setCurrentGameName(date);
+    let reverseGameNameList = gameNameList.slice().reverse();
+    setCurrentGame(reverseGameNameList.indexOf(date) + 1);
     getScoreDoc(dateMap.get(date));
   };
 
@@ -84,38 +95,46 @@ export default function History() {
 
   return (
     <main className='flex flex-col gap-2 items-center justify-center pt-4 text-black'>
-      <section className='flex gap-2 w-full items-center justify-center max-smSm:flex-col'>
-        <Dropdown
-          title={currentGameName}
-          items={gameNameList}
-          customClass=' w-full'
-          setSelected={() => {}}
-        />
-        <div className='flex items-center justify-center gap-2'>
-          <Button title='Back' onClick={() => switchGame("back")} />
-          <h2 className='whitespace-nowrap'>{`Game ${currentGame}/${gameNameList.length}`}</h2>
-          <Button title='Next' onClick={() => switchGame("next")} />
-        </div>
-      </section>
-      <section className='flex gap-2 items-center justify-center'>
-        <h2 className='whitespace-nowrap'>
-          {`${location} ${distance}${distanceUnit} ${bow}`}
-        </h2>
-        <Button title='Note' onClick={() => {}} />
-        <Button title='Delete' onClick={() => {}} />
-      </section>
-      {score.length > 0 ? (
-        <section className='flex flex-col gap-2'>
-          <ScoringChart
-            arrowsPerEnd={arrowsPerEnd}
-            history={true}
-            splits={splits}
-            done={false}
-            score={score}
-          />
-          <FinalScoringStats score={score} />
-        </section>
-      ) : null}
+      {user ? (
+        <>
+          <section className='flex gap-2 w-full items-center justify-center max-smSm:flex-col'>
+            <Dropdown
+              title={currentGameName}
+              items={gameNameList}
+              customClass=' w-full'
+              setSelected={changeGame}
+            />
+            <div className='flex items-center justify-center gap-2'>
+              <Button title='Back' onClick={() => switchGame("back")} />
+              <h2 className='whitespace-nowrap'>{`Game ${currentGame}/${gameNameList.length}`}</h2>
+              <Button title='Next' onClick={() => switchGame("next")} />
+            </div>
+          </section>
+          <section className='flex gap-2 items-center justify-center'>
+            <h2 className='whitespace-nowrap'>
+              {`${location} ${distance}${distanceUnit} ${bow}`}
+            </h2>
+            <Button title='Note' onClick={() => {}} />
+            <Button title='Delete' onClick={() => {}} />
+          </section>
+          {score.length > 0 ? (
+            <section className='flex flex-col gap-2'>
+              <ScoringChart
+                arrowsPerEnd={arrowsPerEnd}
+                history={true}
+                splits={splits}
+                done={false}
+                score={score}
+              />
+              <FinalScoringStats score={score} />
+            </section>
+          ) : null}
+        </>
+      ) : (
+        <h1 className=' animate-pulse border-gray-300 p-10 rounded-md shadow-card'>
+          Authenticating User
+        </h1>
+      )}
     </main>
   );
 }
