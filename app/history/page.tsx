@@ -2,6 +2,8 @@
 
 import getAllSessions from "@/utils/score/getAllSessions";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
+import deleteSession from "@/utils/firebase/db/deleteSession";
+import ConfirmPopup from "@/components/misc/confirmPopup";
 import ScoringChart from "@/components/scoring/scoringChart";
 import { useAuthContext } from "@context/authContext";
 import Dropdown from "@/components/general/dropdown";
@@ -16,6 +18,9 @@ export default function History() {
   const [gameNameList, setGameNameList] = useState([] as string[]);
   const [dateMap, setDateMap] = useState(new Map());
   const { user } = useAuthContext() as { user: any };
+
+  // popup
+  const [deletePopup, setDeletePopup] = useState(false);
 
   // session info
   const [arrowsPerEnd, setArrowsPerEnd] = useState(0);
@@ -93,6 +98,41 @@ export default function History() {
     }
   };
 
+  const deleteAction = () => {
+    setDeletePopup(true);
+  };
+
+  const confirmDelete = async () => {
+    let reverseDates = Array.from(dateMap.keys()).slice().reverse();
+    const scoreDoc = doc(
+      db,
+      "users",
+      user.uid,
+      "scores",
+      dateMap.get(reverseDates[currentGame - 1])
+    );
+    const userDoc = doc(db, "users", user.uid);
+    const userData = await getDoc(userDoc);
+
+    await deleteSession({ scoreDoc, userDoc, userData, totalScore });
+
+    dateMap.delete(reverseDates[currentGame - 1]);
+    setCurrentGame(dateMap.size);
+    setGameNameList(Array.from(dateMap.keys()));
+    changeGame(dateMap.keys().next().value);
+    setDeletePopup(false);
+  };
+
+  const cancelDelete = () => {
+    setDeletePopup(false);
+  };
+
+  const extractName = (name: string) => {
+    let splitName = name.split(" | ");
+    if (splitName.length === 1) return "fuck this should not happen";
+    return splitName[1];
+  };
+
   return (
     <main className='flex flex-col gap-2 items-center justify-center pt-4 text-black'>
       {user ? (
@@ -115,7 +155,7 @@ export default function History() {
               {`${location} ${distance}${distanceUnit} ${bow}`}
             </h2>
             <Button title='Note' onClick={() => {}} />
-            <Button title='Delete' onClick={() => {}} />
+            <Button title='Delete' onClick={deleteAction} />
           </section>
           {score.length > 0 ? (
             <section className='flex flex-col gap-2'>
@@ -135,6 +175,15 @@ export default function History() {
           Authenticating User
         </h1>
       )}
+      {deletePopup ? (
+        <ConfirmPopup
+          title='Delete Game'
+          message='Are you sure you want to delete this game?'
+          expectedValue={extractName(currentGameName)}
+          confirm={confirmDelete}
+          cancel={cancelDelete}
+        />
+      ) : null}
     </main>
   );
 }

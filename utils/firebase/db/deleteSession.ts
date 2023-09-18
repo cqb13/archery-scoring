@@ -1,6 +1,6 @@
 import { deleteDoc, setDoc } from "firebase/firestore";
 
-export default async function deleteGame({
+export default async function deleteSession({
   scoreDoc,
   userDoc,
   userData,
