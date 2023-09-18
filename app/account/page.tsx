@@ -37,6 +37,7 @@ export default function History() {
   const [profileType, setProfileType] = useState("Private");
 
   useEffect(() => {
+    if (!user) return;
     auth.onAuthStateChanged((user) => {
       if (user) {
         setSignedIn(true);
@@ -55,7 +56,7 @@ export default function History() {
       setHighScore(doc.highScore);
       setLowScore(doc.lowScore);
     });
-  }, []);
+  }, [user]);
 
   const [currentWindow, setCurrentWindow] = useState("stats");
 
@@ -92,52 +93,60 @@ export default function History() {
           selected={currentWindow == "account" ? true : false}
         />
       </div>
-      {currentWindow == "stats" ? (
-        <section className='flex flex-wrap justify-center gap-2'>
-          <StatBox name='Average Score' value={averageScore} />
-          <StatBox name='High Score' value={highScore} />
-          <StatBox name='Low Score' value={lowScore} />
-          <StatBox name='Total Games' value={totalGames} />
-          <StatBox name='Total Splits' value={totalSplits} />
-        </section>
-      ) : null}
-      {currentWindow == "social" ? (
-        <h1>Ill get around to this at some point</h1>
-      ) : null}
-      {currentWindow == "account" ? (
-        <section className='shadow-card p-10 border border-gray-300 rounded-md flex gap-2 w-full max-mdLg:flex-col max-mdLg:items-center'>
-          <Image
-            src={userDoc?.photoURL.replaceAll("s96-c", "s500-c")}
-            alt='use pfp'
-            className='rounded-2xl'
-            width={300}
-            height={300}
-          />
-          <div className='flex gap-2 w-full max-smSm:flex-col'>
-            <div className='flex flex-col py-4 gap-2 w-full'>
-              <Input
-                value={name}
-                placeholder={`username: ${namePlaceholder}`}
-                type='text'
-                updateValue={setName}
+      {user ? (
+        <>
+          {currentWindow == "stats" ? (
+            <section className='flex flex-wrap justify-center gap-2'>
+              <StatBox name='Average Score' value={averageScore} />
+              <StatBox name='High Score' value={highScore} />
+              <StatBox name='Low Score' value={lowScore} />
+              <StatBox name='Total Games' value={totalGames} />
+              <StatBox name='Total Splits' value={totalSplits} />
+            </section>
+          ) : null}
+          {currentWindow == "social" ? (
+            <h1>Ill get around to this at some point</h1>
+          ) : null}
+          {currentWindow == "account" ? (
+            <section className='shadow-card p-10 border border-gray-300 rounded-md flex gap-2 w-full max-mdLg:flex-col max-mdLg:items-center'>
+              <Image
+                src={userDoc?.photoURL.replaceAll("s96-c", "s500-c")}
+                alt='use pfp'
+                className='rounded-2xl'
+                width={300}
+                height={300}
               />
-              <Button title='Update Name' onClick={updateName} />
-              <div className='flex flex-col items-center justify-center'>
-                <p>Social Profile</p>
-                <Dropdown
-                  title={profileType}
-                  items={["Private", "Public", "Email Only"]}
-                  setSelected={changeProfileType}
-                />
+              <div className='flex gap-2 w-full max-smSm:flex-col'>
+                <div className='flex flex-col py-4 gap-2 w-full'>
+                  <Input
+                    value={name}
+                    placeholder={`username: ${namePlaceholder}`}
+                    type='text'
+                    updateValue={setName}
+                  />
+                  <Button title='Update Name' onClick={updateName} />
+                  <div className='flex flex-col items-center justify-center'>
+                    <p>Social Profile</p>
+                    <Dropdown
+                      title={profileType}
+                      items={["Private", "Public", "Email Only"]}
+                      setSelected={changeProfileType}
+                    />
+                  </div>
+                </div>
+                <div className='flex flex-col-reverse py-4 gap-2 w-full'>
+                  <Button title='Sign Out' onClick={() => googleSignOut()} />
+                  <Button title='Delete Account' onClick={() => {}} />
+                </div>
               </div>
-            </div>
-            <div className='flex flex-col-reverse py-4 gap-2 w-full'>
-              <Button title='Sign Out' onClick={() => googleSignOut()} />
-              <Button title='Delete Account' onClick={() => {}} />
-            </div>
-          </div>
-        </section>
-      ) : null}
+            </section>
+          ) : null}
+        </>
+      ) : (
+        <h1 className=' animate-pulse border-gray-300 p-10 rounded-md shadow-card'>
+          Authenticating User
+        </h1>
+      )}
     </main>
   );
 }
