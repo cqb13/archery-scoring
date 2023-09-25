@@ -1,6 +1,7 @@
 "use client";
 
 import Button from "@components/general/button";
+import isMobile from "@/utils/isMobile";
 import { useState, useEffect } from "react";
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 export default function ScoringChart(props: Props) {
   const [currentSplit, setCurrentSplit] = useState(0);
   const [data, setData] = useState({} as any);
+  const mobileDevice = isMobile();
 
   useEffect(() => {
     if (!props.updateData) return;
@@ -40,26 +42,28 @@ export default function ScoringChart(props: Props) {
 
   const handleChange = (event: any, rowIndex: any, columnIndex: any) => {
     if (props.history) return;
-    let delay = event.target.value.startsWith("1") ? 1000 : 0;
+
+    const value = event.target.value;
+
+    let delay = value.startsWith("1") && value != "10" ? 1500 : 0;
+
     const updatedData = data[currentSplit].map((row: any, rIndex: any) => {
       if (rIndex === rowIndex) {
         return row.map((column: any, cIndex: any) => {
           if (cIndex === columnIndex) {
-            switch (event.target.value) {
+            switch (value) {
               case "m":
               case "M":
               case "x":
               case "X":
                 setTimeout(() => {
-                  switchFocus(event, columnIndex, rowIndex);
+                  switchFocus(columnIndex, rowIndex);
                 }, delay);
-                return event.target.value;
+                return value;
               default:
                 break;
             }
-            return /^(0|[1-9]|1[0-1])$/.test(event.target.value)
-              ? event.target.value
-              : "";
+            return /^(0|[1-9]|1[0-1])$/.test(value) ? value : "";
           }
           return column;
         });
@@ -75,12 +79,12 @@ export default function ScoringChart(props: Props) {
 
     if (/^(0|[1-9]|1[0-1])$/.test(event.target.value)) {
       setTimeout(() => {
-        switchFocus(event, columnIndex, rowIndex);
+        switchFocus(columnIndex, rowIndex);
       }, delay);
     }
   };
 
-  const switchFocus = (event: any, columnIndex: number, rowIndex: number) => {
+  const switchFocus = (columnIndex: number, rowIndex: number) => {
     let arrowsPerEnd = props.arrowsPerEnd;
     let ends = props.ends;
     let currentArrow = columnIndex + 1;
@@ -136,6 +140,17 @@ export default function ScoringChart(props: Props) {
     }
   }, [props.arrowsPerEnd, props.ends, props.splits, props.score]);
 
+  const setValueOfSelectedBox = (value: string) => {
+    for (let i = 0; i < data[currentSplit].length; i++) {
+      for (let j = 0; j < data[currentSplit][i].length; j++) {
+        if (data[currentSplit][i][j] === "") {
+          handleChange({ target: { value: value } }, i, j);
+          return;
+        }
+      }
+    }
+  };
+
   return (
     <section className='flex flex-col gap-2'>
       {props.splits > 1 ? (
@@ -170,6 +185,7 @@ export default function ScoringChart(props: Props) {
                     type='text'
                     id={`${columnIndex + 1}-${rowIndex + 1}`}
                     pattern='[0-9mxMX]*'
+                    inputMode='numeric'
                     className='bg-lightest border border-gray-300 rounded-sm outline-none focus:border-highlight px-2 w-11/12'
                     value={column}
                     onChange={(event) =>
@@ -212,6 +228,10 @@ export default function ScoringChart(props: Props) {
           ))}
         </tbody>
       </table>
+      <section className={`${mobileDevice ? "" : ""} flex gap-2`}>
+        <Button title='X' onClick={() => setValueOfSelectedBox("X")} />
+        <Button title='M' onClick={() => setValueOfSelectedBox("M")} />
+      </section>
     </section>
   );
 }
