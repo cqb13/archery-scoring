@@ -7,18 +7,26 @@ type Props = {
   items: string[];
   customClass?: string; // meant for width changes only
   setSelected: (value: string) => void;
+  getSelected?: (value: string) => void;
 };
 
 export default function Dropdown({
   title,
   items,
   customClass,
-  setSelected
+  setSelected,
+  getSelected,
 }: Props) {
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
   const toggle = () => setOpened(!opened);
+
+  const selected = () => {
+    if (getSelected ? getSelected(selectedItem) : false) {
+      setSelected(selectedItem);
+    }
+  };
 
   return (
     <section>
@@ -65,6 +73,7 @@ export default function Dropdown({
                   setSelectedItem(item);
                   setSelected(item);
                   setOpened(false);
+                  selected();
                 }}
                 className='block px-4 py-2 text-sm text-gray-700 w-full hover:shadow-card transition-none'
                 role='menuitem'

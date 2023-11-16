@@ -23,6 +23,7 @@ export default function History() {
 
   // popup
   const [deletePopup, setDeletePopup] = useState(false);
+  const [notePopup, setNotePopup] = useState(false);
 
   const [notification, setNotification] = useState(false);
   const [notificationType, setNotificationType] = useState(
@@ -178,7 +179,7 @@ export default function History() {
             <h2 className='whitespace-nowrap'>
               {`${location} ${distance}${distanceUnit} ${bow}`}
             </h2>
-            <Button title='Note' onClick={() => {}} />
+            <Button title='Note' onClick={() => setNotePopup(!notePopup)} />
             <Button title='Delete' onClick={deleteAction} />
           </section>
           {score.length > 0 ? (
@@ -194,6 +195,31 @@ export default function History() {
             </section>
           ) : null}
         </>
+      ) : null}
+      {notePopup ? (
+        <section className='absolute top-0 left-0 h-screen w-screen flex items-center justify-center bg-dark bg-opacity-30'>
+          <div
+            className='absolute inset-0'
+            onClick={() => setNotePopup(false)}
+          ></div>
+          <section className='shadow-card rounded-md p-10 border border-gray-300 bg-lightest flex flex-col w-1/2 gap-2 z-10'>
+            <div className='flex items-center justify-between'>
+              <h1 className='text-center text-3xl'>Note</h1>
+              <svg
+                fill='#c78c7e'
+                width='40px'
+                height='40px'
+                viewBox='-3.5 0 19 19'
+                xmlns='http://www.w3.org/2000/svg'
+                onClick={() => setNotePopup(false)}
+                className='cursor-pointer rounded-md hover:bg-dark hover:rounded-xl transition-all duration-150 ease-in-out fill-highlight'
+              >
+                <path d='M11.383 13.644A1.03 1.03 0 0 1 9.928 15.1L6 11.172 2.072 15.1a1.03 1.03 0 1 1-1.455-1.456l3.928-3.928L.617 5.79a1.03 1.03 0 1 1 1.455-1.456L6 8.261l3.928-3.928a1.03 1.03 0 0 1 1.455 1.456L7.455 9.716z' />
+              </svg>
+            </div>
+            <p>{note}</p>
+          </section>
+        </section>
       ) : null}
       {!user ? (
         <h1 className=' animate-pulse border-gray-300 p-10 rounded-md shadow-card'>

@@ -41,7 +41,6 @@ export default function Home() {
   const updateSetup = (value: boolean) => setSetup(value);
   const updateFinished = (value: boolean) => setFinished(value);
   const updateSavingPopup = (value: boolean) => setSavingPopup(value);
-  const updateSignUpPopup = (value: boolean) => setSignUpPopup(value);
 
   const updateLocation = (value: string) => setLocation(value);
   const updateDistanceUnit = (value: string) => setDistanceUnit(value);

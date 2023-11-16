@@ -47,6 +47,7 @@ export default function ScoringChart(props: Props) {
 
     let delay = value.startsWith("1") && value != "10" ? 1500 : 0;
 
+    // if 1, but next value not 0, this should be done for next box with the extra value
     const updatedData = data[currentSplit].map((row: any, rIndex: any) => {
       if (rIndex === rowIndex) {
         return row.map((column: any, cIndex: any) => {
