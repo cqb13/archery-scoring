@@ -229,7 +229,11 @@ export default function ScoringChart(props: Props) {
           ))}
         </tbody>
       </table>
-      <section className={`${mobileDevice ? "" : ""} flex gap-2`}>
+      <section
+        className={`${mobileDevice ? "" : ""} flex gap-2 ${
+          history ? "hidden" : ""
+        }`}
+      >
         <Button title='X' onClick={() => setValueOfSelectedBox("X")} />
         <Button title='M' onClick={() => setValueOfSelectedBox("M")} />
       </section>

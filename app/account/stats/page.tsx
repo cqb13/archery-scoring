@@ -2,8 +2,8 @@
 
 import countTotalSplits from "@/utils/score/countTotalSplits";
 import getAverageScore from "@/utils/score/getAverageScore";
-import getUserDoc from "@/utils/firebase/db/getUserDoc";
 import StatDisplay from "@/components/account/statDisplay";
+import getUserDoc from "@/utils/firebase/db/getUserDoc";
 import { useAuthContext } from "@context/authContext";
 import { useState, useEffect } from "react";
 import { auth } from "@lib/firebase";

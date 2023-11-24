@@ -1,11 +1,11 @@
 "use client";
 
-import getAllSessions from "@/utils/score/getAllSessions";
 import NotificationPopup from "@/components/general/notificationPopup";
 import FinalScoringStats from "@/components/scoring/finalScoringStats";
 import deleteSession from "@/utils/firebase/db/deleteSession";
-import ConfirmPopup from "@/components/misc/confirmPopup";
 import ScoringChart from "@/components/scoring/scoringChart";
+import getAllSessions from "@/utils/score/getAllSessions";
+import ConfirmPopup from "@/components/misc/confirmPopup";
 import { useAuthContext } from "@context/authContext";
 import Dropdown from "@/components/general/dropdown";
 import { doc, getDoc } from "firebase/firestore";

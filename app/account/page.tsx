@@ -1,11 +1,11 @@
 "use client";
 
-import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
-import ConfirmPopup from "@/components/misc/confirmPopup";
 import NotificationPopup from "@/components/general/notificationPopup";
+import updateDisplayName from "@/utils/firebase/db/updateDisplayName";
 import updateProfileType from "@/utils/firebase/db/updateProfileType";
 import deleteAccount from "@/utils/firebase/account/deleteAccount";
 import googleSignOut from "@/utils/firebase/account/googleSignOut";
+import ConfirmPopup from "@/components/misc/confirmPopup";
 import getUserDoc from "@/utils/firebase/db/getUserDoc";
 import { useAuthContext } from "@context/authContext";
 import Dropdown from "@/components/general/dropdown";
