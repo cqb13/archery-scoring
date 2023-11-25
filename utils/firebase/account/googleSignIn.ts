@@ -13,7 +13,7 @@ export default async function googleSignIn() {
   if (!userDoc.exists()) {
     await setDoc(userRef, {
       displayName: user.displayName,
-      profileStatus: "private",
+      profileType: "private",
       photoURL: user.photoURL,
       email: user.email,
       allScores: [],
