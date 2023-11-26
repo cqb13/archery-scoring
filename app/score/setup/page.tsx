@@ -31,7 +31,6 @@ export default function Score() {
   const [notificationMessage, setNotificationMessage] = useState("");
 
   const [profiles, setProfiles] = useState([] as any[]);
-  const [currentProfile, setCurrentProfile] = useState({} as any);
   const [profileName, setProfileName] = useState("");
 
   const updateLocation = (value: string) => setLocation(value);
@@ -54,7 +53,6 @@ export default function Score() {
   }, [user]);
 
   const loadProfile = (profile: any) => {
-    setCurrentProfile(profile);
     setLocation(profile.location);
     setProfileName(profile.profileName);
     setDistanceUnit(profile.distanceUnit);
