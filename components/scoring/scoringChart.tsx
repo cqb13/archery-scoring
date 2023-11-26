@@ -1,7 +1,6 @@
 "use client";
 
 import Button from "@components/general/button";
-import isMobile from "@/utils/isMobile";
 import { useState, useEffect } from "react";
 
 type Props = {
@@ -17,7 +16,6 @@ type Props = {
 export default function ScoringChart(props: Props) {
   const [currentSplit, setCurrentSplit] = useState(0);
   const [data, setData] = useState({} as any);
-  const mobileDevice = isMobile();
 
   useEffect(() => {
     if (!props.updateData) return;
@@ -112,7 +110,7 @@ export default function ScoringChart(props: Props) {
   };
 
   useEffect(() => {
-    if (history && props.score) {
+    if (props.history && props.score) {
       setData(props.score);
     } else {
       if (!props.splits || !props.ends || !props.arrowsPerEnd) return;
@@ -230,8 +228,8 @@ export default function ScoringChart(props: Props) {
         </tbody>
       </table>
       <section
-        className={`${mobileDevice ? "" : ""} flex gap-2 ${
-          history ? "hidden" : ""
+        className={`flex gap-2 ${
+          props.history ? "hidden" : ""
         }`}
       >
         <Button title='X' onClick={() => setValueOfSelectedBox("X")} />

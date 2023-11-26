@@ -10,7 +10,7 @@ import Slider from "@/components/general/slider";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-export default function Score() {
+export default function Setup() {
   const scoreContext = useScoreContext() as any;
   const { user } = useAuthContext() as any;
   const router = useRouter();
