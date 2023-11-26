@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 
 type Props = {
   title: string;
@@ -19,7 +19,7 @@ export default function Slider({
   max,
   update
 }: Props) {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState<number>();
   const updateValue = (value: number) => {
     if (value < min) value = min;
     if (value > max) value = max;
@@ -27,6 +27,10 @@ export default function Slider({
     setValue(value);
     update(value);
   };
+
+  useEffect(() => {
+    setValue(defaultValue);
+  }, [defaultValue]);
 
   return (
     <section className='bg-lightest px-4 py-2 rounded-md border w-60 border-gray-300 shadow-sm'>
@@ -37,7 +41,7 @@ export default function Slider({
         <div className='flex items-center'>
           <input
             type='number'
-            value={value}
+            value={value === undefined ? defaultValue : value}
             onChange={(e) => updateValue(parseInt(e.target.value))}
             className='w-16 text-center bg-transparent border-none focus:outline-none'
           />
@@ -49,7 +53,7 @@ export default function Slider({
           min={min}
           max={max}
           step={jump}
-          value={value}
+          value={value === undefined ? defaultValue : value}
           onChange={(e) => updateValue(parseInt(e.target.value))}
           className='w-full h-2 bg-lightest rounded-md appearance-none focus:outline-none ring-1 accent-highlight hover:accent-highlight-dark transition-colors ring-gray-300 focus:ring-light'
         />

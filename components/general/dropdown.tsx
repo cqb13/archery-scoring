@@ -1,32 +1,35 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   title: string;
   items: string[];
   customClass?: string; // meant for width changes only
+  selectedItem?: string;
+  newSelectedItem?: string;
   setSelected: (value: string) => void;
-  getSelected?: (value: string) => void;
+  onNewSelection?: (value: string) => void;
 };
 
 export default function Dropdown({
   title,
   items,
   customClass,
+  newSelectedItem,
   setSelected,
-  getSelected,
+  onNewSelection,
 }: Props) {
   const [opened, setOpened] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
 
   const toggle = () => setOpened(!opened);
 
-  const selected = () => {
-    if (getSelected ? getSelected(selectedItem) : false) {
-      setSelected(selectedItem);
+  useEffect(() => {
+    if (newSelectedItem) {
+      setSelectedItem(newSelectedItem);
     }
-  };
+  }, [newSelectedItem]);
 
   return (
     <section>
@@ -73,7 +76,7 @@ export default function Dropdown({
                   setSelectedItem(item);
                   setSelected(item);
                   setOpened(false);
-                  selected();
+                  onNewSelection && onNewSelection(item);
                 }}
                 className='block px-4 py-2 text-sm text-gray-700 w-full hover:shadow-card transition-none'
                 role='menuitem'

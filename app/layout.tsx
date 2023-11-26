@@ -9,6 +9,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://archery.cqb13.dev"),
   title: "Archery Scoring",
   description: "Keep track of your archery scores.",
   keywords: [
@@ -34,9 +35,11 @@ export const metadata: Metadata = {
     address: false,
     telephone: false
   },
+  themeColor: "black",
+  manifest: "https://archery.cqb13.dev/manifest.json",
   openGraph: {
     title: "Archery Scoring",
-    description: "Keep track of your archery scores.",
+    description: "Keep track of your archery scores..",
     url: "https://archery.cqb13.dev/",
     siteName: "Archery Scoring",
     images: [
@@ -44,11 +47,32 @@ export const metadata: Metadata = {
         url: "https://archery.cqb13.dev/icon.png",
         width: 600,
         height: 600,
-        alt: "Bow"
+        alt: "Logo"
       }
     ],
     locale: "en_US",
     type: "website"
+  },
+  icons: {
+    icon: "/icon.png"
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": "auto",
+      "max-image-preview": "large",
+      "max-snippet": -1
+    }
   }
 };
 

@@ -18,6 +18,6 @@ export default async function deleteAccount(user: any) {
     await deleteDoc(doc(scoreCollection, id));
   });
 
-  deleteDoc(userRef);
+  await deleteDoc(userRef);
   googleSignOut();
 }

@@ -3,13 +3,13 @@ import Button from "@components/general/button";
 export default function SessionOptions({
   done,
   updateFinished,
-  updateSetup,
+  goToSetup,
   beginSaving,
   defaultSetup
 }: {
   done: boolean;
   updateFinished: (value: boolean) => void;
-  updateSetup: (value: boolean) => void;
+  goToSetup: () => void;
   beginSaving: () => void;
   defaultSetup: () => void;
 }) {
@@ -20,7 +20,7 @@ export default function SessionOptions({
   const returnToSetup = () => {
     defaultSetup();
     updateFinished(false);
-    updateSetup(true);
+    goToSetup();
   };
 
   const continueScoring = () => {

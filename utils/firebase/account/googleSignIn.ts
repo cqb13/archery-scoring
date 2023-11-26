@@ -1,5 +1,6 @@
-import { collection, getDoc, setDoc, doc } from "firebase/firestore";
+import { collection, getDoc, doc } from "firebase/firestore";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import setupAccount from "./setupAccount";
 import { auth, db } from "@lib/firebase";
 
 const users = collection(db, "users");
@@ -11,14 +12,6 @@ export default async function googleSignIn() {
   const userRef = doc(users, user.uid);
   const userDoc = await getDoc(userRef);
   if (!userDoc.exists()) {
-    await setDoc(userRef, {
-      displayName: user.displayName,
-      profileType: "private",
-      photoURL: user.photoURL,
-      email: user.email,
-      allScores: [],
-      highScore: 0,
-      lowScore: 0
-    });
+    await setupAccount(user, userRef);
   }
 }
