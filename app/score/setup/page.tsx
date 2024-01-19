@@ -74,7 +74,48 @@ export default function Setup() {
     scoreContext.updateSplitEnds(splitEnds);
     scoreContext.updateBow(bow);
 
-    router.push("/score/scoring");
+    // create a variable data, that is has the about of sub arrays as splitEnds each with the amount of arrays as ends, each with the amount of arrays as arrowsPerEnd
+
+    let endsPerSplit = ends / splitEnds;
+
+    if (endsPerSplit % 1 !== 0) {
+      endsPerSplit = Math.floor(endsPerSplit);
+      const setupArray = Array.from(Array(splitEnds), () =>
+        new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => ""))
+      );
+      setupArray[splitEnds - 1].push(Array.from(Array(arrowsPerEnd), () => ""));
+      return;
+    }
+
+    const setupArray = Array.from(Array(splitEnds), () =>
+      new Array(endsPerSplit).fill(Array.from(Array(arrowsPerEnd), () => ""))
+    );
+
+    router.push(
+      "/score/scoring?data=" +
+        JSON.stringify(setupArray) +
+        "&" +
+        configToString()
+    );
+  };
+
+  const configToString = () => {
+    return (
+      "location=" +
+      location +
+      "&distanceUnit=" +
+      distanceUnit +
+      "&distance=" +
+      distance +
+      "&ends=" +
+      ends +
+      "&arrowsPerEnd=" +
+      arrowsPerEnd +
+      "&splitEnds=" +
+      splitEnds +
+      "&bow=" +
+      bow
+    );
   };
 
   const checkIfReady = () => {

@@ -38,6 +38,23 @@ export default function ScoringChart(props: Props) {
     }
   };
 
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const dataNew = url.searchParams.get("data");
+
+    console.log("data:" + dataNew);
+
+    if (!dataNew) {
+      return;
+    }
+    
+    if (data) {
+      setData(JSON.parse(dataNew));
+
+      //router.push(`/score/scoring?data=${data}&${configToString()}`);
+    }
+  }, []);
+
   const handleChange = (event: any, rowIndex: any, columnIndex: any) => {
     if (props.history) return;
 

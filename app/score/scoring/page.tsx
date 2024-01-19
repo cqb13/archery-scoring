@@ -44,7 +44,66 @@ export default function Scoring() {
   const updateFinished = (value: boolean) => setFinished(value);
   const updateSavingPopup = (value: boolean) => setSavingPopup(value);
 
-  const updateData = (value: any) => setData(value);
+  useEffect(() => {
+    const url = new URL(window.location.href);
+    const dataNew = url.searchParams.get("data");
+    const location = url.searchParams.get("location");
+    const distanceUnit = url.searchParams.get("distanceUnit");
+    const distance = url.searchParams.get("distance");
+    const ends = url.searchParams.get("ends");
+    const arrowsPerEnd = url.searchParams.get("arrowsPerEnd");
+    const splitEnds = url.searchParams.get("splitEnds");
+    const bow = url.searchParams.get("bow");
+
+    if (!dataNew) {
+      return;
+    }
+
+    if (
+      data &&
+      location &&
+      distanceUnit &&
+      distance &&
+      ends &&
+      arrowsPerEnd &&
+      splitEnds &&
+      bow
+    ) {
+      setData(JSON.parse(dataNew));
+      setLocation(location);
+      setDistanceUnit(distanceUnit);
+      setDistance(parseInt(distance));
+      setEnds(parseInt(ends));
+      setArrowsPerEnd(parseInt(arrowsPerEnd));
+      setSplitEnds(parseInt(splitEnds));
+      setBow(bow);
+    }
+  }, []);
+
+  const updateData = (value: any) => {
+    const stringifiedValue = JSON.stringify(value);
+    router.push(`/score/scoring?data=${stringifiedValue}&${configToString()}`);
+    setData(value);
+  };
+
+  const configToString = () => {
+    return (
+      "location=" +
+      location +
+      "&distanceUnit=" +
+      distanceUnit +
+      "&distance=" +
+      distance +
+      "&ends=" +
+      ends +
+      "&arrowsPerEnd=" +
+      arrowsPerEnd +
+      "&splitEnds=" +
+      splitEnds +
+      "&bow=" +
+      bow
+    );
+  };
 
   useEffect(() => {
     setLocation(scoreContext.location);
