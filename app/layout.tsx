@@ -1,3 +1,4 @@
+import { ScoreContextProvider } from "@/lib/context/scoreContext";
 import { AuthContextProvider } from "@/lib/context/authContext";
 import { NavigationEvents } from "@/lib/nav-events";
 import NavBar from "@/components/layout/nav";
@@ -85,8 +86,10 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${inter.className} bg-lightest min-h-screen`}>
         <AuthContextProvider>
-          <NavBar />
-          {children}
+          <ScoreContextProvider>
+            <NavBar />
+            {children}
+          </ScoreContextProvider>
         </AuthContextProvider>
         <Suspense fallback={null}>
           <NavigationEvents />

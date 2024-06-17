@@ -16,6 +16,8 @@ type Props = {
 export default function ScoringChart(props: Props) {
   const [currentSplit, setCurrentSplit] = useState(0);
   const [data, setData] = useState({} as any);
+  const [ends, setEnds] = useState(0);
+  const [arrowsPerEnd, setArrowsPerEnd] = useState(0);
 
   useEffect(() => {
     if (!props.updateData) return;
@@ -41,18 +43,18 @@ export default function ScoringChart(props: Props) {
   useEffect(() => {
     const url = new URL(window.location.href);
     const dataNew = url.searchParams.get("data");
+    const endsNew = url.searchParams.get("ends");
+    const arrowsPerEndNew = url.searchParams.get("arrowsPerEnd");
 
     console.log("data:" + dataNew);
 
-    if (!dataNew) {
+    if (!dataNew || !endsNew || !arrowsPerEndNew) {
       return;
     }
-    
-    if (data) {
-      setData(JSON.parse(dataNew));
 
-      //router.push(`/score/scoring?data=${data}&${configToString()}`);
-    }
+    setData(JSON.parse(dataNew));
+    setEnds(parseInt(endsNew));
+    setArrowsPerEnd(parseInt(arrowsPerEndNew));
   }, []);
 
   const handleChange = (event: any, rowIndex: any, columnIndex: any) => {
@@ -244,11 +246,7 @@ export default function ScoringChart(props: Props) {
           ))}
         </tbody>
       </table>
-      <section
-        className={`flex gap-2 ${
-          props.history ? "hidden" : ""
-        }`}
-      >
+      <section className={`flex gap-2 ${props.history ? "hidden" : ""}`}>
         <Button title='X' onClick={() => setValueOfSelectedBox("X")} />
         <Button title='M' onClick={() => setValueOfSelectedBox("M")} />
       </section>

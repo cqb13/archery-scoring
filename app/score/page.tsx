@@ -82,7 +82,7 @@ export default function Scoring() {
 
   const updateData = (value: any) => {
     const stringifiedValue = JSON.stringify(value);
-    router.push(`/score/scoring?data=${stringifiedValue}&${configToString()}`);
+    router.push(`/score?data=${stringifiedValue}&${configToString()}`);
     setData(value);
   };
 
@@ -115,7 +115,7 @@ export default function Scoring() {
     setBow(scoreContext.bow);
 
     if (scoreContext.bow === "") {
-      router.push("/score/setup");
+      router.push("/");
     }
   }, []);
 
@@ -190,13 +190,13 @@ export default function Scoring() {
       note,
       createdAt
     });
-    router.push("/score/setup");
+    router.push("/");
   };
 
   const updateNotification = (value: boolean) => setNotification(value);
 
   return (
-    <>
+    <main className='flex items-center justify-center pt-4 text-black'>
       <section className='flex flex-col gap-2'>
         <ScoringChart
           arrowsPerEnd={arrowsPerEnd}
@@ -210,7 +210,7 @@ export default function Scoring() {
         <SessionOptions
           done={finished}
           updateFinished={updateFinished}
-          goToSetup={() => router.push("/score/setup")}
+          goToSetup={() => router.push("/")}
           beginSaving={beginSaving}
           defaultSetup={defaultSetup}
         />
@@ -235,6 +235,6 @@ export default function Scoring() {
           updateNotification={updateNotification}
         />
       ) : null}
-    </>
+    </main>
   );
 }

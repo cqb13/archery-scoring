@@ -6,8 +6,7 @@
  * [2] = Signed in only
  */
 export const routes = [
-  ["Home", "/", "false"],
-  ["Score", "/score/setup", "false"],
+  ["Score", "/", "false"],
   ["History", "/history", "true"],
   ["Account", "/account", "true"]
 ];
